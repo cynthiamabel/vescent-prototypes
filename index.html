@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vescent — Prototype Library</title>
+<style>
+  :root{
+    --blue:#4a6cf0; --logo-blue:#5b7fd8;
+    --lavender-a:#e7e2f6; --lavender-b:#dcd4ef;
+    --text-dark:#23213a; --text-gray:#6b6b7d;
+    --card-shadow:0 8px 24px rgba(40,30,80,0.10);
+    --serif: Georgia, 'Playfair Display', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;font-family:var(--sans);
+    background:linear-gradient(135deg,#dbe6f7,#ece5f7);
+    color:var(--text-dark);min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;
+    padding:60px 20px;
+  }
+  .brand{font-family:var(--serif);font-weight:700;font-size:32px;color:var(--logo-blue);letter-spacing:1px;}
+  .subtitle{color:var(--text-gray);font-size:14px;margin:8px 0 40px;text-align:center;max-width:480px;line-height:1.6;}
+  .card{
+    background:#fff;border-radius:18px;padding:24px 28px;margin-bottom:16px;
+    box-shadow:var(--card-shadow);max-width:520px;width:100%;
+    text-decoration:none;color:var(--text-dark);display:block;
+    transition:transform .12s;
+  }
+  .card:hover{transform:translateY(-3px);}
+  .card .name{font-family:var(--serif);font-size:19px;font-weight:700;margin-bottom:6px;}
+  .card .desc{font-size:13.5px;color:var(--text-gray);line-height:1.6;}
+  .card .meta{font-size:11.5px;color:var(--blue);font-weight:700;margin-top:10px;}
+  footer{margin-top:40px;font-size:11.5px;color:var(--text-gray);text-align:center;max-width:480px;line-height:1.6;}
+</style>
+</head>
+<body>
+  <div class="brand">VESCENT</div>
+  <div class="subtitle">Prototype library — interactive design references for the app rebuild. Fictional data only. Designs by Lauren, interactivity by Cindy &amp; Claude.</div>
+
+  <a class="card" href="stage1.html">
+    <div class="name">Stage 1 — Teen Flows</div>
+    <div class="desc">New teen first session (Tier 1), returning Tier 1 home, and returning Tier 2 &amp; 3 homes. Tap-through with a toggle showing the concise user story for each screen.</div>
+    <div class="meta">Updated July 2026</div>
+  </a>
+
+  <footer>Each prototype's link stays the same when it's revised — bookmark once, always current. Questions: cindy@vescent.co</footer>
+</body>
+</html>

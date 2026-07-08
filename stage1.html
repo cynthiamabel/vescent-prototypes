@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vescent — Stage 1 Interactive Prototype</title>
+<style>
+  :root{
+    --blue:#4a6cf0;
+    --logo-blue:#5b7fd8;
+    --lavender-a:#e7e2f6;
+    --lavender-b:#dcd4ef;
+    --star-filled:#2f2b52;
+    --star-empty:#d6d2e6;
+    --text-dark:#23213a;
+    --text-gray:#6b6b7d;
+    --pill-border:#c9c4e0;
+    --card-shadow:0 8px 24px rgba(40,30,80,0.10);
+    --annot:#e08a2c;
+    --annot-bg:#fff4e6;
+    --green:#2c8a4c;
+    --green-bg:#e4f3e8;
+    --serif: Georgia, 'Playfair Display', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    background:linear-gradient(135deg,#dbe6f7,#ece5f7);
+    color:var(--text-dark);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:26px 16px 60px;
+  }
+
+  /* ===== CHROME ===== */
+  .top-nav{width:100%;max-width:780px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+  .brand{font-family:var(--serif);font-weight:700;font-size:24px;color:var(--logo-blue);letter-spacing:1px;}
+  .proto-label{font-size:11px;color:var(--text-gray);}
+  .chrome-btns{display:flex;gap:8px;}
+  .chrome-btn{
+    background:#fff;border:1.5px solid var(--blue);color:var(--blue);
+    border-radius:20px;padding:6px 14px;font-size:11.5px;font-weight:700;
+    cursor:pointer;font-family:var(--sans);transition:all .15s;
+  }
+  .chrome-btn:hover{background:var(--blue);color:#fff;}
+  .chrome-btn.on{background:var(--blue);color:#fff;}
+
+  .flow-tabs{display:flex;gap:8px;margin-bottom:6px;width:100%;max-width:780px;flex-wrap:wrap;}
+  .flow-tab{
+    background:rgba(255,255,255,0.55);border:1.5px solid rgba(255,255,255,0.9);
+    border-radius:20px;padding:7px 16px;font-size:12px;font-weight:600;color:var(--text-dark);
+    cursor:pointer;font-family:var(--sans);transition:all .15s;
+  }
+  .flow-tab:hover,.flow-tab.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+  .flow-title{width:100%;max-width:780px;text-align:left;margin:6px 0 14px;}
+  .flow-title .ft{font-family:var(--serif);font-weight:700;font-size:17px;}
+  .flow-title .fs{font-size:12.5px;color:var(--text-gray);margin-top:2px;line-height:1.5;max-width:640px;}
+
+  .tier-seg{display:none;gap:8px;margin-bottom:14px;}
+  .tier-seg.visible{display:flex;}
+  .seg-btn{
+    background:#fff;border:1.5px solid var(--pill-border);color:var(--text-gray);
+    border-radius:20px;padding:6px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--sans);
+  }
+  .seg-btn.active{background:var(--star-filled);border-color:var(--star-filled);color:#fff;}
+
+  .stage{display:flex;gap:28px;align-items:flex-start;justify-content:center;flex-wrap:wrap;}
+
+  /* ===== PHONE ===== */
+  .phone{
+    width:340px;background:#1c1c1e;border-radius:46px;padding:13px;
+    box-shadow:0 24px 48px rgba(20,15,50,0.20);position:relative;flex-shrink:0;
+  }
+  .phone .notch{
+    position:absolute;top:13px;left:50%;transform:translateX(-50%);
+    width:120px;height:24px;background:#1c1c1e;border-radius:0 0 18px 18px;z-index:3;
+  }
+  .screen-wrap{
+    background:linear-gradient(160deg,#f8f6fc,#ffffff);
+    border-radius:34px;overflow:hidden;height:660px;position:relative;
+  }
+  .screen{
+    position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden;
+    background:linear-gradient(160deg,#f8f6fc,#ffffff);
+  }
+  .screen.active{display:flex;animation:slideIn .22s ease;}
+  @keyframes slideIn{from{transform:translateX(40px);opacity:.4;}to{transform:translateX(0);opacity:1;}}
+
+  .statusbar{display:flex;justify-content:space-between;padding:14px 22px 4px;font-size:13px;font-weight:600;flex-shrink:0;}
+  .statusbar .icons{font-size:11px;letter-spacing:1px;}
+  .s-content{padding:10px 18px 18px;flex:1;display:flex;flex-direction:column;overflow-y:auto;}
+  .s-content.center{align-items:center;text-align:center;justify-content:center;gap:10px;}
+
+  /* ===== SHARED APP PIECES (Lauren's design system) ===== */
+  .icon-badge{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,#f7d6e0,#f3b8cf);display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:6px;}
+  .icon-badge.small{width:48px;height:48px;font-size:22px;border-radius:14px;}
+  h1.serif,h2.serif{font-family:var(--serif);margin:4px 0;}
+  h1.serif{font-size:24px;}
+  h2.serif{font-size:20px;}
+  .body{color:var(--text-gray);font-size:14px;line-height:1.5;margin:4px 0 8px;}
+  .body.small{font-size:13px;margin-top:-4px;}
+
+  .group-card{width:100%;background:linear-gradient(135deg,var(--lavender-a),var(--lavender-b));border-radius:18px;padding:16px;text-align:left;margin:10px 0;}
+  .group-name{font-weight:700;font-size:15px;margin-bottom:2px;}
+  .group-sub{font-size:12px;color:var(--text-gray);margin-bottom:10px;}
+  .mentor-row{display:flex;align-items:center;gap:10px;}
+  .avatar{width:38px;height:38px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;position:relative;}
+  .avatar-cluster{display:flex;flex-shrink:0;}
+  .avatar-cluster .a2{margin-left:-14px;}
+  .online-dot{position:absolute;bottom:-1px;right:-1px;width:10px;height:10px;border-radius:50%;background:var(--green);border:2px solid #fff;}
+  .mentor-name{font-weight:700;font-size:13px;}
+  .mentor-sub{font-size:11px;color:var(--text-gray);}
+  .note-card{width:100%;background:#fff;border:1px solid #ece8f5;border-radius:16px;padding:14px;font-size:13px;line-height:1.5;text-align:left;box-shadow:var(--card-shadow);font-style:italic;}
+
+  .btn-primary{
+    background:var(--blue);color:#fff;border:none;padding:13px 20px;border-radius:16px;
+    font-size:14px;font-weight:700;margin-top:10px;cursor:pointer;font-family:var(--sans);
+    transition:transform .1s, box-shadow .1s;
+  }
+  .btn-primary.full{width:100%;}
+  .btn-primary:active{transform:scale(0.97);}
+  .link-secondary{color:var(--text-gray);font-size:13px;text-decoration:underline;margin-top:8px;cursor:pointer;}
+
+  .thread-header{font-weight:700;font-size:15px;padding:6px 0 12px;border-bottom:1px solid #ece8f5;margin-bottom:12px;flex-shrink:0;}
+  .thread-header .back{color:var(--blue);cursor:pointer;margin-right:4px;}
+  .mini-context{font-size:12px;color:var(--text-gray);margin-bottom:10px;}
+  .pinned-post{display:flex;gap:10px;background:linear-gradient(135deg,var(--lavender-a),var(--lavender-b));border-radius:16px;padding:14px;margin-bottom:14px;text-align:left;}
+  .post-avatar{width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+  .post-name{font-weight:700;font-size:12.5px;margin-bottom:3px;}
+  .post-time{font-size:10.5px;color:var(--text-gray);margin-bottom:5px;}
+  .post-text{font-size:13px;line-height:1.5;}
+  .reply{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;}
+  .reply-avatar{width:28px;height:28px;border-radius:50%;background:#f1eef9;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+  .reply-bubble{background:#f5f3fa;border-radius:14px;padding:8px 12px;font-size:12.5px;line-height:1.4;}
+  .reply.mine .reply-bubble{background:var(--lavender-a);}
+  .compose-bar{
+    margin-top:auto;display:flex;align-items:center;justify-content:space-between;
+    border:1px solid #ece8f5;border-radius:20px;padding:10px 14px;font-size:13px;color:var(--text-gray);
+    cursor:pointer;flex-shrink:0;background:#fff;
+  }
+  .compose-bar .send{color:var(--blue);font-weight:700;}
+  .celebrate{background:var(--green-bg);color:var(--green);border-radius:12px;padding:8px 12px;font-size:12px;font-weight:700;text-align:center;margin-bottom:10px;}
+
+  .chip-row{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+  .chip{
+    border:1px solid var(--pill-border);color:var(--blue);border-radius:999px;padding:9px 14px;
+    font-size:12.5px;font-weight:600;text-align:left;cursor:pointer;background:#fff;transition:all .12s;
+  }
+  .chip:hover{background:var(--lavender-a);}
+  .chip.picked{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .textarea-mock{border:1px solid #ece8f5;border-radius:14px;padding:12px;font-size:12.5px;color:var(--text-gray);margin-bottom:12px;min-height:40px;background:#fff;}
+  .textarea-mock.filled{color:var(--text-dark);font-style:italic;}
+
+  .roadmap{width:100%;text-align:left;margin:14px 0;}
+  .rm-item{display:flex;gap:12px;margin-bottom:14px;}
+  .rm-dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--pill-border);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0;margin-top:1px;}
+  .rm-item.done .rm-dot{background:var(--blue);border-color:var(--blue);}
+  .rm-title{font-weight:700;font-size:13px;}
+  .rm-sub{font-size:11.5px;color:var(--text-gray);margin-top:1px;}
+
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding:4px 0 14px;flex-shrink:0;}
+  .topbar .logo{font-family:var(--serif);font-weight:700;font-size:19px;color:var(--logo-blue);}
+  .topbar .icons{display:flex;gap:12px;align-items:center;font-size:16px;position:relative;}
+  .dot{position:absolute;top:-4px;right:-6px;background:#e0507a;color:#fff;font-size:9px;font-weight:700;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+
+  .group-module{background:linear-gradient(135deg,var(--lavender-a),var(--lavender-b));border-radius:18px;padding:14px 16px;margin-bottom:15px;cursor:pointer;transition:transform .12s;}
+  .group-module:hover{transform:translateY(-2px);}
+  .module-title{font-weight:700;font-size:14.5px;}
+  .module-sub{font-size:11.5px;color:var(--text-gray);margin-top:1px;}
+  .stars{margin-top:10px;font-size:14px;display:flex;align-items:center;gap:3px;color:var(--star-empty);}
+  .stars .filled{color:var(--star-filled);}
+  .spark-count{margin-left:8px;font-size:12px;color:var(--blue);font-weight:700;}
+  .since-pill{margin-top:10px;background:#fff;border-radius:12px;padding:8px 10px;font-size:11.5px;display:flex;align-items:center;gap:6px;line-height:1.4;}
+  .since-pill .dotnew{width:6px;height:6px;border-radius:50%;background:#e0507a;flex-shrink:0;}
+  .tap-more{font-size:11px;color:var(--text-gray);margin-top:8px;}
+
+  .section-label{font-size:12px;color:var(--text-gray);font-weight:700;margin-bottom:8px;letter-spacing:.3px;}
+  .post-card{display:flex;gap:10px;background:#fff;border:1px solid #ece8f5;border-radius:16px;padding:14px;box-shadow:var(--card-shadow);margin-bottom:10px;}
+  .post-actions{display:flex;gap:8px;margin-top:10px;}
+  .pill{border:1px solid var(--pill-border);color:var(--blue);border-radius:999px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;}
+  .pill:hover{background:var(--lavender-a);}
+  .thread-link{font-size:11.5px;color:var(--blue);font-weight:600;margin-top:2px;cursor:pointer;}
+
+  .future-slot{border:2px dashed var(--annot);background:var(--annot-bg);border-radius:16px;padding:14px;margin-top:4px;margin-bottom:6px;}
+  .future-slot .tag{display:inline-block;font-size:10px;font-weight:700;color:var(--annot);background:#fff;border:1px solid var(--annot);border-radius:999px;padding:2px 8px;margin-bottom:8px;}
+  .future-slot .fs-title{font-size:12.5px;font-weight:700;margin-bottom:3px;}
+  .future-slot .fs-sub{font-size:11.5px;color:var(--text-gray);line-height:1.4;}
+  .skeleton-row{height:10px;background:#f1e3cd;border-radius:6px;margin-top:8px;}
+  .skeleton-row.w60{width:60%;}
+  .skeleton-row.w40{width:40%;}
+
+  .bottom-nav{margin-top:auto;display:flex;justify-content:space-between;padding:14px 4px 4px;border-top:1px solid #ece8f5;font-size:10.5px;color:var(--text-gray);flex-shrink:0;}
+  .bottom-nav span{position:relative;cursor:pointer;}
+
+  /* chat (Tier 3) */
+  .chat-list{flex:1;display:flex;flex-direction:column;gap:10px;padding-top:4px;overflow-y:auto;}
+  .bubble{max-width:78%;border-radius:16px;padding:10px 13px;font-size:13px;line-height:1.45;}
+  .bubble.them{background:#f5f3fa;align-self:flex-start;border-bottom-left-radius:4px;}
+  .bubble.me{background:var(--lavender-b);align-self:flex-end;border-bottom-right-radius:4px;}
+  .bubble .meta{font-size:10px;color:var(--text-gray);margin-top:4px;}
+  .sent-confirm{align-self:flex-end;font-size:10.5px;color:var(--green);font-weight:700;}
+
+  /* ===== STORY CARD ===== */
+  .story-col{max-width:330px;display:none;}
+  .story-col.visible{display:block;}
+  .story-card{background:#fff;border-radius:18px;padding:18px 20px;box-shadow:var(--card-shadow);border-left:4px solid var(--blue);}
+  .story-card .sc-tag{display:inline-block;font-size:10px;font-weight:700;color:var(--blue);background:var(--lavender-a);border-radius:999px;padding:2px 10px;margin-bottom:10px;letter-spacing:.5px;}
+  .story-card .sc-story{font-size:13.5px;line-height:1.6;font-weight:600;margin-bottom:10px;}
+  .story-card .sc-note{font-size:12.5px;color:var(--text-gray);line-height:1.6;}
+  .story-hint{font-size:11px;color:var(--text-gray);margin-top:10px;font-style:italic;}
+
+  /* toast */
+  #toast{
+    position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);
+    background:var(--star-filled);color:#fff;font-size:12.5px;font-weight:600;
+    border-radius:20px;padding:10px 20px;transition:transform .25s;z-index:50;box-shadow:0 8px 20px rgba(0,0,0,.25);
+  }
+  #toast.show{transform:translateX(-50%) translateY(0);}
+
+  footer.credit{margin-top:36px;font-size:11.5px;color:var(--text-gray);text-align:center;max-width:600px;line-height:1.6;}
+</style>
+</head>
+<body>
+
+  <div class="top-nav">
+    <div>
+      <div class="brand">VESCENT</div>
+      <div class="proto-label">Stage 1 Interactive Prototype · designs by Lauren · tap-through by Cindy · July 2026</div>
+    </div>
+    <div class="chrome-btns">
+      <button class="chrome-btn" id="storyToggle" onclick="toggleStories()">📖 User stories: OFF</button>
+      <button class="chrome-btn" onclick="restartFlow()">↺ Restart flow</button>
+    </div>
+  </div>
+
+  <div class="flow-tabs">
+    <button class="flow-tab active" id="tab-new" onclick="switchFlow('new')">New Teen — Tier 1</button>
+    <button class="flow-tab" id="tab-r1" onclick="switchFlow('r1')">Returning — Tier 1</button>
+    <button class="flow-tab" id="tab-r23" onclick="switchFlow('r23')">Returning — Tier 2 &amp; 3</button>
+  </div>
+
+  <div class="flow-title">
+    <div class="ft" id="flowTitle">Tier 1 (Spark) — New Teen Flow</div>
+    <div class="fs" id="flowSub">First session, starting right after basic profile creation. Tap the buttons on the phone to walk her path.</div>
+  </div>
+
+  <div class="tier-seg" id="tierSeg">
+    <button class="seg-btn active" id="seg-t2" onclick="switchTier('t2')">Tier 2 — Circle</button>
+    <button class="seg-btn" id="seg-t3" onclick="switchTier('t3')">Tier 3 — Anchor</button>
+  </div>
+
+  <div class="stage">
+    <div class="phone"><div class="notch"></div><div class="screen-wrap" id="screenWrap">
+
+      <!-- ============ FLOW: NEW TEEN (TIER 1) ============ -->
+
+      <div class="screen" data-flow="new" data-screen="n1">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content center">
+          <div class="icon-badge">✨</div>
+          <h1 class="serif">You're in, Maya!</h1>
+          <p class="body">Based on what you told us, we placed you in a group that's a great fit — no browsing needed.</p>
+          <div class="group-card">
+            <div class="group-name">Creative Minds 🎨</div>
+            <div class="group-sub">Mentor who shows up here</div>
+            <div class="mentor-row">
+              <div class="avatar">👩🏽</div>
+              <div><div class="mentor-name">Jordan T.</div><div class="mentor-sub">UGA '24 · Graphic Designer</div></div>
+            </div>
+          </div>
+          <div class="note-card">"Hey! Heard someone in this batch loves graphic design — that's basically our whole vibe in here. Can't wait to see what you make. — Jordan 💙"</div>
+          <button class="btn-primary full" onclick="go('n2')">See my group →</button>
+        </div>
+      </div>
+
+      <div class="screen" data-flow="new" data-screen="n2">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content">
+          <div class="thread-header"><span class="back" onclick="go('n1')">‹</span> Creative Minds 🎨</div>
+          <div class="pinned-post">
+            <div class="post-avatar">👩🏽</div>
+            <div>
+              <div class="post-name">Jordan T. · Mentor</div>
+              <div class="post-text">Welcome thread 💌 Tell us one thing about you — favorite way to be creative, a show you're into, anything!</div>
+            </div>
+          </div>
+          <div class="reply"><div class="reply-avatar">🧑🏻</div><div class="reply-bubble"><b>mia_b</b> I just started digital painting!</div></div>
+          <div class="reply"><div class="reply-avatar">👧🏽</div><div class="reply-bubble"><b>zoe.k</b> obsessed with thrifting rn 😂</div></div>
+          <div class="compose-bar" onclick="go('n3')"><span>Add your reply...</span><span class="send">➤</span></div>
+        </div>
+      </div>
+
+      <div class="screen" data-flow="new" data-screen="n3">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content">
+          <div class="thread-header"><span class="back" onclick="go('n2')">‹</span> Creative Minds 🎨</div>
+          <div class="mini-context">Replying to Jordan's welcome prompt</div>
+          <div class="chip-row">
+            <button class="chip" onclick="pickChip(this,'One thing about me is I love graphic design and making playlists 🎧')">One thing about me is...</button>
+            <button class="chip" onclick="pickChip(this,'I&#39;m hoping to get better at drawing people!')">I'm hoping to...</button>
+            <button class="chip" onclick="pickChip(this,'Something I made recently: a collage wall in my room ✂️')">Something I made recently...</button>
+          </div>
+          <div class="textarea-mock" id="composeBox">Or type your own...</div>
+          <button class="btn-primary full" onclick="sendReply()">Send</button>
+        </div>
+      </div>
+
+      <div class="screen" data-flow="new" data-screen="n3b">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content">
+          <div class="thread-header"><span class="back" onclick="go('n2')">‹</span> Creative Minds 🎨</div>
+          <div class="celebrate">Your first post is live 🎉</div>
+          <div class="pinned-post">
+            <div class="post-avatar">👩🏽</div>
+            <div>
+              <div class="post-name">Jordan T. · Mentor</div>
+              <div class="post-text">Welcome thread 💌 Tell us one thing about you!</div>
+            </div>
+          </div>
+          <div class="reply"><div class="reply-avatar">🧑🏻</div><div class="reply-bubble"><b>mia_b</b> I just started digital painting!</div></div>
+          <div class="reply"><div class="reply-avatar">👧🏽</div><div class="reply-bubble"><b>zoe.k</b> obsessed with thrifting rn 😂</div></div>
+          <div class="reply mine"><div class="reply-avatar">👧🏻</div><div class="reply-bubble"><b>maya_p</b> <span id="myReplyText">One thing about me is I love graphic design!</span></div></div>
+          <button class="btn-primary full" onclick="go('n4')">What's next? →</button>
+        </div>
+      </div>
+
+      <div class="screen" data-flow="new" data-screen="n4">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content" style="text-align:left;">
+          <div style="text-align:center;">
+            <div class="icon-badge small" style="margin:0 auto 8px;">🗺️</div>
+            <h2 class="serif">Here's what's coming</h2>
+            <p class="body small">Your first two weeks in Creative Minds</p>
+          </div>
+          <div class="roadmap">
+            <div class="rm-item done"><span class="rm-dot">✓</span><div><div class="rm-title">Day 1 — Welcome thread</div><div class="rm-sub">You just did this 🎉</div></div></div>
+            <div class="rm-item"><span class="rm-dot"></span><div><div class="rm-title">Day 2–3 — Jordan's icebreaker</div><div class="rm-sub">A prompt drops in your group</div></div></div>
+            <div class="rm-item"><span class="rm-dot"></span><div><div class="rm-title">Day 5 — Your first Drop</div><div class="rm-sub">A short piece to talk about together</div></div></div>
+            <div class="rm-item"><span class="rm-dot"></span><div><div class="rm-title">Day 7 — Jordan checks in</div><div class="rm-sub">"How's your first week been?"</div></div></div>
+            <div class="rm-item"><span class="rm-dot"></span><div><div class="rm-title">Day 10–14 — Explore more</div><div class="rm-sub">Optional: join a second group</div></div></div>
+          </div>
+          <button class="btn-primary full" onclick="go('n5')">Got it →</button>
+        </div>
+      </div>
+
+      <div class="screen" data-flow="new" data-screen="n5">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content">
+          <div class="topbar"><span class="logo">Vescent</span><span class="icons">🔔 👤</span></div>
+          <div class="group-module" onclick="go('n3b')">
+            <div class="mentor-row">
+              <div class="avatar">🎨</div>
+              <div><div class="module-title">Your Group ✦</div><div class="module-sub">Creative Minds · Jordan T.</div></div>
+            </div>
+            <div class="stars"><span class="filled">✦</span><span>✦</span><span>✦</span><span>✦</span><span>✦</span><span class="spark-count">1 spark</span></div>
+            <div class="tap-more">tap to see more</div>
+          </div>
+          <div class="section-label">THIS WEEK IN THE COMMUNITY</div>
+          <div class="post-card">
+            <div class="post-avatar">👩🏽</div>
+            <div>
+              <div class="post-name">Jordan T. · Mentor</div>
+              <div class="post-text">Welcome thread 💌 Tell us one thing about you...</div>
+              <div class="post-actions"><span class="pill" onclick="go('n3b')">Reply</span><span class="pill" onclick="toast('Liked 🤍 → 💙')">Like 🤍</span></div>
+            </div>
+          </div>
+          <button class="btn-primary full" id="n5next" onclick="go('n6')">One last thing →</button>
+          <div class="bottom-nav">
+            <span style="color:var(--blue);font-weight:700;">🏠 Home</span>
+            <span onclick="toast('Groups — not wired in this prototype yet 💜')">👥 Groups</span>
+            <span onclick="toast('Create — not wired in this prototype yet 💜')">➕</span>
+            <span onclick="toast('Messages — not wired in this prototype yet 💜')">💬 Msgs</span>
+            <span onclick="toast('Activity — not wired in this prototype yet 💜')">🔔 Activity</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" data-flow="new" data-screen="n6">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content center">
+          <div class="icon-badge">🔔</div>
+          <h2 class="serif">Stay in the loop</h2>
+          <p class="body">We'll let you know when Jordan or your group says something. That's it — no streaks, no pressure.</p>
+          <button class="btn-primary full" onclick="finishNewFlow(true)">Turn on notifications</button>
+          <div class="link-secondary" onclick="finishNewFlow(false)">Maybe later</div>
+        </div>
+      </div>
+
+      <!-- ============ FLOW: RETURNING TIER 1 ============ -->
+
+      <div class="screen" data-flow="r1" data-screen="r1home">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content">
+          <div class="topbar">
+            <span class="logo">Vescent</span>
+            <span class="icons"><span style="position:relative;">🔔<span class="dot">2</span></span><span>👤</span></span>
+          </div>
+          <div class="group-module" onclick="go('r1thread')">
+            <div class="mentor-row">
+              <div class="avatar">🎨</div>
+              <div><div class="module-title">Your Group ✦</div><div class="module-sub">Creative Minds · Jordan T.</div></div>
+            </div>
+            <div class="stars">
+              <span class="filled">✦</span><span class="filled">✦</span><span class="filled">✦</span><span class="filled">✦</span><span>✦</span>
+              <span class="spark-count">4 sparks</span>
+            </div>
+            <div class="since-pill"><span class="dotnew"></span> 2 new since you were last here — Jordan posted, Zoe replied</div>
+            <div class="tap-more">tap to see more</div>
+          </div>
+          <div class="section-label">THIS WEEK IN THE COMMUNITY</div>
+          <div class="post-card">
+            <div class="post-avatar">👩🏽</div>
+            <div>
+              <div class="post-name">Jordan T. · Mentor</div>
+              <div class="post-time">2 days ago</div>
+              <div class="post-text">This one made me think of you all — how do you handle comparison online? 💙</div>
+              <div class="post-actions"><span class="pill" onclick="go('r1thread')">Reply</span><span class="pill" onclick="toast('Liked 🤍 → 💙')">Like 🤍</span></div>
+              <div class="thread-link" onclick="go('r1thread')">3 replies · Zoe, Mia +1 more →</div>
+            </div>
+          </div>
+          <div class="future-slot">
+            <span class="tag">🔧 not live yet</span>
+            <div class="fs-title">Content Area — reserved slot</div>
+            <div class="fs-sub">Once it ships: one curated "Drop" a week, introduced by Jordan in-group — not a separate scrollable feed.</div>
+            <div class="skeleton-row w60"></div>
+            <div class="skeleton-row w40"></div>
+          </div>
+          <div class="bottom-nav">
+            <span style="color:var(--blue);font-weight:700;">🏠 Home</span>
+            <span onclick="go('r1thread')">👥 Groups</span>
+            <span onclick="toast('Create — not wired in this prototype yet 💜')">➕</span>
+            <span onclick="toast('Messages — not wired in this prototype yet 💜')" style="position:relative;">💬 Msgs<span class="dot" style="top:-8px;right:-10px;">1</span></span>
+            <span onclick="toast('Activity — not wired in this prototype yet 💜')">🔔 Activity</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" data-flow="r1" data-screen="r1thread">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content">
+          <div class="thread-header"><span class="back" onclick="go('r1home')">‹</span> Creative Minds 🎨</div>
+          <div class="pinned-post">
+            <div class="post-avatar">👩🏽</div>
+            <div>
+              <div class="post-name">Jordan T. · Mentor <span style="font-weight:400;color:var(--text-gray);font-size:10px;">· 2 days ago</span></div>
+              <div class="post-text">This one made me think of you all — how do you handle comparison online? 💙</div>
+            </div>
+          </div>
+          <div class="reply"><div class="reply-avatar">👧🏽</div><div class="reply-bubble"><b>zoe.k</b> honestly I had to mute like half my feed lol</div></div>
+          <div class="reply"><div class="reply-avatar">🧑🏻</div><div class="reply-bubble"><b>mia_b</b> I remind myself it's everyone's highlight reel</div></div>
+          <div class="reply"><div class="reply-avatar">👩🏼</div><div class="reply-bubble"><b>ava_r</b> this is why I like it here better 💜</div></div>
+          <div class="compose-bar" onclick="postQuickReply()"><span>Add your reply...</span><span class="send">➤</span></div>
+        </div>
+      </div>
+
+      <!-- ============ FLOW: RETURNING TIER 2 ============ -->
+
+      <div class="screen" data-flow="r23t2" data-screen="t2home">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content">
+          <div class="topbar">
+            <span class="logo">Vescent</span>
+            <span class="icons"><span style="position:relative;">🔔<span class="dot">3</span></span><span>👤</span></span>
+          </div>
+          <div class="group-module" onclick="go('t2thread')">
+            <div class="mentor-row">
+              <div class="avatar-cluster">
+                <div class="avatar">👩🏽</div>
+                <div class="avatar a2">👩🏻<span class="online-dot"></span></div>
+              </div>
+              <div style="margin-left:6px;"><div class="module-title">Your Circle ✦</div><div class="module-sub">All groups · mentors online now</div></div>
+            </div>
+            <div class="stars">
+              <span class="filled">✦</span><span class="filled">✦</span><span class="filled">✦</span><span class="filled">✦</span><span class="filled">✦</span>
+              <span class="spark-count">6 sparks</span>
+            </div>
+            <div class="since-pill"><span class="dotnew"></span> 3 new since you were last here — 2 replies, 1 mentor message</div>
+            <div class="tap-more">tap to see more</div>
+          </div>
+          <div class="section-label">THIS WEEK IN YOUR GROUPS</div>
+          <div class="post-card">
+            <div class="post-avatar">👩🏻</div>
+            <div>
+              <div class="post-name">Maya O. · Mentor</div>
+              <div class="post-time">Yesterday · 6:30 PM</div>
+              <div class="post-text">Office hours today at 4 — bring whatever's on your mind, no agenda 💙</div>
+              <div class="post-actions"><span class="pill" onclick="go('t2thread')">Reply</span><span class="pill" onclick="toast('Liked 🤍 → 💙')">Like 🤍</span></div>
+              <div class="thread-link" onclick="go('t2thread')">5 replies · across 3 groups →</div>
+            </div>
+          </div>
+          <div class="future-slot">
+            <span class="tag">🔧 not live yet</span>
+            <div class="fs-title">Content Area — reserved slot</div>
+            <div class="fs-sub">Self-guided Sharpen library lives here — hers to dip into solo, between mentor chats.</div>
+            <div class="skeleton-row w60"></div>
+            <div class="skeleton-row w40"></div>
+          </div>
+          <div class="bottom-nav">
+            <span style="color:var(--blue);font-weight:700;">🏠 Home</span>
+            <span onclick="go('t2thread')">👥 Groups</span>
+            <span onclick="toast('Create — not wired in this prototype yet 💜')">➕</span>
+            <span onclick="toast('Messages — not wired in this prototype yet 💜')" style="position:relative;">💬 Msgs<span class="dot" style="top:-8px;right:-10px;">2</span></span>
+            <span onclick="toast('Activity — not wired in this prototype yet 💜')">🔔 Activity</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" data-flow="r23t2" data-screen="t2thread">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content">
+          <div class="thread-header"><span class="back" onclick="go('t2home')">‹</span> Office Hours 💬</div>
+          <div class="pinned-post">
+            <div class="post-avatar">👩🏻</div>
+            <div>
+              <div class="post-name">Maya O. · Mentor <span style="font-weight:400;color:var(--text-gray);font-size:10px;">· yesterday</span></div>
+              <div class="post-text">Office hours today at 4 — bring whatever's on your mind, no agenda 💙</div>
+            </div>
+          </div>
+          <div class="reply"><div class="reply-avatar">👧🏽</div><div class="reply-bubble"><b>zoe.k</b> can we talk about finals stress 😭</div></div>
+          <div class="reply"><div class="reply-avatar">👩🏼</div><div class="reply-bubble"><b>ava_r</b> I'll be there!</div></div>
+          <div class="reply"><div class="reply-avatar">👩🏻</div><div class="reply-bubble"><b>Maya O. · Mentor</b> Zoe — absolutely. Bringing my own finals survival list 📚</div></div>
+          <div class="compose-bar" onclick="postQuickReply()"><span>Add your reply...</span><span class="send">➤</span></div>
+        </div>
+      </div>
+
+      <!-- ============ FLOW: RETURNING TIER 3 ============ -->
+
+      <div class="screen" data-flow="r23t3" data-screen="t3home">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content">
+          <div class="topbar">
+            <span class="logo">Vescent</span>
+            <span class="icons"><span style="position:relative;">🔔<span class="dot">1</span></span><span>👤</span></span>
+          </div>
+          <div class="group-module" onclick="go('t3chat')">
+            <div class="mentor-row">
+              <div class="avatar">👩🏽</div>
+              <div><div class="module-title">You &amp; Sarah ✦</div><div class="module-sub">Your mentor · week 6 of 12 · Explore phase</div></div>
+            </div>
+            <div class="stars">
+              <span class="filled">✦</span><span class="filled">✦</span><span class="filled">✦</span><span>✦</span><span>✦</span>
+              <span class="spark-count">4 connections</span>
+            </div>
+            <div class="since-pill"><span class="dotnew"></span> 1 new since you were last here — Sarah sent you a message 💌</div>
+            <div class="tap-more">tap to see more</div>
+          </div>
+          <div class="section-label">THIS WEEK IN THE COMMUNITY</div>
+          <div class="post-card">
+            <div class="post-avatar">👩🏽</div>
+            <div>
+              <div class="post-name">Sarah M. · Your Mentor</div>
+              <div class="post-time">Today · 11:00 AM</div>
+              <div class="post-text">"Confidence isn't the absence of doubt, it's deciding to do it anyway." 💙 What's one thing you did this week even when you weren't sure?</div>
+              <div class="post-actions"><span class="pill" onclick="toast('Reply — opens the community thread 💜')">Reply</span><span class="pill" onclick="toast('Liked 🤍 → 💙')">Like 🤍</span></div>
+            </div>
+          </div>
+          <div class="future-slot">
+            <span class="tag">🔧 not live yet</span>
+            <div class="fs-title">Content Area — reserved slot</div>
+            <div class="fs-sub">Structured curriculum with Sarah lives here, tied to her 12-week phases (Spark → Explore → Sustain).</div>
+            <div class="skeleton-row w60"></div>
+            <div class="skeleton-row w40"></div>
+          </div>
+          <div class="bottom-nav">
+            <span style="color:var(--blue);font-weight:700;">🏠 Home</span>
+            <span onclick="toast('Groups — not wired in this prototype yet 💜')">👥 Groups</span>
+            <span onclick="toast('Create — not wired in this prototype yet 💜')">➕</span>
+            <span onclick="go('t3chat')" style="position:relative;">💬 Msgs<span class="dot" style="top:-8px;right:-10px;">1</span></span>
+            <span onclick="toast('Activity — not wired in this prototype yet 💜')">🔔 Activity</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" data-flow="r23t3" data-screen="t3chat">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● 📶 🔋</span></div>
+        <div class="s-content">
+          <div class="thread-header"><span class="back" onclick="go('t3home')">‹</span> Sarah M. 💙 <span style="font-weight:400;font-size:10.5px;color:var(--green);">● online</span></div>
+          <div class="chat-list" id="t3chatList">
+            <div class="bubble them">Hey Maya 💙 I was thinking about our call — how did the art class tryout end up going?<div class="meta">Today · 11:02 AM</div></div>
+          </div>
+          <div class="compose-bar" onclick="sendChat()"><span id="t3composeHint">Tap to reply: "It went so well!! I almost didn't go but..."</span><span class="send">➤</span></div>
+        </div>
+      </div>
+
+    </div></div>
+
+    <!-- STORY PANEL -->
+    <div class="story-col" id="storyCol">
+      <div class="story-card">
+        <span class="sc-tag" id="scTag">USER STORY</span>
+        <div class="sc-story" id="scStory"></div>
+        <div class="sc-note" id="scNote"></div>
+      </div>
+      <div class="story-hint">These concise stories track each screen — the distilled version of the Stage 1 User Stories doc, for Eric.</div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <footer class="credit">
+    Built from Lauren's Stage 1 landing-page designs (July 2026) and the Stage 1 User Stories doc. Dashed orange areas are reserved slots for features not yet live — kept deliberately visible so the layout won't need a redesign when they ship.
+  </footer>
+
+<script>
+  var state = { flow:'new', screen:'n1', tier:'t2', stories:false };
+
+  var flowMeta = {
+    'new': { title:"Tier 1 (Spark) — New Teen Flow", sub:"First session, starting right after basic profile creation. Tap the buttons on the phone to walk her path.", first:'n1' },
+    'r1':  { title:"Tier 1 (Spark) — Returning Teen Home", sub:"What she sees opening the app after Day 1. Tap the group module or the post to step into the conversation.", first:'r1home' },
+    'r23': { title:"Tier 2 (Circle) & Tier 3 (Anchor) — Returning Teen Home", sub:"Same Home shape as Tier 1 — what changes is how much mentor attention is personally hers. Use the toggle to compare.", first:null }
+  };
+
+  var stories = {
+    n1:  { s:"As a new teen who just finished her survey, I'm placed directly into a group that fits me — with a personal note from its mentor — so my first moment feels chosen, not like browsing an empty app.",
+           n:"Placement comes from her survey answers (per the Teen Login story: survey → placement review). The mentor note references her actual interests. One action, one obvious path forward." },
+    n2:  { s:"As a new teen, I land in a welcome thread where the mentor has already asked an easy question and peers have replied, so I never face an empty room.",
+           n:"The thread is seeded before she arrives. Tap the reply bar to answer." },
+    n3:  { s:"As a new teen, I can make my first post by tapping a starter chip instead of writing from scratch, so posting feels low-stakes.",
+           n:"Free text stays optional. Tap a chip, then Send." },
+    n3b: { s:"As a new teen, my first reply appears in the thread immediately, so I feel like a member of the group from minute one.",
+           n:"Small celebration, no points or badges — the reward is belonging." },
+    n4:  { s:"As a new teen, I can see what my first two weeks will look like, so the app never feels like an open void.",
+           n:"Framed as what's coming, not a checklist to clear for a reward." },
+    n5:  { s:"As a Tier 1 teen, my Home opens on my group and mentor — not a feed — so the relationship is always the first thing I see.",
+           n:"The group + mentor module replaces the feed. This is Tier 1's version of the \"You & [Mentor] ✦\" card." },
+    n6:  { s:"As a new teen, I'm invited to turn on notifications framed around my people — no streaks, no pressure — so alerts feel caring, not addictive.",
+           n:"Matches the notification rules in the Stage 1 User Stories: relationship-triggered only, frequency-capped." },
+    r1home: { s:"As a returning Tier 1 teen, Home tells me exactly what changed since my last visit, so I never have to hunt for what's new.",
+           n:"One bounded community post — never an infinite scroll. The dashed slot reserves space for the weekly \"Drop\" so Home won't need a redesign when Content ships." },
+    r1thread: { s:"As a returning teen, one tap takes me from \"2 new\" to the conversation itself, so re-engaging takes seconds.",
+           n:"Sourced from the existing Groups + Chats features — surfaced on Home instead of buried behind a tab." },
+    t2home: { s:"As a Circle teen, my module shows all my groups and which mentors are online right now, so I know help is on demand whenever I want it.",
+           n:"Mentor time is pooled, not personally hers — that's the tier difference. Content slot is the self-guided Sharpen library." },
+    t2thread: { s:"As a Circle teen, I can jump into any group conversation — like mentor office hours — the moment it's relevant to me.",
+           n:"The community item rotates across all her groups." },
+    t3home: { s:"As an Anchor teen, Home opens on \"You & Sarah\" — my dedicated mentor and where we are in our 12 weeks — so my one relationship anchors everything.",
+           n:"Pulled directly from the Reveal Moment prototype's pattern (phase labels, ✦ connection count) for continuity. Content slot holds her structured curriculum." },
+    t3chat: { s:"As an Anchor teen, Sarah's message is one tap from Home and replying is effortless, so our relationship keeps its momentum between sessions.",
+           n:"Direct 1:1 messaging — the heart of Tier 3. The confirmation echo tells her the message truly went to Sarah." }
+  };
+
+  function activeFlowKey(){
+    if(state.flow==='r23') return state.tier==='t2' ? 'r23t2' : 'r23t3';
+    return state.flow;
+  }
+
+  function render(){
+    var key = activeFlowKey();
+    document.querySelectorAll('.screen').forEach(function(el){
+      el.classList.toggle('active', el.dataset.flow===key && el.dataset.screen===state.screen);
+    });
+    document.getElementById('flowTitle').textContent = flowMeta[state.flow].title;
+    document.getElementById('flowSub').textContent = flowMeta[state.flow].sub;
+    document.getElementById('tierSeg').classList.toggle('visible', state.flow==='r23');
+    ['new','r1','r23'].forEach(function(f){
+      document.getElementById('tab-'+f).classList.toggle('active', state.flow===f);
+    });
+    document.getElementById('seg-t2').classList.toggle('active', state.tier==='t2');
+    document.getElementById('seg-t3').classList.toggle('active', state.tier==='t3');
+    var st = stories[state.screen];
+    if(st){
+      document.getElementById('scStory').textContent = st.s;
+      document.getElementById('scNote').textContent = st.n;
+    }
+    document.getElementById('storyCol').classList.toggle('visible', state.stories && !!st);
+  }
+
+  function go(screenId){ state.screen = screenId; render(); }
+
+  function switchFlow(f){
+    state.flow = f;
+    state.screen = (f==='r23') ? (state.tier==='t2'?'t2home':'t3home') : flowMeta[f].first;
+    render();
+  }
+
+  function switchTier(t){
+    state.tier = t;
+    state.screen = (t==='t2') ? 't2home' : 't3home';
+    render();
+  }
+
+  function restartFlow(){ switchFlow(state.flow); toast('Flow restarted ↺'); }
+
+  function toggleStories(){
+    state.stories = !state.stories;
+    document.getElementById('storyToggle').textContent = '📖 User stories: ' + (state.stories?'ON':'OFF');
+    document.getElementById('storyToggle').classList.toggle('on', state.stories);
+    render();
+  }
+
+  var chipText = "One thing about me is I love graphic design!";
+  function pickChip(el, text){
+    chipText = text;
+    document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('picked');});
+    el.classList.add('picked');
+    var box = document.getElementById('composeBox');
+    box.textContent = text;
+    box.classList.add('filled');
+  }
+  function sendReply(){
+    document.getElementById('myReplyText').textContent = chipText;
+    go('n3b');
+  }
+
+  function finishNewFlow(optedIn){
+    toast(optedIn ? "You're all set 💙 Jordan will reach you here." : "No problem — you can turn these on anytime 💜");
+    go('n5');
+    var btn = document.getElementById('n5next');
+    if(btn) btn.style.display='none';
+  }
+
+  function postQuickReply(){ toast('Reply posted to the thread 💬 (prototype)'); }
+
+  var chatSent = false;
+  function sendChat(){
+    if(chatSent) { toast('Sarah will reply soon 💙 (prototype)'); return; }
+    chatSent = true;
+    var list = document.getElementById('t3chatList');
+    var b = document.createElement('div');
+    b.className = 'bubble me';
+    b.innerHTML = 'It went so well!! I almost didn\'t go but I remembered what you said 🙈🎨<div class="meta">Just now</div>';
+    list.appendChild(b);
+    var c = document.createElement('div');
+    c.className = 'sent-confirm';
+    c.textContent = 'Delivered to Sarah ✓';
+    list.appendChild(c);
+    document.getElementById('t3composeHint').textContent = 'Message...';
+    list.scrollTop = list.scrollHeight;
+  }
+
+  var toastTimer;
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+  }
+
+  render();
+</script>
+</body>
+</html>
