@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@300..700&family=Space+Mono&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#e7e2d8;font-family:'Outfit',system-ui,sans-serif}
+a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
+@keyframes vSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes vPulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.12);opacity:1}}
+@keyframes vBreathe{0%,100%{transform:scale(.82)}45%,60%{transform:scale(1)}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:16px;padding:26px 20px 56px;box-sizing:border-box">
+
+<div style="width:100%;max-width:520px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:12px">
+    <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:19px;display:block">
+    <span style="font-family:'Playfair Display',serif;font-size:16px;color:#1e2124">Full prototype — the teen journey</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span style="font:600 11px 'Space Mono',monospace;color:#5f6b6d">{{ tierLabel }}</span>
+    <span onClick="{{ restart }}" style="font-size:12px;color:#4a90b8;cursor:pointer;border:1px solid #cfe0ea;border-radius:999px;padding:4px 12px;background:#fff">↺ Restart</span>
+  </div>
+</div>
+
+<div style="display:flex;gap:5px;background:#d9d3c7;border-radius:999px;padding:5px">
+  <span onClick="{{ goChOnb }}" style="{{ chOnb }}">1 · Onboarding</span>
+  <span onClick="{{ goChMatch }}" style="{{ chMatch }}">2 · The match</span>
+  <span onClick="{{ goChHome }}" style="{{ chHome }}">3 · Home</span>
+  <span onClick="{{ goChCircle }}" style="{{ chCircle }}">4 · Inside a circle</span>
+</div>
+
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" title="" hint-size="420px,880px">
+<div style="height:100%;background:#faf7f1;position:relative;overflow:hidden;font-family:'Outfit',sans-serif">
+
+<sc-if value="{{ isTierpick }}" hint-placeholder-val="{{ true }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:26px;font-size:11px;letter-spacing:.14em;color:#4a90b8;font-weight:500">SIMULATION · NOT AN IN-APP SCREEN</div>
+  <div style="margin-top:8px;font-family:'Playfair Display',serif;font-size:28px;line-height:1.2;color:#1e2124;font-weight:600">Which tier did<br>the parent buy?</div>
+  <div style="font-size:13.5px;color:#6b7076;margin-top:8px;font-weight:300;line-height:1.5">In the real flow the parent pays on the web first; the teen logs in with a code from her email and lands in the purchased tier. Pick one to preview that whole journey.</div>
+  <div style="margin-top:22px;display:flex;flex-direction:column;gap:12px">
+    <div onClick="{{ pickT1 }}" style="background:#fff;border:1.5px solid #ece7dd;border-radius:18px;padding:18px;cursor:pointer" style-hover="border-color:#5DA4CD">
+      <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-family:'Playfair Display',serif;font-size:19px;color:#1e2124">Circle</span><span style="font-size:14px;color:#6b7076">$10/mo</span></div>
+      <div style="font-size:13px;color:#6b7076;margin-top:6px;line-height:1.5">Your circle · weekly sessions · the Sharpen journey</div>
+    </div>
+    <div onClick="{{ pickT2 }}" style="background:#1e2124;border-radius:18px;padding:18px;cursor:pointer;position:relative" style-hover="background:#2a2e33">
+      <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-family:'Playfair Display',serif;font-size:19px;color:#fff">Circle + One-on-one</span><span style="font-size:14px;color:#a9d6dc">$39/mo</span></div>
+      <div style="font-size:13px;color:rgba(255,255,255,.72);margin-top:6px;line-height:1.5">Everything in Circle, plus your own circle of two — just you and a mentor.</div>
+    </div>
+  </div>
+  <div style="margin-top:auto;text-align:center;font-size:12px;color:#9aa0a6">Age + parental consent are handled by the app-store APIs before this point.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isWelcome }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:34px;font-family:'Playfair Display',serif;font-size:29px;line-height:1.2;color:#1e2124;font-weight:600">Hi Zoe. Let's find your people.</div>
+  <div style="margin-top:10px;font-size:14px;color:#6b7076;font-weight:300;line-height:1.55">A few questions so we can match you with mentors who actually fit you. About 5 minutes.</div>
+  <div style="margin-top:24px;display:flex;flex-direction:column;gap:11px">
+    <div style="background:#fff;border:1px solid #ece7dd;border-radius:16px;padding:15px 17px;display:flex;gap:13px;align-items:flex-start"><span style="width:26px;height:26px;border-radius:50%;background:#eef6f7;color:#4a90b8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">1</span><div><div style="font-size:14px;font-weight:600;color:#1e2124">A mentor is a big sister, not a therapist</div><div style="font-size:12.5px;color:#6b7076;line-height:1.45;margin-top:3px">College-aged, screened, trained — a few steps ahead of you.</div></div></div>
+    <div style="background:#fff;border:1px solid #ece7dd;border-radius:16px;padding:15px 17px;display:flex;gap:13px;align-items:flex-start"><span style="width:26px;height:26px;border-radius:50%;background:#eef6f7;color:#4a90b8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">2</span><div><div style="font-size:14px;font-weight:600;color:#1e2124">Honest answers make better matches</div><div style="font-size:12.5px;color:#6b7076;line-height:1.45;margin-top:3px">No wrong answers, nothing to ace.</div></div></div>
+    <div style="background:#fff;border:1px solid #ece7dd;border-radius:16px;padding:15px 17px;display:flex;gap:13px;align-items:flex-start"><span style="width:26px;height:26px;border-radius:50%;background:#eef6f7;color:#4a90b8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">3</span><div><div style="font-size:14px;font-weight:600;color:#1e2124">A real person approves your match</div><div style="font-size:12.5px;color:#6b7076;line-height:1.45;margin-top:3px">Olivia, our program lead, reviews every one.</div></div></div>
+  </div>
+  <div onClick="{{ start }}" style="margin-top:auto;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Start — about 5 minutes</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPersonality }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;background:#faf7f1;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#6b7076">{{ pCount }} of 20</span></div>
+  <div style="margin-top:14px;height:4px;background:#ece7dd;border-radius:99px"><div style="width:{{ pPct }};height:100%;background:#5DA4CD;border-radius:99px;transition:width .3s"></div></div>
+  <div style="margin-top:40px;font-size:11px;letter-spacing:.14em;color:#4a90b8;font-weight:500">{{ pDim }} · NO WRONG ANSWERS</div>
+  <div style="margin-top:10px;font-family:'Playfair Display',serif;font-size:25px;line-height:1.25;color:#1e2124;font-weight:600">{{ pQ }}</div>
+  <div style="margin-top:30px;display:flex;flex-direction:column;gap:12px">
+    <div onClick="{{ ansA }}" style="background:#fff;border:2px solid #ece7dd;border-radius:18px;padding:19px;font-size:15px;line-height:1.45;color:#1e2124;cursor:pointer" style-hover="border-color:#5DA4CD;background:#eef6f7">{{ pA }}</div>
+    <div onClick="{{ ansB }}" style="background:#fff;border:2px solid #ece7dd;border-radius:18px;padding:19px;font-size:15px;line-height:1.45;color:#1e2124;cursor:pointer" style-hover="border-color:#5DA4CD;background:#eef6f7">{{ pB }}</div>
+  </div>
+  <div style="margin-top:auto;text-align:center;font-size:12.5px;color:#9aa0a6">tap an answer to continue</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLightning }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;background:#1e2124;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype-white.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#a9d6dc">lightning round · {{ lCount }} of 8</span></div>
+  <div style="margin-top:26px;text-align:center;font-size:11px;letter-spacing:.16em;color:#a9d6dc;font-weight:500">DON'T THINK — JUST TAP</div>
+  <div style="margin-top:20px;flex:1;display:flex;flex-direction:column;gap:14px">
+    <div onClick="{{ lA }}" style="flex:1;background:linear-gradient(135deg,#FEC2B9,#f5a99e);border-radius:22px;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-family:'Playfair Display',serif;font-size:27px;color:#5d2c22;font-weight:600;cursor:pointer">{{ lOptA }}</div>
+    <div style="text-align:center;font-size:12px;color:#8b9094;font-weight:500">or</div>
+    <div onClick="{{ lB }}" style="flex:1;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);border-radius:22px;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-family:'Playfair Display',serif;font-size:27px;color:#1d4a56;font-weight:600;cursor:pointer">{{ lOptB }}</div>
+  </div>
+  <div style="margin-top:20px;text-align:center;font-size:12.5px;color:#8b9094">your mentor answers these too — matches on the overlap</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isInterests }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#6b7076">almost done</span></div>
+  <div style="margin-top:34px;font-family:'Playfair Display',serif;font-size:26px;line-height:1.25;color:#1e2124;font-weight:600">What fills your time?</div>
+  <div style="margin-top:8px;font-size:13.5px;color:#6b7076;font-weight:300">Tap everything that's true. Be honest, not impressive.</div>
+  <div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:9px">
+    <sc-for list="{{ interestChips }}" as="chip" hint-placeholder-count="11">
+      <span onClick="{{ chip.toggle }}" style="{{ chip.chipStyle }}">{{ chip.label }}</span>
+    </sc-for>
+  </div>
+  <div onClick="{{ goResp }}" style="margin-top:auto;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Next — how you text</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isResp }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#6b7076">how you text</span></div>
+  <div style="margin-top:34px;font-family:'Playfair Display',serif;font-size:26px;line-height:1.25;color:#1e2124;font-weight:600">When a friend texts you, you usually reply…</div>
+  <div style="margin-top:8px;font-size:13.5px;color:#6b7076;font-weight:300">This helps us find a mentor whose pace matches yours.</div>
+  <div style="margin-top:22px;display:flex;flex-direction:column;gap:11px">
+    <div onClick="{{ next }}" style="background:#fff;border:2px solid #ece7dd;border-radius:16px;padding:17px 18px;font-size:14.5px;color:#1e2124;cursor:pointer" style-hover="border-color:#5DA4CD;background:#eef6f7">Pretty fast — I like keeping it going</div>
+    <div onClick="{{ next }}" style="background:#fff;border:2px solid #ece7dd;border-radius:16px;padding:17px 18px;font-size:14.5px;color:#1e2124;cursor:pointer" style-hover="border-color:#5DA4CD;background:#eef6f7">When I see it — could be an hour or tonight</div>
+    <div onClick="{{ next }}" style="background:#fff;border:2px solid #ece7dd;border-radius:16px;padding:17px 18px;font-size:14.5px;color:#1e2124;cursor:pointer" style-hover="border-color:#5DA4CD;background:#eef6f7">When I have the energy — sometimes a day</div>
+  </div>
+  <div style="margin-top:auto;background:#eef6f7;border-radius:14px;padding:13px 16px;font-size:12px;color:#3d6e84;line-height:1.45">Why we ask: a mentor who texts back matters more than anything — it's the #1 thing girls told us.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isFourh }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#6b7076">where you are</span></div>
+  <div style="margin-top:32px;font-family:'Playfair Display',serif;font-size:26px;line-height:1.25;color:#1e2124;font-weight:600">How are things, honestly?</div>
+  <div style="margin-top:8px;font-size:13.5px;color:#6b7076;font-weight:300">No right answer. This helps us find someone who's been where you are.</div>
+  <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px">
+    <div style="background:#fff;border:2px solid #ece7dd;border-radius:16px;padding:15px 18px;font-size:14.5px;color:#1e2124">Pretty good — I want someone in my corner</div>
+    <div style="background:#eef6f7;border:2px solid #5DA4CD;border-radius:16px;padding:15px 18px;font-size:14.5px;color:#1e2124">Up and down lately</div>
+    <div style="background:#fff;border:2px solid #ece7dd;border-radius:16px;padding:15px 18px;font-size:14.5px;color:#1e2124">It's been hard for a while</div>
+  </div>
+  <div style="margin-top:20px;font-size:13px;color:#6b7076;font-weight:500">And what do you want out of this?</div>
+  <div style="margin-top:9px;display:flex;flex-wrap:wrap;gap:8px">
+    <span style="border:1.5px solid #5DA4CD;background:#eef6f7;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">someone to talk to</span>
+    <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">confidence</span>
+    <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">less stress</span>
+    <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">my future</span>
+    <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">friend stuff</span>
+  </div>
+  <div onClick="{{ next }}" style="margin-top:auto;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Continue</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isExp }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#6b7076">optional</span></div>
+  <div style="margin-top:32px;font-family:'Playfair Display',serif;font-size:25px;line-height:1.25;color:#1e2124;font-weight:600">Want a mentor who's been through it too?</div>
+  <div style="margin-top:8px;font-size:13.5px;color:#6b7076;font-weight:300;line-height:1.5">If that's you, tap what's part of your story. Only our matching team sees this — never your circle.</div>
+  <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:9px">
+    <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124">switching schools</span>
+    <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124">parents splitting up</span>
+    <span style="border:1.5px solid #5DA4CD;background:#eef6f7;border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124">anxiety</span>
+    <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124">losing someone</span>
+    <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124">feeling left out</span>
+    <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124">body image</span>
+    <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124">family stress</span>
+  </div>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+    <div onClick="{{ next }}" style="background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Continue</div>
+    <div onClick="{{ next }}" style="text-align:center;font-size:13.5px;color:#6b7076;padding:6px;cursor:pointer">Skip this — totally fine</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSms }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box;text-align:center">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:44px;display:flex;justify-content:center"><svg width="66" height="66" viewBox="0 0 100 100"><g style="fill:#a9d6dc"><path d="M50 0 L56 40 L50 50 L44 40 Z"></path><path d="M50 100 L56 60 L50 50 L44 60 Z"></path><path d="M0 50 L40 44 L50 50 L40 56 Z"></path><path d="M100 50 L60 44 L50 50 L60 56 Z"></path><path d="M15 15 L45 41 L50 50 L41 45 Z"></path><path d="M85 85 L59 55 L50 50 L55 59 Z"></path><path d="M85 15 L55 41 L50 50 L59 45 Z"></path><path d="M15 85 L41 55 L50 50 L45 59 Z"></path></g></svg></div>
+  <div style="margin-top:24px;font-family:'Playfair Display',serif;font-size:27px;line-height:1.2;color:#1e2124;font-weight:600">That's everything.</div>
+  <div style="margin-top:10px;font-size:14px;color:#6b7076;font-weight:300;line-height:1.55;max-width:280px;align-self:center">One last thing — the good news about your match comes by text.</div>
+  <div style="margin-top:22px;background:#fff;border:1px solid #ece7dd;border-radius:18px;padding:18px;text-align:left">
+    <div style="display:flex;gap:12px;align-items:flex-start"><span style="width:22px;height:22px;border-radius:7px;background:#5DA4CD;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex:none">✓</span><div style="font-size:13px;color:#1e2124;line-height:1.5">Text me when my match is ready, plus circle reminders. <span style="color:#6b7076">Msg rates may apply. Reply STOP anytime.</span></div></div>
+    <div style="margin-top:14px;border-top:1px solid #ece7dd;padding-top:13px;font-size:14px;color:#1e2124">(555) 010-2764 <span style="font-size:11.5px;color:#6b7076;margin-left:6px">from your parent's signup · edit</span></div>
+  </div>
+  <div onClick="{{ next }}" style="margin-top:auto;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;cursor:pointer">Done — start matching</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;align-items:center;padding:60px 30px 44px;box-sizing:border-box;text-align:center">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:56px"><svg width="84" height="84" viewBox="0 0 100 100" style="animation:vSpin 14s linear infinite"><g style="fill:#a9d6dc"><path d="M50 0 L56 40 L50 50 L44 40 Z"></path><path d="M50 100 L56 60 L50 50 L44 60 Z"></path><path d="M0 50 L40 44 L50 50 L40 56 Z"></path><path d="M100 50 L60 44 L50 50 L60 56 Z"></path><path d="M15 15 L45 41 L50 50 L41 45 Z"></path><path d="M85 85 L59 55 L50 50 L55 59 Z"></path><path d="M85 15 L55 41 L50 50 L59 45 Z"></path><path d="M15 85 L41 55 L50 50 L45 59 Z"></path></g></svg></div>
+  <div style="margin-top:32px;font-family:'Playfair Display',serif;font-size:28px;line-height:1.2;color:#1e2124;font-weight:600">You're all set.</div>
+  <div style="margin-top:12px;font-size:14px;color:#6b7076;line-height:1.55;font-weight:300;max-width:270px">We're matching you with your circle now. We'll text you when it's ready — usually within a day.</div>
+  <div style="margin-top:auto;width:100%;display:flex;flex-direction:column;gap:10px">
+    <div onClick="{{ goBreathe }}" style="background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;cursor:pointer">Try a 1-minute breath</div>
+    <div onClick="{{ goNotif }}" style="color:#5f6b6d;font-size:13px;padding:8px;cursor:pointer">Skip the wait — jump to when the text arrives →</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isBreathe }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;background:#eef4f4;display:flex;flex-direction:column;align-items:center;padding:52px 30px 40px;box-sizing:border-box;text-align:center">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:48px;position:relative;width:190px;height:190px;display:flex;align-items:center;justify-content:center">
+    <div style="position:absolute;inset:0;border-radius:50%;background:#cfe5e8;animation:vBreathe 8s ease-in-out infinite"></div>
+    <div style="position:absolute;inset:26px;border-radius:50%;background:#a9d6dc;opacity:.7;animation:vBreathe 8s ease-in-out infinite"></div>
+    <div style="position:relative;font-size:14px;color:#1e2124;font-weight:500">breathe in</div>
+  </div>
+  <div style="margin-top:40px;font-family:'Playfair Display',serif;font-size:25px;line-height:1.25;color:#1e2124;font-weight:600">Your match is<br>being made.</div>
+  <div style="margin-top:12px;font-size:14px;color:#5f6b6d;line-height:1.55;font-weight:300;max-width:260px">There's nothing you need to do. We'll text you when your circle is ready.</div>
+  <div style="margin-top:auto;width:100%;display:flex;flex-direction:column;gap:10px">
+    <div onClick="{{ goPrep }}" style="background:#fff;border:1px solid #cfe0ea;color:#1e2124;border-radius:999px;padding:14px;font-size:14px;font-weight:500;cursor:pointer">A couple things to read while you wait →</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPrep }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block"><span style="font-size:11px;font-weight:500;color:#4a90b8;background:#eef6f7;border-radius:999px;padding:6px 12px;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;background:#5DA4CD;animation:vPulse 2s ease-in-out infinite"></span>Matching in progress</span></div>
+  <div style="margin-top:26px"><div style="font-family:'Playfair Display',serif;font-size:27px;line-height:1.18;color:#1e2124;font-weight:600">While you wait,<br>get ready.</div><div style="font-size:14px;color:#6b7076;margin-top:9px;font-weight:300;line-height:1.5">Two quick reads. They make the first week better.</div></div>
+  <div style="margin-top:22px;display:flex;flex-direction:column;gap:12px">
+    <div style="background:#fff;border:1px solid #ece7dd;border-radius:18px;padding:18px"><div style="font-size:11px;letter-spacing:.12em;color:#4a90b8;font-weight:500">3 MIN READ</div><div style="font-family:'Playfair Display',serif;font-size:19px;margin-top:8px;color:#1e2124">What a mentor is (and isn't)</div><div style="font-size:13px;color:#6b7076;margin-top:6px;line-height:1.5">A big sister a few steps ahead — not a therapist, not another adult telling you what to do.</div></div>
+    <div style="background:#fff;border:1px solid #ece7dd;border-radius:18px;padding:18px"><div style="font-size:11px;letter-spacing:.12em;color:#4a90b8;font-weight:500">1 MIN READ</div><div style="font-family:'Playfair Display',serif;font-size:19px;margin-top:8px;color:#1e2124">How to say hi</div><div style="font-size:13px;color:#6b7076;margin-top:6px;line-height:1.5">First messages are awkward for everyone. Here are openers that work.</div></div>
+  </div>
+  <div onClick="{{ goNotif }}" style="margin-top:auto;text-align:center;font-size:12.5px;color:#4a90b8;cursor:pointer;border:1px dashed #cfe0ea;border-radius:12px;padding:13px">▶ A day later — your circle is ready and the text lands</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isNotif }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;background:linear-gradient(170deg,#20242a,#171a1d);display:flex;flex-direction:column;align-items:center;padding:70px 24px 44px;box-sizing:border-box">
+  <div style="font-size:60px;font-weight:200;color:#fff;letter-spacing:.02em">9:41</div>
+  <div style="font-size:15px;color:rgba(255,255,255,.6);margin-top:4px">Monday, July 20</div>
+  <div onClick="{{ goReveal }}" style="margin-top:48px;width:100%;background:rgba(255,255,255,.95);border-radius:18px;padding:14px 16px;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.3)">
+    <div style="display:flex;align-items:center;gap:8px"><span style="width:20px;height:20px;border-radius:6px;background:#5DA4CD;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-family:'Playfair Display',serif;font-weight:800">v</span><span style="font-size:12px;color:#6b7076;font-weight:500">VESCENT · now</span></div>
+    <div style="font-size:14px;color:#1e2124;font-weight:600;margin-top:6px">Your circle is ready 🎉</div>
+    <div style="font-size:13px;color:#3c4146;margin-top:2px;line-height:1.4">{{ notifBody }}</div>
+    <div style="font-size:11.5px;color:#9aa0a6;margin-top:8px">Tap to open</div>
+  </div>
+  <div style="margin-top:auto;font-size:12px;color:rgba(255,255,255,.35)">The Twilio text does the announcing — the app just opens to the reveal.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isApp }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;background:#f7f2ea;position:relative;display:flex;flex-direction:column">
+<div style="flex:1;min-height:0;overflow-y:auto;box-sizing:border-box">
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div style="padding:24px 22px 96px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:19px;display:block">
+    <span onClick="{{ goYou }}" style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#a9d6dc);cursor:pointer"></span>
+  </div>
+
+  <div style="margin-top:16px;display:flex;align-items:baseline;justify-content:space-between">
+    <span style="font-family:'Playfair Display',serif;font-size:22px;color:#1e2124;font-weight:600">Evening, Zoe.</span>
+    <span style="font-size:11px;color:#9a8579;font-weight:600">{{ waitingLabel }}</span>
+  </div>
+  <div style="margin-top:5px;font-size:10.5px;letter-spacing:.13em;color:#4a90b8;font-weight:600">WAITING FOR YOU</div>
+
+  <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+
+    <div style="background:#fffdf9;border:1px solid #ece3d5;border-radius:18px;padding:14px 15px">
+      <div style="display:flex;gap:12px;align-items:center">
+        <span style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5c9a0);flex:none"></span>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600;color:#1e2124">Mia</span><span style="font-size:9.5px;font-weight:600;color:#6b7076;background:#f0ece3;border-radius:99px;padding:2px 7px">friend chat</span><span style="margin-left:auto;font-size:11px;color:#c0563f;font-weight:600">3h</span></div>
+          <div style="margin-top:2px;font-size:13px;color:#4a4f54;line-height:1.4">"did you see what jordan posted??"</div>
+        </div>
+      </div>
+      <sc-if value="{{ chatIdle }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:11px;display:flex;gap:8px;align-items:center">
+        <input value="{{ chatDraft }}" onInput="{{ onChatDraft }}" placeholder="Answer Mia&hellip;" style="flex:1;min-width:0;border:1px solid #dfe8ea;border-radius:999px;padding:9px 14px;font-family:'Outfit',sans-serif;font-size:13px;color:#1e2124;background:#fbfaf7;outline:none;box-sizing:border-box">
+        <span onClick="{{ sendChat }}" style="flex:none;width:36px;height:36px;border-radius:50%;background:{{ chatSendBg }};display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="17" height="17" viewBox="0 0 17 17"><path d="M2 8.5L15 2l-4.5 13-2.8-5.2L2 8.5z" fill="#fff"></path></svg></span>
+      </div>
+      </sc-if>
+      <sc-if value="{{ chatDone }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:11px;display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3d6e84;font-weight:600">Sent to Mia &#10003;<span onClick="{{ goMessages }}" style="margin-left:auto;color:#4a90b8;font-weight:600;cursor:pointer">Open chat &rarr;</span></div>
+      </sc-if>
+    </div>
+
+    <sc-if value="{{ isT2 }}" hint-placeholder-val="{{ true }}">
+    <div style="background:#fffdf9;border:1px solid #b8d9e2;border-radius:18px;padding:14px 15px;box-shadow:0 8px 22px -18px rgba(93,164,205,.55)">
+      <div style="display:flex;gap:12px;align-items:center">
+        <span style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600;color:#1e2124">Your One On One</span><span style="font-size:9.5px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:2px 7px">mentor</span><span style="margin-left:auto;font-size:11px;color:#c0563f;font-weight:600">2h</span></div>
+          <div style="margin-top:2px;font-size:13px;color:#4a4f54;line-height:1.4"><strong style="font-weight:600;color:#1e2124">Kelsey</strong> &mdash; "How'd the presentation go today?"</div>
+        </div>
+      </div>
+      <sc-if value="{{ oneIdle }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:11px;display:flex;gap:8px;align-items:center">
+        <input value="{{ oneDraft }}" onInput="{{ onOneDraft }}" placeholder="Answer Kelsey&hellip;" style="flex:1;min-width:0;border:1px solid #dfe8ea;border-radius:999px;padding:9px 14px;font-family:'Outfit',sans-serif;font-size:13px;color:#1e2124;background:#fbfaf7;outline:none;box-sizing:border-box">
+        <span onClick="{{ sendOne }}" style="flex:none;width:36px;height:36px;border-radius:50%;background:{{ oneSendBg }};display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="17" height="17" viewBox="0 0 17 17"><path d="M2 8.5L15 2l-4.5 13-2.8-5.2L2 8.5z" fill="#fff"></path></svg></span>
+      </div>
+      </sc-if>
+      <sc-if value="{{ oneDone }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:11px;display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3d6e84;font-weight:600">Sent to Kelsey &#10003;<span onClick="{{ goMessages }}" style="margin-left:auto;color:#4a90b8;font-weight:600;cursor:pointer">Open chat &rarr;</span></div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <div style="background:#fffdf9;border:1px solid #ece3d5;border-radius:18px;padding:14px 15px">
+      <div style="display:flex;gap:12px;align-items:center">
+        <span style="width:42px;height:42px;border-radius:12px;background:url('assets/photos/circle-group.jpg') center/cover;flex:none"></span>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600;color:#1e2124">Your Vescent Community</span><span style="font-size:9.5px;font-weight:600;color:#6b7076;background:#f0ece3;border-radius:99px;padding:2px 7px">group</span><span style="margin-left:auto;font-size:11px;color:#c0563f;font-weight:600">1h</span></div>
+          <div style="margin-top:2px;font-size:13px;color:#4a4f54;line-height:1.4"><strong style="font-weight:600;color:#1e2124">Jordan</strong> asked something &mdash; 2 girls jumped in</div>
+        </div>
+      </div>
+      <sc-if value="{{ commIdle }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:11px;display:flex;gap:8px;align-items:center">
+        <input value="{{ commDraft }}" onInput="{{ onCommDraft }}" placeholder="Answer the group&hellip;" style="flex:1;min-width:0;border:1px solid #dfe8ea;border-radius:999px;padding:9px 14px;font-family:'Outfit',sans-serif;font-size:13px;color:#1e2124;background:#fbfaf7;outline:none;box-sizing:border-box">
+        <span onClick="{{ sendComm }}" style="flex:none;width:36px;height:36px;border-radius:50%;background:{{ commSendBg }};display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="17" height="17" viewBox="0 0 17 17"><path d="M2 8.5L15 2l-4.5 13-2.8-5.2L2 8.5z" fill="#fff"></path></svg></span>
+      </div>
+      </sc-if>
+      <sc-if value="{{ commDone }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:11px;display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3d6e84;font-weight:600">Shared with your community &#10003;<span onClick="{{ goCircleFeed }}" style="margin-left:auto;color:#4a90b8;font-weight:600;cursor:pointer">Open community &rarr;</span></div>
+      </sc-if>
+    </div>
+
+  </div>
+
+  <div style="margin-top:20px;font-size:10.5px;letter-spacing:.13em;color:#4a90b8;font-weight:600">GRATITUDE THOUGHT OF THE DAY</div>
+  <div style="margin-top:8px;position:relative;background:linear-gradient(160deg,#fbf1ec,#f6ede2);border:1px solid #f0e2d8;border-radius:18px;padding:16px 16px 15px;overflow:hidden">
+    <span style="position:absolute;top:-24px;right:-18px;width:78px;height:78px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#FEC2B9,#f5a99e);opacity:.4"></span>
+    <div style="position:relative;display:flex;align-items:center;justify-content:space-between">
+      <span style="font:700 9px 'Space Mono',monospace;letter-spacing:.12em;color:#9a8579">A MOMENT FOR YOU</span>
+      <span onClick="{{ swapQuote }}" style="font-size:11.5px;color:#9a8579;cursor:pointer">&#8635; new</span>
+    </div>
+    <div style="position:relative;margin-top:8px;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;line-height:1.35;color:#5d3a2e">&ldquo;{{ quote }}&rdquo;</div>
+    <div style="position:relative;margin-top:12px"><span onClick="{{ openCompose }}" style="background:#1e2124;color:#fff;border-radius:999px;padding:8px 18px;font-size:12.5px;font-weight:500;cursor:pointer">Take a moment</span></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCircles }}" hint-placeholder-val="{{ false }}">
+<div style="padding:30px 24px 96px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <span style="font-family:'Playfair Display',serif;font-size:26px;color:#1e2124;font-weight:600">Your circles</span>
+    <span style="width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid #ece3d5;display:flex;align-items:center;justify-content:center"><svg width="18" height="18"><circle cx="8" cy="8" r="6" fill="none" stroke="#6b7076" stroke-width="2"></circle><line x1="12.5" y1="12.5" x2="16" y2="16" stroke="#6b7076" stroke-width="2"></line></svg></span>
+  </div>
+  <div style="margin-top:6px;font-size:13px;color:#6b7076;font-weight:300">The ones with something new come first.</div>
+
+  <sc-if value="{{ isT2 }}" hint-placeholder-val="{{ true }}">
+  <div onClick="{{ goCircleFeed }}" style="margin-top:20px;background:#fffdf9;border:1px solid #b8d9e2;border-radius:20px;padding:16px;position:relative;box-shadow:0 8px 24px -18px rgba(93,164,205,.6);cursor:pointer">
+    <span style="position:absolute;top:16px;right:16px;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#e0665a"></span><span style="font-size:11px;color:#c0563f;font-weight:600">new</span></span>
+    <div style="display:flex;gap:13px;align-items:center">
+      <span style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span>
+      <div><div style="display:flex;align-items:center;gap:7px"><span style="font-size:17px;font-weight:600;color:#1e2124">Your One On One</span><span style="font-size:10px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:2px 8px">your 1-on-1</span></div><div style="font-size:12.5px;color:#6b7076;line-height:1.4;margin-top:2px">Your private space with Kelsey.</div></div>
+    </div>
+    <div style="margin-top:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-size:12px;color:#3d6e84;background:#eef6f7;border-radius:999px;padding:5px 11px">Just you two</span>
+      <span style="font-size:12px;color:#6b7076;background:#f3efe7;border-radius:999px;padding:5px 11px">Kelsey · mentor</span>
+      <span style="font-size:12px;color:#6b7076;background:#f3efe7;border-radius:999px;padding:5px 11px">Video &amp; office hours inside</span>
+    </div>
+  </div>
+  </sc-if>
+
+  <div onClick="{{ goCircleFeed }}" style="margin-top:14px;background:#fffdf9;border:1px solid #d7e6ee;border-radius:20px;padding:16px;position:relative;cursor:pointer">
+    <span style="position:absolute;top:16px;right:16px;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#e0665a"></span><span style="font-size:11px;color:#c0563f;font-weight:600">new</span></span>
+    <div style="display:flex;gap:13px;align-items:center">
+      <span style="width:56px;height:56px;border-radius:16px;background:url('assets/photos/circle-group.jpg') center/cover;flex:none"></span>
+      <div><div style="font-size:17px;font-weight:600;color:#1e2124">Your Vescent Community</div><div style="font-size:12.5px;color:#6b7076;line-height:1.4;margin-top:2px">Where you talk it out, no judgment.</div></div>
+    </div>
+    <div style="margin-top:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-size:12px;color:#3d6e84;background:#eef6f7;border-radius:999px;padding:5px 11px">9 girls</span>
+      <span style="font-size:12px;color:#6b7076;background:#f3efe7;border-radius:999px;padding:5px 11px">Jordan T. &amp; Priya M.</span>
+    </div>
+  </div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isMessages }}" hint-placeholder-val="{{ false }}">
+<div style="padding:30px 24px 96px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <span style="font-family:'Playfair Display',serif;font-size:26px;color:#1e2124;font-weight:600">Messages</span>
+    <span style="display:flex;gap:8px">
+      <span style="width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid #ece3d5;display:flex;align-items:center;justify-content:center"><svg width="18" height="18"><circle cx="8" cy="8" r="6" fill="none" stroke="#6b7076" stroke-width="2"></circle><line x1="12.5" y1="12.5" x2="16" y2="16" stroke="#6b7076" stroke-width="2"></line></svg></span>
+      <span style="width:38px;height:38px;border-radius:50%;background:#1e2124;display:flex;align-items:center;justify-content:center"><svg width="18" height="18"><line x1="9" y1="3" x2="9" y2="15" stroke="#fff" stroke-width="2"></line><line x1="3" y1="9" x2="15" y2="9" stroke="#fff" stroke-width="2"></line></svg></span>
+    </span>
+  </div>
+
+  <sc-if value="{{ isT2 }}" hint-placeholder-val="{{ true }}">
+  <div style="margin-top:20px;display:flex;flex-direction:column;gap:2px">
+    <div style="display:flex;gap:13px;align-items:center;padding:14px 4px">
+      <span style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:7px"><span style="font-size:15px;font-weight:600;color:#1e2124">Kelsey</span><span style="font-size:10px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:2px 7px">mentor</span><span style="margin-left:auto;font-size:11.5px;color:#c0563f;font-weight:600">2h</span></div>
+        <div style="margin-top:3px;font-size:13.5px;color:#1e2124;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">How'd the presentation go today?</div>
+      </div>
+      <span style="width:9px;height:9px;border-radius:50%;background:#e0665a;flex:none"></span>
+    </div>
+    <div style="height:1px;background:#e8e0d3;margin:0 4px"></div>
+    <div style="display:flex;gap:13px;align-items:center;padding:14px 4px">
+      <span style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5c9a0);flex:none"></span>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:7px"><span style="font-size:15px;font-weight:600;color:#1e2124">Mia</span><span style="font-size:10px;font-weight:600;color:#6b7076;background:#f0ece3;border-radius:99px;padding:2px 7px">circle</span><span style="margin-left:auto;font-size:11.5px;color:#6b7076">yesterday</span></div>
+        <div style="margin-top:3px;font-size:13.5px;color:#6b7076;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">omg same though 😂</div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+  <sc-if value="{{ isT1 }}" hint-placeholder-val="{{ false }}">
+  <div style="margin-top:20px;display:flex;flex-direction:column;gap:2px">
+    <div style="display:flex;gap:13px;align-items:center;padding:14px 4px">
+      <span style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5c9a0);flex:none"></span>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:7px"><span style="font-size:15px;font-weight:600;color:#1e2124">Mia</span><span style="font-size:10px;font-weight:600;color:#6b7076;background:#f0ece3;border-radius:99px;padding:2px 7px">circle</span><span style="margin-left:auto;font-size:11.5px;color:#c0563f;font-weight:600">1h</span></div>
+        <div style="margin-top:3px;font-size:13.5px;color:#1e2124;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">did you see what jordan posted??</div>
+      </div>
+      <span style="width:9px;height:9px;border-radius:50%;background:#e0665a;flex:none"></span>
+    </div>
+  </div>
+  <div style="margin-top:22px;background:#fffdf9;border:1px solid #ece3d5;border-radius:16px;padding:16px;text-align:center">
+    <div style="font-size:13.5px;color:#6b7076;line-height:1.55">Chats are 1-on-1 with girls from your circles. Tap a girl's name in your circle to say hi.</div>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isYou }}" hint-placeholder-val="{{ false }}">
+<div style="padding:40px 24px 96px;box-sizing:border-box;text-align:center">
+  <span style="width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#a9d6dc);display:inline-block"></span>
+  <div style="margin-top:16px;font-family:'Playfair Display',serif;font-size:24px;color:#1e2124;font-weight:600">Zoe R.</div>
+  <div style="margin-top:4px;font-size:13px;color:#6b7076">{{ tierProfile }}</div>
+  <div style="margin-top:26px;display:flex;flex-direction:column;gap:2px;text-align:left">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 4px;font-size:14.5px;color:#1e2124">Edit profile<span style="color:#c3bdb1">›</span></div>
+    <div style="height:1px;background:#e8e0d3;margin:0 4px"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 4px;font-size:14.5px;color:#1e2124">Notifications<span style="color:#c3bdb1">›</span></div>
+    <div style="height:1px;background:#e8e0d3;margin:0 4px"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 4px;font-size:14.5px;color:#1e2124">Privacy &amp; safety<span style="color:#c3bdb1">›</span></div>
+    <div style="height:1px;background:#e8e0d3;margin:0 4px"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 4px;font-size:14.5px;color:#1e2124">Help<span style="color:#c3bdb1">›</span></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCircleFeed }}" hint-placeholder-val="{{ false }}">
+<sc-if value="{{ isT1 }}" hint-placeholder-val="{{ true }}">
+<div style="padding:18px 20px 12px;display:flex;align-items:center;gap:11px;background:#fffdf9;border-bottom:1px solid #ece3d5">
+  <span onClick="{{ goCircles }}" style="color:#9aa0a6;font-size:22px;cursor:pointer">‹</span>
+  <span style="width:34px;height:34px;border-radius:10px;background:url('assets/photos/circle-group.jpg') center/cover;flex:none"></span>
+  <div style="flex:1"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#1e2124">Your Vescent Community</div><div style="font-size:11px;color:#6b7076">9 girls · named by the circle</div></div>
+  <span style="color:#c3bdb1;font-size:20px">⋮</span>
+</div>
+<div style="padding:16px 16px 96px">
+  <div style="background:linear-gradient(155deg,#eef6f7,#f6ede2);border:1px solid #dfe8ea;border-radius:20px;padding:18px">
+    <div style="font-size:11px;letter-spacing:.13em;color:#4a90b8;font-weight:600">THIS WEEK</div>
+    <div style="margin-top:5px;font-family:'Playfair Display',serif;font-size:25px;line-height:1.2;color:#1e2124;font-weight:600">Coping skills</div>
+    <div style="margin-top:7px;font-size:13px;color:#4a4d51;line-height:1.5">The little things that steady you when stress hits. Jordan kicked it off — jump in whenever.</div>
+    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;background:#1e2124;border-radius:12px;padding:11px 13px"><span style="width:30px;height:30px;border-radius:50%;background:#5DA4CD;display:flex;align-items:center;justify-content:center;flex:none"><span style="width:0;height:0;border-left:9px solid #fff;border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:2px"></span></span><div style="flex:1"><div style="font-size:12.5px;color:#fff;font-weight:600">Live session</div><div style="font-size:11px;color:#b9c6cc">Next: Thursday 7pm · start anytime</div></div><span style="background:#fff;color:#1e2124;border-radius:999px;padding:6px 13px;font-size:11.5px;font-weight:600">Join</span></div>
+  </div>
+
+  <div style="margin-top:16px;font-size:10.5px;letter-spacing:.13em;color:#6b7076;font-weight:600">THE CONVERSATION</div>
+  <div style="margin-top:9px;background:#fffdf9;border:1px solid #ece3d5;border-radius:16px;padding:15px 16px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c9b8e0,#a9d6dc);flex:none"></span><div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#1e2124">Jordan T. · Mentor</div><div style="font-size:11px;color:#6b7076">Your Vescent Community · Monday at 3:11 PM</div></div><span style="color:#c3bdb1">⋮</span></div>
+    <div style="margin-top:11px;font-size:14px;line-height:1.55;color:#1e2124">Happy Monday! This week we're on coping skills — the little things that steady you when stress hits. Read the module, then drop one thing that helps you calm down 💙</div>
+    <div onClick="{{ openModule }}" style="margin-top:12px;border:1px solid #f0d9d2;border-radius:14px;overflow:hidden;cursor:pointer">
+      <div style="height:150px;position:relative"><image-slot id="sharpen-card-full" shape="rect" fit="cover" placeholder="Sharpen image — a teen on her phone"></image-slot></div>
+      <div style="background:#f4f2ee;padding:13px 14px">
+        <div style="display:flex;gap:9px;align-items:center"><span style="width:20px;height:24px;background:linear-gradient(150deg,#8f6ce0,#5b39c9);border-radius:5px 8px 5px 8px;flex:none"></span><span style="font-size:14.5px;font-weight:700;color:#1e2124">13. Coping Skills</span></div>
+        <div style="margin-top:7px;font-size:12.5px;color:#4a4d51;line-height:1.5">Simple ways to steady yourself when things feel like a lot.</div>
+        <div style="margin-top:9px;font-size:12.5px;color:#4a90b8;font-weight:700">Read More</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;display:flex;align-items:center;gap:10px;border-top:1px solid #ece3d5;padding-top:11px"><span style="font-size:12.5px;color:#4a90b8;font-weight:600">♡ Like</span><span style="font-size:12.5px;color:#4a90b8;font-weight:600">Comment</span><span style="margin-left:auto;font-size:12px;color:#6b7076">4 comments</span></div>
+    <div style="margin-top:11px;display:flex;flex-direction:column;gap:9px">
+      <div style="display:flex;gap:9px"><span style="width:26px;height:26px;border-radius:50%;background:#FEC2B9;flex:none"></span><div style="background:#f3efe7;border-radius:4px 13px 13px 13px;padding:9px 12px;font-size:12.5px;color:#1e2124;line-height:1.4"><strong style="font-weight:600">Mia</strong> making a playlist honestly resets my whole mood</div></div>
+      <div style="display:flex;gap:9px"><span style="width:26px;height:26px;border-radius:50%;background:#a9d6dc;flex:none"></span><div style="background:#f3efe7;border-radius:4px 13px 13px 13px;padding:9px 12px;font-size:12.5px;color:#1e2124;line-height:1.4"><strong style="font-weight:600">Zoe R.</strong> going on a walk with my dog 🐶</div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;background:#fffdf9;border:1px solid #ece3d5;border-radius:16px;padding:15px 16px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span><div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#1e2124">Priya M. · Mentor</div><div style="font-size:11px;color:#6b7076">Your Vescent Community · Monday at 8:00 AM</div></div><span style="color:#c3bdb1">⋮</span></div>
+    <div style="margin-top:11px;font-size:14px;line-height:1.55;color:#1e2124">Weekly gratitude 🌿 What's one thing you're grateful for today? Big or tiny, all of it counts.</div>
+    <div style="margin-top:12px;display:flex;align-items:center;gap:10px;border-top:1px solid #ece3d5;padding-top:11px"><span style="font-size:12.5px;color:#4a90b8;font-weight:600">♡ Like</span><span style="font-size:12.5px;color:#4a90b8;font-weight:600">Comment</span><span style="margin-left:auto;font-size:12px;color:#6b7076">7 comments</span></div>
+    <div style="margin-top:11px;display:flex;flex-direction:column;gap:9px">
+      <div style="display:flex;gap:9px"><span style="width:26px;height:26px;border-radius:50%;background:#c9b8e0;flex:none"></span><div style="background:#f3efe7;border-radius:4px 13px 13px 13px;padding:9px 12px;font-size:12.5px;color:#1e2124;line-height:1.4"><strong style="font-weight:600">Ava</strong> my little sister made me breakfast today 🥞</div></div>
+      <div style="display:flex;gap:9px"><span style="width:26px;height:26px;border-radius:50%;background:#a9d6dc;flex:none"></span><div style="background:#f3efe7;border-radius:4px 13px 13px 13px;padding:9px 12px;font-size:12.5px;color:#1e2124;line-height:1.4"><strong style="font-weight:600">Zoe R.</strong> honestly? this circle 💙</div></div>
+    </div>
+  </div>
+</div>
+</sc-if>
+<sc-if value="{{ isT2 }}" hint-placeholder-val="{{ false }}">
+<div style="padding:18px 20px 12px;background:#fffdf9;border-bottom:1px solid #ece3d5">
+  <div style="display:flex;align-items:center;gap:11px">
+    <span onClick="{{ goCircles }}" style="color:#9aa0a6;font-size:22px;cursor:pointer">‹</span>
+    <span style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span>
+    <div style="flex:1"><div style="display:flex;align-items:center;gap:7px"><span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#1e2124">Your One On One</span><span style="font-size:9.5px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:2px 7px">1-on-1</span></div><div style="font-size:11px;color:#6b7076">you &amp; Kelsey, your mentor</div></div>
+    <span style="color:#c3bdb1;font-size:20px">⋮</span>
+  </div>
+</div>
+<div style="padding:16px 16px 96px">
+  <div style="background:linear-gradient(155deg,#eef6f7,#f6ede2);border:1px solid #dfe8ea;border-radius:20px;padding:18px">
+    <div style="font-size:11px;letter-spacing:.13em;color:#4a90b8;font-weight:600">THIS WEEK</div>
+    <div style="margin-top:5px;font-family:'Playfair Display',serif;font-size:25px;line-height:1.2;color:#1e2124;font-weight:600">Coping skills</div>
+    <div style="margin-top:7px;font-size:13px;color:#4a4d51;line-height:1.5">Something you and Kelsey can talk through together whenever you're ready.</div>
+    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;background:#1e2124;border-radius:12px;padding:11px 13px"><span style="width:30px;height:30px;border-radius:50%;background:#5DA4CD;display:flex;align-items:center;justify-content:center;flex:none"><span style="width:0;height:0;border-left:9px solid #fff;border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:2px"></span></span><div style="flex:1"><div style="font-size:12.5px;color:#fff;font-weight:600">Live session</div><div style="font-size:11px;color:#b9c6cc">Next: Monday 2:30pm · start anytime</div></div><span style="background:#fff;color:#1e2124;border-radius:999px;padding:6px 13px;font-size:11.5px;font-weight:600">Join</span></div>
+  </div>
+
+  <div style="margin-top:16px;font-size:10.5px;letter-spacing:.13em;color:#6b7076;font-weight:600">THE CONVERSATION</div>
+  <div style="margin-top:9px;background:#fffdf9;border:1px solid #ece3d5;border-radius:16px;padding:15px 16px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span><div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#1e2124">Kelsey · Mentor</div><div style="font-size:11px;color:#6b7076">Monday at 4:02 PM</div></div></div>
+    <div style="margin-top:10px;font-size:14px;line-height:1.55;color:#1e2124">Loved talking today! Here's the coping-skills one we mentioned — no pressure, just take a look before Monday 💙</div>
+    <div onClick="{{ openModule }}" style="margin-top:12px;border:1px solid #f0d9d2;border-radius:14px;overflow:hidden;cursor:pointer">
+      <div style="height:150px;position:relative"><image-slot id="sharpen-card-full2" shape="rect" fit="cover" placeholder="Sharpen image — a teen on her phone"></image-slot></div>
+      <div style="background:#f4f2ee;padding:13px 14px">
+        <div style="display:flex;gap:9px;align-items:center"><span style="width:20px;height:24px;background:linear-gradient(150deg,#8f6ce0,#5b39c9);border-radius:5px 8px 5px 8px;flex:none"></span><span style="font-size:14.5px;font-weight:700;color:#1e2124">13. Coping Skills</span></div>
+        <div style="margin-top:7px;font-size:12.5px;color:#4a4d51;line-height:1.5">Simple ways to steady yourself when things feel like a lot.</div>
+        <div style="margin-top:9px;font-size:12.5px;color:#4a90b8;font-weight:700">Read More</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;display:flex;align-items:center;gap:10px;border-top:1px solid #ece3d5;padding-top:11px"><span style="font-size:12.5px;color:#4a90b8;font-weight:600">♡ Like</span><span style="font-size:12.5px;color:#4a90b8;font-weight:600">Comment</span><span style="margin-left:auto;font-size:12px;color:#6b7076">2 comments</span></div>
+    <div style="margin-top:11px;display:flex;flex-direction:column;gap:9px">
+      <div style="display:flex;gap:9px"><span style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#a9d6dc);flex:none"></span><div style="background:#f3efe7;border-radius:4px 13px 13px 13px;padding:9px 12px;font-size:12.5px;color:#1e2124;line-height:1.4"><strong style="font-weight:600">Zoe</strong> thank you!! today actually really helped 🫶</div></div>
+      <div style="display:flex;gap:9px"><span style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span><div style="background:#f3efe7;border-radius:4px 13px 13px 13px;padding:9px 12px;font-size:12.5px;color:#1e2124;line-height:1.4"><strong style="font-weight:600">Kelsey</strong> Anytime. So proud of you for the presentation 🌟</div></div>
+    </div>
+  </div>
+</div>
+</sc-if>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ moduleOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:10">
+  <div onClick="{{ closeModule }}" style="position:absolute;inset:0;background:rgba(30,33,36,.5)"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;top:70px;background:#fff;border-radius:22px 22px 0 0;display:flex;flex-direction:column;overflow:hidden">
+    <div style="padding:12px 20px 0;display:flex;justify-content:center"><span style="width:44px;height:5px;border-radius:99px;background:#d8d2c6"></span></div>
+    <div style="padding:12px 20px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee7db"><span style="font-size:18px;font-weight:700;color:#1e2124">13. Coping Skills</span><span onClick="{{ closeModule }}" style="color:#4a90b8;font-size:20px;cursor:pointer">✕</span></div>
+    <div style="flex:1;min-height:0;overflow-y:auto">
+      <div style="height:170px;position:relative"><image-slot id="sharpen-hero-full" shape="rect" fit="cover" placeholder="Sharpen image — a teen on her phone"></image-slot></div>
+      <div style="padding:18px 20px">
+        <div style="font-size:14.5px;line-height:1.6;color:#2c2f33">When stress builds up, a few small resets can make a big difference. Try one of these next time things feel like a lot:</div>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:9px">
+          <div style="display:flex;gap:9px;font-size:14px;color:#2c2f33;line-height:1.5"><span style="color:#8b8f94">•</span>Take five slow breaths, longer on the way out</div>
+          <div style="display:flex;gap:9px;font-size:14px;color:#2c2f33;line-height:1.5"><span style="color:#8b8f94">•</span>Put on a song that always lifts you</div>
+          <div style="display:flex;gap:9px;font-size:14px;color:#2c2f33;line-height:1.5"><span style="color:#8b8f94">•</span>Step outside for two minutes</div>
+          <div style="display:flex;gap:9px;font-size:14px;color:#2c2f33;line-height:1.5"><span style="color:#8b8f94">•</span>Text one person you trust</div>
+        </div>
+        <div style="margin-top:18px;height:150px;border-radius:12px;background-image:repeating-linear-gradient(135deg,#e2ded4 0 12px,#eceae1 12px 24px);display:flex;align-items:center;justify-content:center;position:relative"><span style="width:52px;height:52px;border-radius:50%;background:rgba(40,42,46,.55);display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px"></span></span></div>
+        <div style="margin-top:8px;text-align:center;font-size:12px;color:#9aa0a6;font-style:italic">A 2-minute calming meditation</div>
+        <div style="margin-top:20px;text-align:center;font-size:15px;font-weight:700;color:#1e2124">Additional Materials</div>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ composeOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:20">
+  <div onClick="{{ closeCompose }}" style="position:absolute;inset:0;background:rgba(30,33,36,.5)"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;top:120px;background:#fff;border-radius:22px 22px 0 0;display:flex;flex-direction:column;overflow:hidden">
+    <div style="padding:12px 20px 0;display:flex;justify-content:center"><span style="width:44px;height:5px;border-radius:99px;background:#d8d2c6"></span></div>
+    <div style="padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee7db">
+      <span onClick="{{ closeCompose }}" style="font-size:14px;color:#6b7076;cursor:pointer">Cancel</span>
+      <span style="font-size:15px;font-weight:600;color:#1e2124">New post</span>
+      <sc-if value="{{ canPost }}" hint-placeholder-val="{{ true }}"><span onClick="{{ submitPost }}" style="font-size:14px;font-weight:700;color:#4a90b8;cursor:pointer">Post</span></sc-if>
+      <sc-if value="{{ cantPost }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;font-weight:700;color:#c3bdb1">Post</span></sc-if>
+    </div>
+    <div style="padding:16px 18px;display:flex;gap:11px;align-items:flex-start">
+      <span style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#a9d6dc);flex:none"></span>
+      <div style="flex:1"><div style="font-size:14px;font-weight:600;color:#1e2124">{{ composeName }}</div><div style="font-size:11.5px;color:#6b7076">{{ composeSub }}</div></div>
+    </div>
+    <textarea value="{{ draft }}" onInput="{{ onDraft }}" placeholder="Type your text or question here…" style="flex:1;min-height:0;margin:0 18px;border:none;outline:none;resize:none;font-family:'Outfit',sans-serif;font-size:15px;line-height:1.55;color:#1e2124;background:transparent"></textarea>
+    <sc-if value="{{ hasSharpen }}" hint-placeholder-val="{{ false }}">
+    <div style="margin:8px 18px 0;border:1px solid #e2d6f7;border-radius:12px;background:#faf8ff;padding:11px 12px;display:flex;gap:10px;align-items:center">
+      <span style="width:22px;height:26px;background:linear-gradient(150deg,#8f6ce0,#5b39c9);border-radius:5px 8px 5px 8px;flex:none"></span>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#1e2124">{{ sharpenTitle }}</div><div style="font-size:11px;color:#7a6ea6">Sharpen content attached</div></div>
+      <span onClick="{{ removeSharpen }}" style="color:#9a8fc0;font-size:18px;cursor:pointer;padding:0 4px">✕</span>
+    </div>
+    </sc-if>
+    <div style="padding:12px 18px 16px;border-top:1px solid #eee7db;display:flex;flex-direction:column;gap:9px">
+      <div onClick="{{ toggleAnon }}" style="display:flex;align-items:center;justify-content:space-between;border:1px solid #dfe8ea;border-radius:12px;padding:12px 14px;cursor:pointer">
+        <span style="display:flex;align-items:center;gap:10px;color:#4a4d51"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M2 8c3-1 13-1 16 0 0 4-3 6-5 4-1-1-5-1-6 0-2 2-5 0-5-4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg><span style="font-size:14px;font-weight:600">Post anonymously</span></span>
+        <span style="{{ anonTrack }}"><span style="{{ anonKnob }}"></span></span>
+      </div>
+      <sc-if value="{{ anon }}" hint-placeholder-val="{{ false }}">
+      <div style="font-size:11.5px;color:#6b7076;line-height:1.45;padding:0 3px">Your name stays hidden from the circle. Mentors and moderators can still see who posted — that's how we keep everyone safe.</div>
+      </sc-if>
+      <div style="display:flex;align-items:center;gap:10px;border:1px solid #dfe8ea;border-radius:12px;padding:12px 14px;cursor:pointer;color:#4a90b8"><svg width="20" height="20"><rect x="2" y="4" width="16" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"></rect><circle cx="7" cy="9" r="1.6" fill="currentColor"></circle><path d="M3 15l4-4 3 3 3-4 4 5" fill="none" stroke="currentColor" stroke-width="1.7"></path></svg><span style="font-size:14px;font-weight:600">Add photo or video</span></div>
+      <div onClick="{{ openSharpen }}" style="display:flex;align-items:center;gap:10px;border:1px solid #e2d6f7;border-radius:12px;padding:12px 14px;cursor:pointer;color:#5b39c9"><span style="width:18px;height:22px;background:linear-gradient(150deg,#8f6ce0,#5b39c9);border-radius:4px 7px 4px 7px;flex:none"></span><span style="font-size:14px;font-weight:600">Add Sharpen content</span></div>
+    </div>
+  </div>
+
+  <sc-if value="{{ sharpenPickerOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;z-index:25">
+    <div onClick="{{ closeSharpen }}" style="position:absolute;inset:0;background:rgba(30,33,36,.4)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;top:150px;background:#fff;border-radius:22px 22px 0 0;display:flex;flex-direction:column;overflow:hidden">
+      <div style="padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee7db"><span onClick="{{ closeSharpen }}" style="font-size:14px;color:#6b7076;cursor:pointer">Cancel</span><span style="font-size:15px;font-weight:600;color:#1e2124">Sharpen library</span><span style="width:44px"></span></div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:12px 16px">
+        <sc-for list="{{ sharpenLib }}" as="item" hint-placeholder-count="4">
+        <div onClick="{{ item.pick }}" style="display:flex;gap:11px;align-items:center;padding:11px 8px;border-bottom:1px solid #f2ede3;cursor:pointer">
+          <span style="width:40px;height:40px;border-radius:9px;background:linear-gradient(150deg,#8f6ce0,#5b39c9);flex:none"></span>
+          <div style="flex:1"><div style="font-size:13.5px;font-weight:700;color:#1e2124">{{ item.title }}</div><div style="font-size:11.5px;color:#6b7076">{{ item.kind }}</div></div>
+          <span style="color:#c3bdb1;font-size:18px">›</span>
+        </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ posted }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:50%;top:60px;transform:translateX(-50%);z-index:30;background:#1e2124;color:#fff;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:500;box-shadow:0 8px 24px -10px rgba(0,0,0,.5)">Posted ✓</div>
+</sc-if>
+
+<div style="position:absolute;bottom:0;left:0;right:0;height:66px;background:rgba(255,253,249,.94);border-top:1px solid #ece3d5;display:flex;align-items:center;justify-content:space-around;padding-bottom:6px;box-sizing:border-box">
+  <div onClick="{{ goHome }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:{{ cHome }}"><svg width="22" height="22"><rect x="4" y="4" width="14" height="14" rx="4" fill="currentColor"></rect></svg><span style="font-size:10px;font-weight:{{ wHome }}">Home</span></div>
+  <div onClick="{{ goCircles }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:{{ cCircles }}"><svg width="28" height="22"><circle cx="10" cy="11" r="6" fill="none" stroke="currentColor" stroke-width="2"></circle><circle cx="19" cy="11" r="6" fill="none" stroke="currentColor" stroke-width="2"></circle></svg><span style="font-size:10px;font-weight:{{ wCircles }}">Circles</span></div>
+  <div onClick="{{ openCompose }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#9aa0a6;cursor:pointer"><svg width="22" height="22"><line x1="11" y1="4" x2="11" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="11" x2="18" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"></line></svg><span style="font-size:10px;font-weight:600">Post</span></div>
+  <div onClick="{{ goMessages }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:{{ cMessages }};position:relative"><svg width="22" height="22"><rect x="3" y="5" width="16" height="12" rx="4" fill="none" stroke="currentColor" stroke-width="2"></rect></svg><span style="position:absolute;top:-2px;right:16px;width:8px;height:8px;border-radius:50%;background:#e0665a;border:1.5px solid #fdfdf9"></span><span style="font-size:10px;font-weight:{{ wMessages }}">Messages</span></div>
+  <div onClick="{{ goYou }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:{{ cYou }}"><svg width="22" height="22"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"></circle></svg><span style="font-size:10px;font-weight:{{ wYou }}">You</span></div>
+</div>
+
+</div>
+</sc-if>
+
+</div>
+</x-import>
+
+<div style="max-width:430px;width:100%;text-align:center;font-size:12.5px;line-height:1.5;color:#5f6b6d">{{ caption }}</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;560px&quot;,&quot;height&quot;:&quot;1060px&quot;}}">
+class Component extends DCLogic {
+  state = { screen: 'tierpick', tier: 2, qi: 0, li: 0, interests: [], tab: 'home', moduleOpen: false, composeOpen: false, draft: '', posted: false, sharpenPickerOpen: false, sharpen: null, quoteIdx: 0, reply: {}, sent: {}, pollVote: null, anon: false };
+
+  // PLACEHOLDER content — Eric to supply a real rotating set (see PROTOTYPE_CONTEXT action item).
+  QUOTES = [
+    "Grateful for the small stuff — a good song, a text back, a quiet minute.",
+    "You don't have to have it all figured out to take the next step.",
+    "Be as kind to yourself as you'd be to a good friend.",
+  ];
+  POLL = [
+    { label: 'Running high', pct: 34 },
+    { label: 'Steady', pct: 49 },
+    { label: 'Kind of low', pct: 17 },
+  ];
+
+  componentDidMount() {
+    this._qt = setInterval(() => this.setState(s => ({ quoteIdx: (s.quoteIdx + 1) % this.QUOTES.length })), 6000);
+  }
+  componentWillUnmount() { clearInterval(this._qt); }
+
+  PQ = [
+    { d:'ENERGY', q:"After a long day at school, what sounds better?", a:"Being around people", b:"Chilling alone" },
+    { d:'ENERGY', q:"When you're stressed, what helps more?", a:"Venting to a friend or being around people", b:"Taking space and processing it alone" },
+    { d:'ENERGY', q:"At a party or group hangout, you're more likely to…", a:"Talk to lots of different people", b:"Stick with one or two you know" },
+    { d:'HOW YOU TAKE THINGS IN', q:"When someone gives you directions, what works better?", a:"Step-by-step details", b:"The general idea — I'll figure it out" },
+    { d:'HOW YOU TAKE THINGS IN', q:"You're more drawn to…", a:"What's real and happening now", b:"Ideas and what could be" },
+    { d:'HOW YOU TAKE THINGS IN', q:"Learning something new, you focus on…", a:"The facts and how it works", b:"The big picture and what it means" },
+    { d:'HOW YOU DECIDE', q:"When a friend has a problem, you first…", a:"Help them solve it", b:"Make sure they feel heard" },
+    { d:'HOW YOU DECIDE', q:"Making a tough choice, you go with…", a:"What makes the most sense", b:"What feels right" },
+    { d:'HOW YOU DECIDE', q:"You'd rather be seen as…", a:"Fair", b:"Kind" },
+    { d:'HOW YOU LIVE', q:"Your weekend is better when…", a:"You have a plan", b:"You keep it open" },
+    { d:'HOW YOU LIVE', q:"With homework, you…", a:"Start early and go steady", b:"Do it when the pressure hits" },
+    { d:'HOW YOU LIVE', q:"You feel better when things are…", a:"Decided and settled", b:"Open to change" },
+    { d:'ENERGY', q:"You get your energy from…", a:"Being with other people", b:"Time to yourself" },
+    { d:'ENERGY', q:"In a group project you'd rather…", a:"Talk it all out together", b:"Take a piece and work on it solo" },
+    { d:'HOW YOU TAKE THINGS IN', q:"You tend to trust…", a:"What you can see and prove", b:"Your gut and your hunches" },
+    { d:'HOW YOU TAKE THINGS IN', q:"You'd rather a teacher who…", a:"Gives clear examples to follow", b:"Lets you explore your own ideas" },
+    { d:'HOW YOU DECIDE', q:"When someone's upset with you, you first want to…", a:"Understand what's fair", b:"Fix how they're feeling" },
+    { d:'HOW YOU DECIDE', q:"A good decision is one that's…", a:"Logical", b:"True to your heart" },
+    { d:'HOW YOU LIVE', q:"Your room or backpack is usually…", a:"Pretty organized", b:"A bit of controlled chaos" },
+    { d:'HOW YOU LIVE', q:"Plans changing last minute feels…", a:"Kind of stressful", b:"Kind of exciting" },
+  ];
+  LR = [
+    ["Making a playlist","Making a mess in the kitchen"],
+    ["Big group hangout","One close friend"],
+    ["Texting","Calling"],
+    ["Early bird","Night owl"],
+    ["Beach day","Mountain trip"],
+    ["Rom-com","True crime"],
+    ["Stick to a plan","Go with the flow"],
+    ["Sweet","Salty"],
+  ];
+  INTERESTS = ['drawing + art','sports + moving','music','gaming','reading + writing','animals','baking + cooking','fashion + thrifting','being outside','faith + community','shows + movies'];
+
+  chapterOf(s, tab) {
+    if (['tierpick','welcome','personality','lightning','interests','responsiveness','fourh','exp','sms'].includes(s)) return 'onb';
+    if (['done','breathe','prep','notif'].includes(s)) return 'match';
+    if (s === 'app') return tab === 'circle' ? 'circle' : 'home';
+    return 'onb';
+  }
+
+  captionOf(s, tab) {
+    switch (s) {
+      case 'tierpick': return "Chapter 1 · Onboarding — start by choosing which tier the parent purchased; it shapes the whole journey.";
+      case 'welcome': return "Chapter 1 · The in-app onboarding opens with expectations, not a form.";
+      case 'personality': return "Chapter 1 · 20 fixed Jungian questions (no branching in v1).";
+      case 'lightning': return "Chapter 1 · Lightning round — the Interests signal; the mentor answers the same set.";
+      case 'interests': return "Chapter 1 · Interest areas — a multi-select that feeds the Interests signal and seeds circle topics.";
+      case 'responsiveness': return "Chapter 1 · Reply-pace — the highest-value matching signal.";
+      case 'fourh': return "Chapter 1 · Where she is + what she wants (the 4H Journey signal).";
+      case 'exp': return "Chapter 1 · Optional lived-experience tags — matching-team visibility only.";
+      case 'sms': return "Chapter 1 · SMS consent — the match announcement comes by text.";
+      case 'done': return "Chapter 2 · The match — the 24–48h wait, designed as the emotional peak.";
+      case 'breathe': return "Chapter 2 · A calm holding state while Olivia approves the match.";
+      case 'prep': return "Chapter 2 · Harvest-the-wait: short reads that make the first week land better.";
+      case 'notif': return "Chapter 2 · The Twilio text arrives — tap it to open straight into the app.";
+      default:
+        if (s === 'app') {
+          if (tab === 'circle') return "Chapter 4 · Inside a circle — the weekly focus, mentor posts, and the Sharpen module.";
+          return "Chapter 3 · Home — a rotating quote, what's waiting, a quick poll, a Mindsharpener. Quote + poll are placeholder content (Eric supplies the real rotation). Tap the footer to explore.";
+        }
+        return "";
+    }
+  }
+
+  renderVals() {
+    const { screen, tier, qi, li, tab, moduleOpen, composeOpen, draft, posted, sharpenPickerOpen, sharpen, quoteIdx, pollVote, anon } = this.state;
+    const set = (o) => () => this.setState(o);
+    const q = this.PQ[qi] || this.PQ[0];
+    const lr = this.LR[li] || this.LR[0];
+    const nextQ = () => this.setState(st => st.qi >= 19 ? { screen:'lightning' } : { qi: st.qi + 1 });
+    const nextL = () => this.setState(st => st.li >= 7 ? { screen:'interests' } : { li: st.li + 1 });
+    const toggleInt = (label) => () => this.setState(st => ({ interests: st.interests.includes(label) ? st.interests.filter(x => x !== label) : [...st.interests, label] }));
+    const interestChips = this.INTERESTS.map(label => {
+      const sel = this.state.interests.includes(label);
+      return { label, toggle: toggleInt(label),
+        chipStyle: sel
+          ? "border:1.5px solid #a9d6dc;background:#eef6f7;border-radius:999px;padding:10px 16px;font-size:14px;color:#1e2124;cursor:pointer"
+          : "border:1.5px solid #ece7dd;background:#fff;border-radius:999px;padding:10px 16px;font-size:14px;color:#1e2124;cursor:pointer" };
+    });
+    const intCount = this.state.interests.length;
+    const goResp = () => this.setState({ screen:'responsiveness' });
+    const chap = this.chapterOf(screen, tab);
+    const chStyle = (on) => on
+      ? "font-size:12px;font-weight:600;color:#fff;background:#1a1a1a;border-radius:999px;padding:7px 14px;cursor:pointer"
+      : "font-size:12px;font-weight:500;color:#5f6b6d;padding:7px 14px;cursor:pointer";
+    const on = '#1e2124', off = '#9aa0a6';
+    const reply = this.state.reply || {}, sent = this.state.sent || {};
+    const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+    const mkReply = (key) => {
+      const d = reply[key] || '';
+      const o = {};
+      o[key + 'Draft'] = d;
+      o[key + 'Idle'] = !sent[key];
+      o[key + 'Done'] = !!sent[key];
+      o[key + 'SendBg'] = d.trim().length > 0 ? '#1e2124' : '#c9c2b6';
+      o['on' + cap(key) + 'Draft'] = (e) => this.setState((s) => ({ reply: { ...(s.reply || {}), [key]: e.target.value } }));
+      o['send' + cap(key)] = () => {
+        if (!((this.state.reply || {})[key] || '').trim()) return;
+        this.setState((s) => ({ reply: { ...(s.reply || {}), [key]: '' }, sent: { ...(s.sent || {}), [key]: true } }));
+        setTimeout(() => this.setState((s) => ({ sent: { ...(s.sent || {}), [key]: false } })), 2800);
+      };
+      return o;
+    };
+    const inCircle = tab === 'circle';
+    const voted = pollVote !== null;
+    const pollOpts = this.POLL.map((o, i) => ({
+      label: o.label,
+      vote: () => this.setState({ pollVote: i }),
+      barW: voted ? o.pct + '%' : '0%',
+      barColor: voted ? (i === pollVote ? '#cfe5e8' : '#f1e7db') : 'transparent',
+      pctLabel: voted ? o.pct + '%' : '',
+      weight: (voted && i === pollVote) ? '700' : '500',
+    }));
+    const lib = [
+      { title: '13. Coping Skills', kind: 'Peer Resiliency Module' },
+      { title: '14. Sources of Support', kind: 'Peer Resiliency Module' },
+      { title: 'In ten years, I hope to…', kind: 'Mindsharpener' },
+      { title: 'Defined by Music', kind: 'Mindsharpener' },
+    ];
+    return {
+      isTierpick: screen==='tierpick', isWelcome: screen==='welcome', isPersonality: screen==='personality',
+      isLightning: screen==='lightning', isInterests: screen==='interests', isResp: screen==='responsiveness', isFourh: screen==='fourh',
+      interestChips, intCount, toggleInt, goResp,
+      isExp: screen==='exp', isSms: screen==='sms', isDone: screen==='done', isBreathe: screen==='breathe',
+      isPrep: screen==='prep', isNotif: screen==='notif', isReveal: screen==='reveal', isApp: screen==='app',
+      isT1: tier===1, isT2: tier===2,
+      isHome: tab==='home', isCircles: tab==='circles', isMessages: tab==='messages', isYou: tab==='you', isCircleFeed: tab==='circle',
+
+      tierLabel: tier===2 ? 'Previewing: Circle + 1:1 · $39' : 'Previewing: Circle · $10',
+      tierProfile: tier===2 ? 'Circle + 1:1 mentor' : 'Circle member',
+      notifBody: tier===2 ? "Meet your circle — and your one-on-one mentor." : "Meet your mentors and your girls.",
+      caption: this.captionOf(screen, tab),
+
+      quote: this.QUOTES[quoteIdx % this.QUOTES.length],
+      swapQuote: () => this.setState((s) => ({ quoteIdx: s.quoteIdx + 1 })),
+      waitingLabel: tier===2 ? '3 new' : '2 new',
+      ...mkReply('one'), ...mkReply('comm'), ...mkReply('chat'),
+      pollOpts,
+      anon,
+      toggleAnon: () => this.setState(s => ({ anon: !s.anon })),
+      anonTrack: 'width:40px;height:24px;border-radius:99px;position:relative;flex:none;transition:background .2s;background:' + (anon ? '#5DA4CD' : '#d8d2c6'),
+      anonKnob: 'position:absolute;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s;left:' + (anon ? '19px' : '3px'),
+      composeName: anon ? 'Anonymous' : 'Zoe R.',
+      composeSub: anon ? 'Posting anonymously to Your Vescent Community' : 'Posting to Your Vescent Community',
+
+      chOnb: chStyle(chap==='onb'), chMatch: chStyle(chap==='match'), chHome: chStyle(chap==='home'), chCircle: chStyle(chap==='circle'),
+      goChOnb: () => this.setState({ screen:'tierpick', qi:0, li:0, moduleOpen:false, composeOpen:false }),
+      goChMatch: () => this.setState({ screen:'done', moduleOpen:false, composeOpen:false }),
+      goChHome: () => this.setState({ screen:'app', tab:'home', moduleOpen:false, composeOpen:false }),
+      goChCircle: () => this.setState({ screen:'app', tab:'circle', moduleOpen:false, composeOpen:false }),
+
+      pickT1: () => this.setState({ tier:1, screen:'welcome' }),
+      pickT2: () => this.setState({ tier:2, screen:'welcome' }),
+      start: set({ screen:'personality' }),
+      pCount: qi + 1, pPct: Math.round(((qi + 1) / 20) * 100) + '%', pDim: q.d, pQ: q.q, pA: q.a, pB: q.b,
+      ansA: nextQ, ansB: nextQ,
+      lCount: li + 1, lOptA: lr[0], lOptB: lr[1], lA: nextL, lB: nextL,
+      next: () => this.setState(st => {
+        const seq = ['responsiveness','fourh','exp','sms','done'];
+        const i = seq.indexOf(st.screen);
+        return { screen: i >= 0 && i < seq.length - 1 ? seq[i+1] : 'done' };
+      }),
+      goBreathe: set({ screen:'breathe' }), goPrep: set({ screen:'prep' }),
+      goNotif: set({ screen:'notif' }),
+      goReveal: () => this.setState({ screen:'app', tab:'home' }),
+
+      goHome: () => this.setState({ tab:'home' }),
+      goCircles: () => this.setState({ tab:'circles' }),
+      goCircleFeed: () => this.setState({ tab:'circle' }),
+      goMessages: () => this.setState({ tab:'messages' }),
+      goYou: () => this.setState({ tab:'you' }),
+      cHome: tab==='home'?on:off, cCircles: (tab==='circles'||inCircle)?on:off, cMessages: tab==='messages'?on:off, cYou: tab==='you'?on:off,
+      wHome: tab==='home'?'700':'600', wCircles: (tab==='circles'||inCircle)?'700':'600', wMessages: tab==='messages'?'700':'600', wYou: tab==='you'?'700':'600',
+
+      moduleOpen, openModule: set({ moduleOpen:true }), closeModule: set({ moduleOpen:false }),
+      composeOpen, draft, posted, sharpenPickerOpen,
+      hasSharpen: !!sharpen, sharpenTitle: sharpen ? sharpen.title : '',
+      canPost: draft.trim().length > 0 || !!sharpen,
+      cantPost: !(draft.trim().length > 0 || !!sharpen),
+      openCompose: set({ composeOpen:true }),
+      closeCompose: set({ composeOpen:false, draft:'', sharpen:null, sharpenPickerOpen:false, anon:false }),
+      onDraft: (e) => this.setState({ draft: e.target.value }),
+      openSharpen: set({ sharpenPickerOpen:true }),
+      closeSharpen: set({ sharpenPickerOpen:false }),
+      removeSharpen: set({ sharpen:null }),
+      sharpenLib: lib.map((it) => ({ ...it, pick: () => this.setState({ sharpen: it, sharpenPickerOpen:false }) })),
+      submitPost: () => {
+        this.setState({ composeOpen:false, draft:'', sharpen:null, sharpenPickerOpen:false, anon:false, posted:true });
+        setTimeout(() => this.setState({ posted:false }), 2200);
+      },
+
+      restart: () => this.setState({ screen:'tierpick', tier:2, qi:0, li:0, tab:'home', moduleOpen:false, composeOpen:false, draft:'', sharpen:null, anon:false, pollVote:null, reply:{}, sent:{} }),
+    };
+  }
+}
+</script>
+</body>
+</html>
