@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<span style="{{ wrapStyle }}">
+  <span style="display:inline-flex;width:14px;height:14px;align-items:center;justify-content:center">
+    <sc-if value="{{ isTeen }}" hint-placeholder-val="{{ true }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="{{ color }}"><path d="M12 2l1.6 6.4L20 10l-6.4 1.6L12 18l-1.6-6.4L4 10l6.4-1.6z"/></svg></sc-if>
+    <sc-if value="{{ isMentor }}" hint-placeholder-val="{{ false }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="{{ color }}"><path d="M12 2l2.9 6.3L22 9.3l-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 7.1-1z"/></svg></sc-if>
+    <sc-if value="{{ isMod }}" hint-placeholder-val="{{ false }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="{{ color }}"><path d="M12 2l8 3v6c0 5-3.4 9.2-8 11-4.6-1.8-8-6-8-11V5z"/></svg></sc-if>
+    <sc-if value="{{ isSuper }}" hint-placeholder-val="{{ false }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="{{ color }}"><path d="M14 3a5 5 0 00-4.9 6l-6.1 6.1V19h3.9v-2h2v-2h2l1.2-1.2A5 5 0 1014 3zm1.8 3.2a1.4 1.4 0 11-2 2 1.4 1.4 0 012-2z"/></svg></sc-if>
+  </span>
+  <span>{{ label }}</span>
+</span>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:120,&quot;height&quot;:30},&quot;role&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Teen&quot;,&quot;Mentor&quot;,&quot;Moderator&quot;,&quot;Super-admin&quot;],&quot;default&quot;:&quot;Mentor&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  MAP = {
+    'Teen':{label:'Teen',color:'#3a8fb0',bg:'#e8f4f7',ring:'#a9d6dc'},
+    'Mentor':{label:'Mentor',color:'#2f6f96',bg:'#e2eef7',ring:'#5da4cd'},
+    'Moderator':{label:'Moderator',color:'#a9741f',bg:'#f8efdb',ring:'#e0a458'},
+    'Super-admin':{label:'Super-admin',color:'#5b4b86',bg:'#efeaf6',ring:'#6b5b95'},
+  };
+  renderVals() {
+    const r = this.props.role || 'Teen';
+    const m = this.MAP[r] || this.MAP['Teen'];
+    return {
+      label: m.label, color: m.color,
+      isTeen: r==='Teen', isMentor: r==='Mentor', isMod: r==='Moderator', isSuper: r==='Super-admin',
+      wrapStyle: `display:inline-flex;align-items:center;gap:5px;background:${m.bg};color:${m.color};border:1px solid ${m.ring};border-radius:999px;padding:3px 9px 3px 7px;font-family:'Outfit',system-ui,sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.01em;white-space:nowrap;line-height:1`,
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -8,7 +8,7 @@
 <body>
 <x-dc>
 <helmet>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@300..700&family=Space+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Outfit:wght@300..700&amp;family=Space+Mono&amp;display=swap" rel="stylesheet">
 <script src="./image-slot.js"></script>
 <style>
 body{margin:0;background:#e7e2d8;font-family:'Outfit',system-ui,sans-serif}
@@ -18,7 +18,7 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
 @keyframes vBreathe{0%,100%{transform:scale(.82)}45%,60%{transform:scale(1)}}
 </style>
 </helmet>
-<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:16px;padding:26px 20px 56px;box-sizing:border-box">
+<div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 26px 20px 56px; box-sizing: border-box; position: absolute; left: 8px; top: 1px">
 
 <div style="width:100%;max-width:520px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
   <div style="display:flex;align-items:center;gap:12px">
@@ -36,6 +36,7 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
   <span onClick="{{ goChMatch }}" style="{{ chMatch }}">2 · The match</span>
   <span onClick="{{ goChHome }}" style="{{ chHome }}">3 · Home</span>
   <span onClick="{{ goChCircle }}" style="{{ chCircle }}">4 · Inside a circle</span>
+  <span onClick="{{ goChMM }}" style="{{ chMM }}">5 · Multi-member circle</span>
 </div>
 
 <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" title="" hint-size="420px,880px">
@@ -45,7 +46,7 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
 <div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
   <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
   <div style="margin-top:26px;font-size:11px;letter-spacing:.14em;color:#4a90b8;font-weight:500">SIMULATION · NOT AN IN-APP SCREEN</div>
-  <div style="margin-top:8px;font-family:'Playfair Display',serif;font-size:28px;line-height:1.2;color:#1e2124;font-weight:600">Which tier did<br>the parent buy?</div>
+  <div style="margin-top:8px;font-family:'Playfair Display',serif;font-size:28px;line-height:1.2;color:#1e2124;font-weight:600">What tier did<br>the parent buy?</div>
   <div style="font-size:13.5px;color:#6b7076;margin-top:8px;font-weight:300;line-height:1.5">In the real flow the parent pays on the web first; the teen logs in with a code from her email and lands in the purchased tier. Pick one to preview that whole journey.</div>
   <div style="margin-top:22px;display:flex;flex-direction:column;gap:12px">
     <div onClick="{{ pickT1 }}" style="background:#fff;border:1.5px solid #ece7dd;border-radius:18px;padding:18px;cursor:pointer" style-hover="border-color:#5DA4CD">
@@ -66,7 +67,9 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
   <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
   <div style="margin-top:34px;font-family:'Playfair Display',serif;font-size:29px;line-height:1.2;color:#1e2124;font-weight:600">Hi Zoe. Let's find your people.</div>
   <div style="margin-top:10px;font-size:14px;color:#6b7076;font-weight:300;line-height:1.55">A few questions so we can match you with mentors who actually fit you. About 5 minutes.</div>
-  <div style="margin-top:24px;display:flex;flex-direction:column;gap:11px">
+  <div style="margin-top:22px;font-size:11px;letter-spacing:.13em;color:#4a90b8;font-weight:600">A FEW THINGS TO KNOW FIRST</div>
+  <div style="margin-top:6px;font-size:13px;color:#6b7076;font-weight:300;line-height:1.5">So you know what this is (and isn't) before we start:</div>
+  <div style="margin-top:11px;display:flex;flex-direction:column;gap:11px">
     <div style="background:#fff;border:1px solid #ece7dd;border-radius:16px;padding:15px 17px;display:flex;gap:13px;align-items:flex-start"><span style="width:26px;height:26px;border-radius:50%;background:#eef6f7;color:#4a90b8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">1</span><div><div style="font-size:14px;font-weight:600;color:#1e2124">A mentor is a big sister, not a therapist</div><div style="font-size:12.5px;color:#6b7076;line-height:1.45;margin-top:3px">College-aged, screened, trained — a few steps ahead of you.</div></div></div>
     <div style="background:#fff;border:1px solid #ece7dd;border-radius:16px;padding:15px 17px;display:flex;gap:13px;align-items:flex-start"><span style="width:26px;height:26px;border-radius:50%;background:#eef6f7;color:#4a90b8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">2</span><div><div style="font-size:14px;font-weight:600;color:#1e2124">Honest answers make better matches</div><div style="font-size:12.5px;color:#6b7076;line-height:1.45;margin-top:3px">No wrong answers, nothing to ace.</div></div></div>
     <div style="background:#fff;border:1px solid #ece7dd;border-radius:16px;padding:15px 17px;display:flex;gap:13px;align-items:flex-start"><span style="width:26px;height:26px;border-radius:50%;background:#eef6f7;color:#4a90b8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">3</span><div><div style="font-size:14px;font-weight:600;color:#1e2124">A real person approves your match</div><div style="font-size:12.5px;color:#6b7076;line-height:1.45;margin-top:3px">Olivia, our program lead, reviews every one.</div></div></div>
@@ -112,6 +115,9 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
       <span onClick="{{ chip.toggle }}" style="{{ chip.chipStyle }}">{{ chip.label }}</span>
     </sc-for>
   </div>
+  <sc-if value="{{ interestOtherOpen }}" hint-placeholder-val="{{ false }}">
+  <input value="{{ interestOtherText }}" onInput="{{ onInterestOther }}" placeholder="What else fills your time?" style="margin-top:14px;width:100%;border:1.5px solid #5DA4CD;border-radius:14px;padding:12px 15px;font-family:'Outfit',sans-serif;font-size:14px;color:#1e2124;background:#fbfaf7;outline:none;box-sizing:border-box">
+  </sc-if>
   <div onClick="{{ goResp }}" style="margin-top:auto;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Next — how you text</div>
 </div>
 </sc-if>
@@ -140,20 +146,24 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
     <div style="background:#eef6f7;border:2px solid #5DA4CD;border-radius:16px;padding:15px 18px;font-size:14.5px;color:#1e2124">Up and down lately</div>
     <div style="background:#fff;border:2px solid #ece7dd;border-radius:16px;padding:15px 18px;font-size:14.5px;color:#1e2124">It's been hard for a while</div>
   </div>
-  <div style="margin-top:20px;font-size:13px;color:#6b7076;font-weight:500">And what do you want out of this?</div>
+  <div style="margin-top:20px;font-size:13px;color:#6b7076;font-weight:500">Anything you're hoping to grow, figure out, or get better at?</div>
   <div style="margin-top:9px;display:flex;flex-wrap:wrap;gap:8px">
-    <span style="border:1.5px solid #5DA4CD;background:#eef6f7;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">someone to talk to</span>
+    <span style="border:1.5px solid #5DA4CD;background:#eef6f7;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">feeling less alone</span>
     <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">confidence</span>
     <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">less stress</span>
     <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">my future</span>
     <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">friend stuff</span>
+    <span onClick="{{ toggleGoalOther }}" style="{{ goalOtherChip }}">+ other</span>
   </div>
+  <sc-if value="{{ goalOtherOpen }}" hint-placeholder-val="{{ false }}">
+  <input value="{{ goalOtherText }}" onInput="{{ onGoalOther }}" placeholder="In your words — no pressure…" style="margin-top:11px;width:100%;border:1.5px solid #5DA4CD;border-radius:14px;padding:11px 14px;font-family:'Outfit',sans-serif;font-size:14px;color:#1e2124;background:#fbfaf7;outline:none;box-sizing:border-box">
+  </sc-if>
   <div onClick="{{ next }}" style="margin-top:auto;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Continue</div>
 </div>
 </sc-if>
 
 <sc-if value="{{ isExp }}" hint-placeholder-val="{{ false }}">
-<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box;overflow-y:auto">
   <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#6b7076">optional</span></div>
   <div style="margin-top:32px;font-family:'Playfair Display',serif;font-size:25px;line-height:1.25;color:#1e2124;font-weight:600">Want a mentor who's been through it too?</div>
   <div style="margin-top:8px;font-size:13.5px;color:#6b7076;font-weight:300;line-height:1.5">If that's you, tap what's part of your story. Only our matching team sees this — never your circle.</div>
@@ -165,10 +175,15 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
     <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124">feeling left out</span>
     <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124">body image</span>
     <span style="border:1.5px solid #ece7dd;border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124">family stress</span>
+    <span onClick="{{ toggleExpOther }}" style="{{ expOtherChip }}">+ other</span>
+    <span onClick="{{ toggleExpNone }}" style="{{ expNoneChip }}">none of these</span>
   </div>
-  <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+  <sc-if value="{{ expOtherOpen }}" hint-placeholder-val="{{ false }}">
+  <input value="{{ expOtherText }}" onInput="{{ onExpOther }}" placeholder="Tell us in your words…" style="margin-top:12px;width:100%;border:1.5px solid #5DA4CD;border-radius:14px;padding:12px 15px;font-family:'Outfit',sans-serif;font-size:14px;color:#1e2124;background:#fbfaf7;outline:none;box-sizing:border-box">
+  </sc-if>
+  <div style="margin-top:auto;padding-top:20px;display:flex;flex-direction:column;gap:10px">
     <div onClick="{{ next }}" style="background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Continue</div>
-    <div onClick="{{ next }}" style="text-align:center;font-size:13.5px;color:#6b7076;padding:6px;cursor:pointer">Skip this — totally fine</div>
+    <div onClick="{{ next }}" style="text-align:center;font-size:14px;color:#5f6b6d;font-weight:500;border:1.5px solid #e0dccf;border-radius:999px;padding:13px;cursor:pointer">Skip this — totally fine</div>
   </div>
 </div>
 </sc-if>
@@ -195,7 +210,7 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
   <div style="margin-top:12px;font-size:14px;color:#6b7076;line-height:1.55;font-weight:300;max-width:270px">We're matching you with your circle now. We'll text you when it's ready — usually within a day.</div>
   <div style="margin-top:auto;width:100%;display:flex;flex-direction:column;gap:10px">
     <div onClick="{{ goBreathe }}" style="background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;cursor:pointer">Try a 1-minute breath</div>
-    <div onClick="{{ goNotif }}" style="color:#5f6b6d;font-size:13px;padding:8px;cursor:pointer">Skip the wait — jump to when the text arrives →</div>
+    <div onClick="{{ goNotif }}" style="color:#4a90b8;font-size:12.5px;padding:13px;cursor:pointer;border:1px dashed #cfe0ea;border-radius:12px;text-align:center">▶ Skip the wait — jump to when the text arrives</div>
   </div>
 </div>
 </sc-if>
@@ -219,9 +234,11 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
 <sc-if value="{{ isPrep }}" hint-placeholder-val="{{ false }}">
 <div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
   <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block"><span style="font-size:11px;font-weight:500;color:#4a90b8;background:#eef6f7;border-radius:999px;padding:6px 12px;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;background:#5DA4CD;animation:vPulse 2s ease-in-out infinite"></span>Matching in progress</span></div>
-  <div style="margin-top:26px"><div style="font-family:'Playfair Display',serif;font-size:27px;line-height:1.18;color:#1e2124;font-weight:600">While you wait,<br>get ready.</div><div style="font-size:14px;color:#6b7076;margin-top:9px;font-weight:300;line-height:1.5">Two quick reads. They make the first week better.</div></div>
+  <div style="margin-top:26px"><div style="font-family:'Playfair Display',serif;font-size:27px;line-height:1.18;color:#1e2124;font-weight:600">While you wait,<br>get ready.</div><div style="font-size:14px;color:#6b7076;margin-top:9px;font-weight:300;line-height:1.5">Two quick reads so you know what to expect.</div></div>
   <div style="margin-top:22px;display:flex;flex-direction:column;gap:12px">
-    <div style="background:#fff;border:1px solid #ece7dd;border-radius:18px;padding:18px"><div style="font-size:11px;letter-spacing:.12em;color:#4a90b8;font-weight:500">3 MIN READ</div><div style="font-family:'Playfair Display',serif;font-size:19px;margin-top:8px;color:#1e2124">What a mentor is (and isn't)</div><div style="font-size:13px;color:#6b7076;margin-top:6px;line-height:1.5">A big sister a few steps ahead — not a therapist, not another adult telling you what to do.</div></div>
+    <div style="background:#fff;border:1px solid #ece7dd;border-radius:18px;padding:18px"><div style="font-size:11px;letter-spacing:.12em;color:#4a90b8;font-weight:500">3 MIN READ</div><div style="font-family:'Playfair Display',serif;font-size:19px;margin-top:8px;color:#1e2124">What a mentor is (and isn't)</div><div style="font-size:13px;color:#6b7076;margin-top:6px;line-height:1.5">A big sister a few steps ahead — not a therapist, not another adult telling you what to do.</div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid #f0ece3"><div style="font-size:11px;letter-spacing:.12em;color:#c98a5e;font-weight:500">AND YOUR CIRCLE</div><div style="font-family:'Playfair Display',serif;font-size:16px;margin-top:6px;color:#1e2124">A small group of girls, going through the same stuff you are.</div><div style="font-size:13px;color:#6b7076;margin-top:6px;line-height:1.5">It's where most of the day-to-day happens — someone always gets it, so you're never doing this alone.</div></div>
+    </div>
     <div style="background:#fff;border:1px solid #ece7dd;border-radius:18px;padding:18px"><div style="font-size:11px;letter-spacing:.12em;color:#4a90b8;font-weight:500">1 MIN READ</div><div style="font-family:'Playfair Display',serif;font-size:19px;margin-top:8px;color:#1e2124">How to say hi</div><div style="font-size:13px;color:#6b7076;margin-top:6px;line-height:1.5">First messages are awkward for everyone. Here are openers that work.</div></div>
   </div>
   <div onClick="{{ goNotif }}" style="margin-top:auto;text-align:center;font-size:12.5px;color:#4a90b8;cursor:pointer;border:1px dashed #cfe0ea;border-radius:12px;padding:13px">▶ A day later — your circle is ready and the text lands</div>
@@ -242,6 +259,103 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
 </div>
 </sc-if>
 
+<sc-if value="{{ isMM }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;background:#faf7f1;position:relative;display:flex;flex-direction:column;font-family:'Outfit',sans-serif">
+  <div style="padding:20px 20px 12px;border-bottom:1px solid #ece3d5;background:#fffdf9">
+    <div style="display:flex;align-items:center;gap:11px">
+      <span onClick="{{ mmCircles }}" style="color:#9aa0a6;font-size:22px;cursor:pointer">‹</span>
+      <span style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#FEC2B9,#f5a99e);flex:none"></span>
+      <div style="flex:1"><div style="font-family:'Playfair Display',serif;font-size:19px;font-weight:600;color:#1e2124">Your Nova Circle</div><div style="font-size:11.5px;color:#6b7076"><span onClick="{{ openRoster }}" style="color:#4a90b8;font-weight:600;cursor:pointer">9 girls</span> · <span onClick="{{ openJordan }}" style="color:#4a90b8;font-weight:600;cursor:pointer">Jordan T.</span> &amp; <span onClick="{{ openPriya }}" style="color:#4a90b8;font-weight:600;cursor:pointer">Priya M.</span></div></div>
+      <span style="color:#c3bdb1;font-size:20px">⋮</span>
+    </div>
+  </div>
+
+  <sc-if value="{{ rosterOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;z-index:15">
+    <div onClick="{{ closeRoster }}" style="position:absolute;inset:0;background:rgba(30,33,36,.5)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;top:90px;background:#fff;border-radius:22px 22px 0 0;display:flex;flex-direction:column;overflow:hidden">
+      <div style="padding:12px 20px 0;display:flex;justify-content:center"><span style="width:44px;height:5px;border-radius:99px;background:#d8d2c6"></span></div>
+      <div style="padding:12px 20px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee7db"><span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#1e2124">In your circle · 9 girls</span><span onClick="{{ closeRoster }}" style="color:#4a90b8;font-size:20px;cursor:pointer">✕</span></div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:6px 18px 24px">
+        <sc-for list="{{ roster }}" as="g" hint-placeholder-count="9">
+        <div onClick="{{ g.open }}" style="display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid #f2ede3;cursor:pointer">
+          <span style="width:42px;height:42px;border-radius:50%;flex:none;background:{{ g.grad }}"></span>
+          <div style="flex:1;min-width:0"><div style="font-size:14.5px;font-weight:600;color:#1e2124">{{ g.name }}</div><div style="font-size:11.5px;color:#6b7076">{{ g.sub }}</div></div>
+          <span style="color:#4a90b8;font-size:12px;font-weight:600;white-space:nowrap">View profile ›</span>
+        </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ personOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;z-index:16">
+    <div onClick="{{ closePerson }}" style="position:absolute;inset:0;background:rgba(30,33,36,.5)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;top:70px;background:#fff;border-radius:22px 22px 0 0;display:flex;flex-direction:column;overflow:hidden">
+      <div style="padding:12px 20px 0;display:flex;justify-content:center"><span style="width:44px;height:5px;border-radius:99px;background:#d8d2c6"></span></div>
+      <div style="padding:10px 20px 6px;display:flex;align-items:center;justify-content:flex-end"><span onClick="{{ closePerson }}" style="color:#4a90b8;font-size:20px;cursor:pointer">✕</span></div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:2px 22px 30px;text-align:center">
+        <span style="width:92px;height:92px;border-radius:50%;display:inline-block;background:{{ personGrad }}"></span>
+        <div style="margin-top:14px;font-family:'Playfair Display',serif;font-size:23px;color:#1e2124;font-weight:600">{{ personName }}</div>
+        <div style="margin-top:6px;display:flex;align-items:center;justify-content:center;gap:7px"><span style="font-size:10px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:3px 10px">{{ personRole }}</span></div>
+        <div style="margin-top:6px;font-size:13px;color:#6b7076">{{ personSub }}</div>
+        <div style="margin-top:16px;text-align:left;font-size:14px;line-height:1.6;color:#2c2f33">{{ personBio }}</div>
+        <div style="margin-top:18px;text-align:left;font-size:10.5px;letter-spacing:.13em;color:#4a90b8;font-weight:600">INTO</div>
+        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ personTags }}" as="t" hint-placeholder-count="3">
+          <span style="border:1.5px solid #a9d6dc;background:#eef6f7;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">{{ t }}</span>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+  <div style="flex:1;min-height:0;overflow-y:auto;padding:14px 16px 20px">
+    <div style="background:#1e2124;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px">
+      <span style="width:38px;height:38px;border-radius:50%;background:#5DA4CD;display:flex;align-items:center;justify-content:center;flex:none"><span style="width:0;height:0;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:3px"></span></span>
+      <div style="flex:1"><div style="font-size:13.5px;color:#fff;font-weight:600">Office Hours with Jordan</div><div style="font-size:12px;color:#b9c6cc">Live video · Thursday 7pm</div></div>
+      <span style="background:#fff;color:#1e2124;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:600">Join</span>
+    </div>
+
+    <div style="margin-top:14px;background:#fffdf9;border:1px solid #ece3d5;border-radius:16px;padding:15px 16px">
+      <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span><div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#1e2124">Priya M. · Mentor</div><div style="font-size:11px;color:#6b7076">Your Nova Circle · Monday at 8:00 AM</div></div><span style="color:#c3bdb1">⋮</span></div>
+      <div style="margin-top:11px;font-size:14px;line-height:1.55;color:#1e2124">Weekly gratitude 🌿 What's one thing you're grateful for today? Big or tiny, all of it counts.</div>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:10px;border-top:1px solid #ece3d5;padding-top:11px"><span style="font-size:12.5px;color:#4a90b8;font-weight:600">♡ Like</span><span style="font-size:12.5px;color:#4a90b8;font-weight:600">Comment</span><span style="margin-left:auto;font-size:12px;color:#6b7076">7 comments</span></div>
+      <div style="margin-top:11px;display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;gap:9px"><span style="width:26px;height:26px;border-radius:50%;background:#c9b8e0;flex:none"></span><div style="background:#f3efe7;border-radius:4px 13px 13px 13px;padding:9px 12px;font-size:12.5px;color:#1e2124;line-height:1.4"><strong style="font-weight:600">Ava</strong> my little sister made me breakfast today 🥞</div></div>
+        <div style="display:flex;gap:9px"><span style="width:26px;height:26px;border-radius:50%;background:#a9d6dc;flex:none"></span><div style="background:#f3efe7;border-radius:4px 13px 13px 13px;padding:9px 12px;font-size:12.5px;color:#1e2124;line-height:1.4"><strong style="font-weight:600">Zoe R.</strong> honestly? this circle 💙</div></div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;background:#fffdf9;border:1px solid #ece3d5;border-radius:16px;padding:15px 16px">
+      <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c9b8e0,#a9d6dc);flex:none"></span><div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#1e2124">Jordan T. · Mentor</div><div style="font-size:11px;color:#6b7076">Monday at 3:11 PM</div></div><span style="color:#c3bdb1">⋮</span></div>
+      <div style="margin-top:11px;font-size:14px;line-height:1.55;color:#1e2124">Happy Monday! This week we're on coping skills — the little things that steady you when stress hits. Read the module, then drop one thing that helps you calm down 💙</div>
+      <div onClick="{{ openModule }}" style="margin-top:12px;border:1px solid #f0d9d2;border-radius:14px;overflow:hidden;cursor:pointer">
+        <div style="height:150px;position:relative"><image-slot id="sharpen-card-mm-full" shape="rect" fit="cover" placeholder="Sharpen image — a teen on her phone"></image-slot></div>
+        <div style="background:#f4f2ee;padding:13px 14px">
+          <div style="display:flex;gap:9px;align-items:center"><span style="width:20px;height:24px;background:linear-gradient(150deg,#8f6ce0,#5b39c9);border-radius:5px 8px 5px 8px;flex:none"></span><span style="font-size:14.5px;font-weight:700;color:#1e2124">13. Coping Skills</span></div>
+          <div style="margin-top:7px;font-size:12.5px;color:#4a4d51;line-height:1.5">Simple ways to steady yourself when things feel like a lot.</div>
+          <div style="margin-top:9px;font-size:12.5px;color:#4a90b8;font-weight:700">Read More</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:10px;border-top:1px solid #ece3d5;padding-top:11px"><span style="font-size:12.5px;color:#4a90b8;font-weight:600">♡ Like</span><span style="font-size:12.5px;color:#4a90b8;font-weight:600">Comment</span><span style="margin-left:auto;font-size:12px;color:#6b7076">4 comments</span></div>
+      <div style="margin-top:11px;display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;gap:9px"><span style="width:26px;height:26px;border-radius:50%;background:#FEC2B9;flex:none"></span><div style="background:#f3efe7;border-radius:4px 13px 13px 13px;padding:9px 12px;font-size:12.5px;color:#1e2124;line-height:1.4"><strong style="font-weight:600">Mia</strong> making a playlist honestly resets my whole mood</div></div>
+        <div style="display:flex;gap:9px"><span style="width:26px;height:26px;border-radius:50%;background:#a9d6dc;flex:none"></span><div style="background:#f3efe7;border-radius:4px 13px 13px 13px;padding:9px 12px;font-size:12.5px;color:#1e2124;line-height:1.4"><strong style="font-weight:600">Zoe R.</strong> going on a walk with my dog 🐶</div></div>
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:66px;background:rgba(255,253,249,.94);border-top:1px solid #ece3d5;display:flex;align-items:center;justify-content:space-around;padding-bottom:6px;box-sizing:border-box">
+    <div onClick="{{ mmHome }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#9aa0a6;cursor:pointer"><svg width="22" height="22"><rect x="4" y="4" width="14" height="14" rx="4" fill="currentColor"></rect></svg><span style="font-size:10px;font-weight:600">Home</span></div>
+    <div onClick="{{ mmCircles }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#1e2124;cursor:pointer"><svg width="28" height="22"><circle cx="10" cy="11" r="6" fill="none" stroke="currentColor" stroke-width="2"></circle><circle cx="19" cy="11" r="6" fill="none" stroke="currentColor" stroke-width="2"></circle></svg><span style="font-size:10px;font-weight:700">Circles</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#9aa0a6"><svg width="22" height="22"><line x1="11" y1="4" x2="11" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="11" x2="18" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"></line></svg><span style="font-size:10px;font-weight:600">Post</span></div>
+    <div onClick="{{ mmMessages }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#9aa0a6;cursor:pointer"><svg width="22" height="22"><rect x="3" y="5" width="16" height="12" rx="4" fill="none" stroke="currentColor" stroke-width="2"></rect></svg><span style="font-size:10px;font-weight:600">Messages</span></div>
+    <div onClick="{{ mmYou }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#9aa0a6;cursor:pointer"><svg width="22" height="22"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"></circle></svg><span style="font-size:10px;font-weight:600">You</span></div>
+  </div>
+</div>
+</sc-if>
+
 <sc-if value="{{ isApp }}" hint-placeholder-val="{{ false }}">
 <div style="height:100%;background:#f7f2ea;position:relative;display:flex;flex-direction:column">
 <div style="flex:1;min-height:0;overflow-y:auto;box-sizing:border-box">
@@ -257,67 +371,43 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
     <span style="font-family:'Playfair Display',serif;font-size:22px;color:#1e2124;font-weight:600">Evening, Zoe.</span>
     <span style="font-size:11px;color:#9a8579;font-weight:600">{{ waitingLabel }}</span>
   </div>
-  <div style="margin-top:5px;font-size:10.5px;letter-spacing:.13em;color:#4a90b8;font-weight:600">WAITING FOR YOU</div>
+  <div style="margin-top:5px;font-size:10.5px;letter-spacing:.13em;color:#4a90b8;font-weight:600">NEW FOR YOU</div>
 
   <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
 
-    <div style="background:#fffdf9;border:1px solid #ece3d5;border-radius:18px;padding:14px 15px">
-      <div style="display:flex;gap:12px;align-items:center">
-        <span style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5c9a0);flex:none"></span>
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600;color:#1e2124">Mia</span><span style="font-size:9.5px;font-weight:600;color:#6b7076;background:#f0ece3;border-radius:99px;padding:2px 7px">friend chat</span><span style="margin-left:auto;font-size:11px;color:#c0563f;font-weight:600">3h</span></div>
-          <div style="margin-top:2px;font-size:13px;color:#4a4f54;line-height:1.4">"did you see what jordan posted??"</div>
-        </div>
-      </div>
-      <sc-if value="{{ chatIdle }}" hint-placeholder-val="{{ true }}">
-      <div style="margin-top:11px;display:flex;gap:8px;align-items:center">
-        <input value="{{ chatDraft }}" onInput="{{ onChatDraft }}" placeholder="Answer Mia&hellip;" style="flex:1;min-width:0;border:1px solid #dfe8ea;border-radius:999px;padding:9px 14px;font-family:'Outfit',sans-serif;font-size:13px;color:#1e2124;background:#fbfaf7;outline:none;box-sizing:border-box">
-        <span onClick="{{ sendChat }}" style="flex:none;width:36px;height:36px;border-radius:50%;background:{{ chatSendBg }};display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="17" height="17" viewBox="0 0 17 17"><path d="M2 8.5L15 2l-4.5 13-2.8-5.2L2 8.5z" fill="#fff"></path></svg></span>
-      </div>
-      </sc-if>
-      <sc-if value="{{ chatDone }}" hint-placeholder-val="{{ false }}">
-      <div style="margin-top:11px;display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3d6e84;font-weight:600">Sent to Mia &#10003;<span onClick="{{ goMessages }}" style="margin-left:auto;color:#4a90b8;font-weight:600;cursor:pointer">Open chat &rarr;</span></div>
-      </sc-if>
-    </div>
-
     <sc-if value="{{ isT2 }}" hint-placeholder-val="{{ true }}">
-    <div style="background:#fffdf9;border:1px solid #b8d9e2;border-radius:18px;padding:14px 15px;box-shadow:0 8px 22px -18px rgba(93,164,205,.55)">
+    <div onClick="{{ goCircleFeed }}" style="background:#fffdf9;border:1px solid #b8d9e2;border-radius:18px;padding:14px 15px;box-shadow:0 8px 22px -18px rgba(93,164,205,.55);cursor:pointer">
       <div style="display:flex;gap:12px;align-items:center">
         <span style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span>
         <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600;color:#1e2124">Your One On One</span><span style="font-size:9.5px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:2px 7px">mentor</span><span style="margin-left:auto;font-size:11px;color:#c0563f;font-weight:600">2h</span></div>
-          <div style="margin-top:2px;font-size:13px;color:#4a4f54;line-height:1.4"><strong style="font-weight:600;color:#1e2124">Kelsey</strong> &mdash; "How'd the presentation go today?"</div>
+          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600;color:#1e2124">Your 1:1</span><span style="font-size:9.5px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:2px 7px">mentor</span><span style="margin-left:auto;font-size:11px;color:#c0563f;font-weight:600">2h</span></div>
+          <div style="margin-top:2px;font-size:13px;color:#4a4f54;line-height:1.4"><strong style="font-weight:600;color:#1e2124">Kelsey</strong> — "How'd the presentation go today?"</div>
         </div>
+        <span style="flex:none;font-size:12.5px;color:#4a90b8;font-weight:600">Open →</span>
       </div>
-      <sc-if value="{{ oneIdle }}" hint-placeholder-val="{{ true }}">
-      <div style="margin-top:11px;display:flex;gap:8px;align-items:center">
-        <input value="{{ oneDraft }}" onInput="{{ onOneDraft }}" placeholder="Answer Kelsey&hellip;" style="flex:1;min-width:0;border:1px solid #dfe8ea;border-radius:999px;padding:9px 14px;font-family:'Outfit',sans-serif;font-size:13px;color:#1e2124;background:#fbfaf7;outline:none;box-sizing:border-box">
-        <span onClick="{{ sendOne }}" style="flex:none;width:36px;height:36px;border-radius:50%;background:{{ oneSendBg }};display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="17" height="17" viewBox="0 0 17 17"><path d="M2 8.5L15 2l-4.5 13-2.8-5.2L2 8.5z" fill="#fff"></path></svg></span>
-      </div>
-      </sc-if>
-      <sc-if value="{{ oneDone }}" hint-placeholder-val="{{ false }}">
-      <div style="margin-top:11px;display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3d6e84;font-weight:600">Sent to Kelsey &#10003;<span onClick="{{ goMessages }}" style="margin-left:auto;color:#4a90b8;font-weight:600;cursor:pointer">Open chat &rarr;</span></div>
-      </sc-if>
     </div>
     </sc-if>
 
-    <div style="background:#fffdf9;border:1px solid #ece3d5;border-radius:18px;padding:14px 15px">
+    <div onClick="{{ goMessages }}" style="background:#fffdf9;border:1px solid #ece3d5;border-radius:18px;padding:14px 15px;cursor:pointer">
+      <div style="display:flex;gap:12px;align-items:center">
+        <span style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5c9a0);flex:none"></span>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600;color:#1e2124">Mia</span><span style="font-size:9.5px;font-weight:600;color:#6b7076;background:#f0ece3;border-radius:99px;padding:2px 7px">message</span><span style="margin-left:auto;font-size:11px;color:#c0563f;font-weight:600">3h</span></div>
+          <div style="margin-top:2px;font-size:13px;color:#4a4f54;line-height:1.4">"just finished this week's gratitude topic — you're gonna love it 💙"</div>
+        </div>
+        <span style="flex:none;font-size:12.5px;color:#4a90b8;font-weight:600">Open →</span>
+      </div>
+    </div>
+
+    <div onClick="{{ goMM }}" style="background:#fffdf9;border:1px solid #ece3d5;border-radius:18px;padding:14px 15px;cursor:pointer">
       <div style="display:flex;gap:12px;align-items:center">
         <span style="width:42px;height:42px;border-radius:12px;background:url('assets/photos/circle-group.jpg') center/cover;flex:none"></span>
         <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600;color:#1e2124">Your Vescent Community</span><span style="font-size:9.5px;font-weight:600;color:#6b7076;background:#f0ece3;border-radius:99px;padding:2px 7px">group</span><span style="margin-left:auto;font-size:11px;color:#c0563f;font-weight:600">1h</span></div>
-          <div style="margin-top:2px;font-size:13px;color:#4a4f54;line-height:1.4"><strong style="font-weight:600;color:#1e2124">Jordan</strong> asked something &mdash; 2 girls jumped in</div>
+          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600;color:#1e2124">Your Nova Circle</span><span style="font-size:9.5px;font-weight:600;color:#6b7076;background:#f0ece3;border-radius:99px;padding:2px 7px">circle</span><span style="margin-left:auto;font-size:11px;color:#c0563f;font-weight:600">1h</span></div>
+          <div style="margin-top:2px;font-size:13px;color:#4a4f54;line-height:1.4"><strong style="font-weight:600;color:#1e2124">Jordan</strong> asked something — 2 girls jumped in</div>
         </div>
+        <span style="flex:none;font-size:12.5px;color:#4a90b8;font-weight:600">Open →</span>
       </div>
-      <sc-if value="{{ commIdle }}" hint-placeholder-val="{{ true }}">
-      <div style="margin-top:11px;display:flex;gap:8px;align-items:center">
-        <input value="{{ commDraft }}" onInput="{{ onCommDraft }}" placeholder="Answer the group&hellip;" style="flex:1;min-width:0;border:1px solid #dfe8ea;border-radius:999px;padding:9px 14px;font-family:'Outfit',sans-serif;font-size:13px;color:#1e2124;background:#fbfaf7;outline:none;box-sizing:border-box">
-        <span onClick="{{ sendComm }}" style="flex:none;width:36px;height:36px;border-radius:50%;background:{{ commSendBg }};display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="17" height="17" viewBox="0 0 17 17"><path d="M2 8.5L15 2l-4.5 13-2.8-5.2L2 8.5z" fill="#fff"></path></svg></span>
-      </div>
-      </sc-if>
-      <sc-if value="{{ commDone }}" hint-placeholder-val="{{ false }}">
-      <div style="margin-top:11px;display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3d6e84;font-weight:600">Shared with your community &#10003;<span onClick="{{ goCircleFeed }}" style="margin-left:auto;color:#4a90b8;font-weight:600;cursor:pointer">Open community &rarr;</span></div>
-      </sc-if>
     </div>
 
   </div>
@@ -327,10 +417,9 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
     <span style="position:absolute;top:-24px;right:-18px;width:78px;height:78px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#FEC2B9,#f5a99e);opacity:.4"></span>
     <div style="position:relative;display:flex;align-items:center;justify-content:space-between">
       <span style="font:700 9px 'Space Mono',monospace;letter-spacing:.12em;color:#9a8579">A MOMENT FOR YOU</span>
-      <span onClick="{{ swapQuote }}" style="font-size:11.5px;color:#9a8579;cursor:pointer">&#8635; new</span>
+      <span onClick="{{ swapQuote }}" style="font-size:11.5px;color:#9a8579;cursor:pointer">↻ new</span>
     </div>
-    <div style="position:relative;margin-top:8px;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;line-height:1.35;color:#5d3a2e">&ldquo;{{ quote }}&rdquo;</div>
-    <div style="position:relative;margin-top:12px"><span onClick="{{ openCompose }}" style="background:#1e2124;color:#fff;border-radius:999px;padding:8px 18px;font-size:12.5px;font-weight:500;cursor:pointer">Take a moment</span></div>
+    <div style="position:relative;margin-top:8px;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;line-height:1.35;color:#5d3a2e">“{{ quote }}”</div>
   </div>
 </div>
 </sc-if>
@@ -348,7 +437,7 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
     <span style="position:absolute;top:16px;right:16px;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#e0665a"></span><span style="font-size:11px;color:#c0563f;font-weight:600">new</span></span>
     <div style="display:flex;gap:13px;align-items:center">
       <span style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span>
-      <div><div style="display:flex;align-items:center;gap:7px"><span style="font-size:17px;font-weight:600;color:#1e2124">Your One On One</span><span style="font-size:10px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:2px 8px">your 1-on-1</span></div><div style="font-size:12.5px;color:#6b7076;line-height:1.4;margin-top:2px">Your private space with Kelsey.</div></div>
+      <div><div style="display:flex;align-items:center;gap:7px"><span style="font-size:17px;font-weight:600;color:#1e2124">Your 1:1</span><span style="font-size:10px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:2px 8px">your 1-on-1</span></div><div style="font-size:12.5px;color:#6b7076;line-height:1.4;margin-top:2px">Your private space with Kelsey.</div></div>
     </div>
     <div style="margin-top:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
       <span style="font-size:12px;color:#3d6e84;background:#eef6f7;border-radius:999px;padding:5px 11px">Just you two</span>
@@ -358,11 +447,11 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
   </div>
   </sc-if>
 
-  <div onClick="{{ goCircleFeed }}" style="margin-top:14px;background:#fffdf9;border:1px solid #d7e6ee;border-radius:20px;padding:16px;position:relative;cursor:pointer">
+  <div onClick="{{ goMM }}" style="margin-top:14px;background:#fffdf9;border:1px solid #d7e6ee;border-radius:20px;padding:16px;position:relative;cursor:pointer">
     <span style="position:absolute;top:16px;right:16px;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#e0665a"></span><span style="font-size:11px;color:#c0563f;font-weight:600">new</span></span>
     <div style="display:flex;gap:13px;align-items:center">
       <span style="width:56px;height:56px;border-radius:16px;background:url('assets/photos/circle-group.jpg') center/cover;flex:none"></span>
-      <div><div style="font-size:17px;font-weight:600;color:#1e2124">Your Vescent Community</div><div style="font-size:12.5px;color:#6b7076;line-height:1.4;margin-top:2px">Where you talk it out, no judgment.</div></div>
+      <div><div style="font-size:17px;font-weight:600;color:#1e2124">Your Nova Circle</div><div style="font-size:12.5px;color:#6b7076;line-height:1.4;margin-top:2px">Where you talk it out, no judgment.</div></div>
     </div>
     <div style="margin-top:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
       <span style="font-size:12px;color:#3d6e84;background:#eef6f7;border-radius:999px;padding:5px 11px">9 girls</span>
@@ -383,6 +472,8 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
     </span>
   </div>
 
+  
+
   <sc-if value="{{ isT2 }}" hint-placeholder-val="{{ true }}">
   <div style="margin-top:20px;display:flex;flex-direction:column;gap:2px">
     <div style="display:flex;gap:13px;align-items:center;padding:14px 4px">
@@ -398,24 +489,29 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
       <span style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5c9a0);flex:none"></span>
       <div style="flex:1;min-width:0">
         <div style="display:flex;align-items:center;gap:7px"><span style="font-size:15px;font-weight:600;color:#1e2124">Mia</span><span style="font-size:10px;font-weight:600;color:#6b7076;background:#f0ece3;border-radius:99px;padding:2px 7px">circle</span><span style="margin-left:auto;font-size:11.5px;color:#6b7076">yesterday</span></div>
-        <div style="margin-top:3px;font-size:13.5px;color:#6b7076;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">omg same though 😂</div>
+        <div style="margin-top:3px;font-size:13.5px;color:#6b7076;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><span style="color: rgb(74, 79, 84); font-size: 13px; white-space: normal; background-color: rgb(255, 253, 249);">"just finished this week's gratitude topic — you're gonna love it 💙"</span></div>
       </div>
     </div>
   </div>
   </sc-if>
   <sc-if value="{{ isT1 }}" hint-placeholder-val="{{ false }}">
+  <div style="margin-top:14px;display:flex;align-items:center;gap:8px;background:#eef6f7;border:1px solid #dcecf3;border-radius:999px;padding:8px 14px">
+    <span style="width:7px;height:7px;border-radius:50%;background:#5DA4CD;flex:none"></span>
+    <span style="font-size:12.5px;color:#3d6e84;font-weight:600">{{ msgRemaining }} messages left</span>
+    <span style="font-size:12px;color:#6b7076;font-weight:400">· {{ msgResetLabel }}</span>
+  </div>
   <div style="margin-top:20px;display:flex;flex-direction:column;gap:2px">
     <div style="display:flex;gap:13px;align-items:center;padding:14px 4px">
       <span style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5c9a0);flex:none"></span>
       <div style="flex:1;min-width:0">
         <div style="display:flex;align-items:center;gap:7px"><span style="font-size:15px;font-weight:600;color:#1e2124">Mia</span><span style="font-size:10px;font-weight:600;color:#6b7076;background:#f0ece3;border-radius:99px;padding:2px 7px">circle</span><span style="margin-left:auto;font-size:11.5px;color:#c0563f;font-weight:600">1h</span></div>
-        <div style="margin-top:3px;font-size:13.5px;color:#1e2124;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">did you see what jordan posted??</div>
+        <div style="margin-top:3px;font-size:13.5px;color:#1e2124;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">just finished this week's gratitude topic— you'd love it 💙</div>
       </div>
       <span style="width:9px;height:9px;border-radius:50%;background:#e0665a;flex:none"></span>
     </div>
   </div>
   <div style="margin-top:22px;background:#fffdf9;border:1px solid #ece3d5;border-radius:16px;padding:16px;text-align:center">
-    <div style="font-size:13.5px;color:#6b7076;line-height:1.55">Chats are 1-on-1 with girls from your circles. Tap a girl's name in your circle to say hi.</div>
+    <div style="font-size:13.5px;color:#6b7076;line-height:1.55">Messages are 1-on-1 with other Vescent members. Tap a user's name to say hi.</div>
   </div>
   </sc-if>
 </div>
@@ -443,7 +539,7 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
 <div style="padding:18px 20px 12px;display:flex;align-items:center;gap:11px;background:#fffdf9;border-bottom:1px solid #ece3d5">
   <span onClick="{{ goCircles }}" style="color:#9aa0a6;font-size:22px;cursor:pointer">‹</span>
   <span style="width:34px;height:34px;border-radius:10px;background:url('assets/photos/circle-group.jpg') center/cover;flex:none"></span>
-  <div style="flex:1"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#1e2124">Your Vescent Community</div><div style="font-size:11px;color:#6b7076">9 girls · named by the circle</div></div>
+  <div style="flex:1"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#1e2124">Your Nova Circle</div><div style="font-size:11px;color:#6b7076">9 girls · named by the circle</div></div>
   <span style="color:#c3bdb1;font-size:20px">⋮</span>
 </div>
 <div style="padding:16px 16px 96px">
@@ -456,7 +552,7 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
 
   <div style="margin-top:16px;font-size:10.5px;letter-spacing:.13em;color:#6b7076;font-weight:600">THE CONVERSATION</div>
   <div style="margin-top:9px;background:#fffdf9;border:1px solid #ece3d5;border-radius:16px;padding:15px 16px">
-    <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c9b8e0,#a9d6dc);flex:none"></span><div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#1e2124">Jordan T. · Mentor</div><div style="font-size:11px;color:#6b7076">Your Vescent Community · Monday at 3:11 PM</div></div><span style="color:#c3bdb1">⋮</span></div>
+    <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c9b8e0,#a9d6dc);flex:none"></span><div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#1e2124">Jordan T. · Mentor</div><div style="font-size:11px;color:#6b7076">Your Nova Circle · Monday at 3:11 PM</div></div><span style="color:#c3bdb1">⋮</span></div>
     <div style="margin-top:11px;font-size:14px;line-height:1.55;color:#1e2124">Happy Monday! This week we're on coping skills — the little things that steady you when stress hits. Read the module, then drop one thing that helps you calm down 💙</div>
     <div onClick="{{ openModule }}" style="margin-top:12px;border:1px solid #f0d9d2;border-radius:14px;overflow:hidden;cursor:pointer">
       <div style="height:150px;position:relative"><image-slot id="sharpen-card-full" shape="rect" fit="cover" placeholder="Sharpen image — a teen on her phone"></image-slot></div>
@@ -474,7 +570,7 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
   </div>
 
   <div style="margin-top:14px;background:#fffdf9;border:1px solid #ece3d5;border-radius:16px;padding:15px 16px">
-    <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span><div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#1e2124">Priya M. · Mentor</div><div style="font-size:11px;color:#6b7076">Your Vescent Community · Monday at 8:00 AM</div></div><span style="color:#c3bdb1">⋮</span></div>
+    <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span><div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#1e2124">Priya M. · Mentor</div><div style="font-size:11px;color:#6b7076">Your Nova Circle · Monday at 8:00 AM</div></div><span style="color:#c3bdb1">⋮</span></div>
     <div style="margin-top:11px;font-size:14px;line-height:1.55;color:#1e2124">Weekly gratitude 🌿 What's one thing you're grateful for today? Big or tiny, all of it counts.</div>
     <div style="margin-top:12px;display:flex;align-items:center;gap:10px;border-top:1px solid #ece3d5;padding-top:11px"><span style="font-size:12.5px;color:#4a90b8;font-weight:600">♡ Like</span><span style="font-size:12.5px;color:#4a90b8;font-weight:600">Comment</span><span style="margin-left:auto;font-size:12px;color:#6b7076">7 comments</span></div>
     <div style="margin-top:11px;display:flex;flex-direction:column;gap:9px">
@@ -485,12 +581,12 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
 </div>
 </sc-if>
 <sc-if value="{{ isT2 }}" hint-placeholder-val="{{ false }}">
-<div style="padding:18px 20px 12px;background:#fffdf9;border-bottom:1px solid #ece3d5">
+<div style="padding:18px 20px 14px;background:#fffdf9;border-bottom:1px solid #ece3d5">
   <div style="display:flex;align-items:center;gap:11px">
     <span onClick="{{ goCircles }}" style="color:#9aa0a6;font-size:22px;cursor:pointer">‹</span>
-    <span style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none"></span>
-    <div style="flex:1"><div style="display:flex;align-items:center;gap:7px"><span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#1e2124">Your One On One</span><span style="font-size:9.5px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:2px 7px">1-on-1</span></div><div style="font-size:11px;color:#6b7076">you &amp; Kelsey, your mentor</div></div>
-    <span style="color:#c3bdb1;font-size:20px">⋮</span>
+    <span onClick="{{ openMentor }}" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);flex:none;cursor:pointer"></span>
+    <div style="flex:1"><div style="display:flex;align-items:center;gap:7px"><span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#1e2124">Your 1:1 Circle&nbsp;</span><span style="font-size:9.5px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:2px 7px">1-on-1</span></div><div style="font-size:11px;color:#6b7076">with Kelsey, your mentor</div></div>
+    <span onClick="{{ openMentor }}" style="font-size:12px;color:#4a90b8;font-weight:600;cursor:pointer;white-space:nowrap">View profile ›</span>
   </div>
 </div>
 <div style="padding:16px 16px 96px">
@@ -544,6 +640,34 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
         <div style="margin-top:18px;height:150px;border-radius:12px;background-image:repeating-linear-gradient(135deg,#e2ded4 0 12px,#eceae1 12px 24px);display:flex;align-items:center;justify-content:center;position:relative"><span style="width:52px;height:52px;border-radius:50%;background:rgba(40,42,46,.55);display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px"></span></span></div>
         <div style="margin-top:8px;text-align:center;font-size:12px;color:#9aa0a6;font-style:italic">A 2-minute calming meditation</div>
         <div style="margin-top:20px;text-align:center;font-size:15px;font-weight:700;color:#1e2124">Additional Materials</div>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ mentorOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:15">
+  <div onClick="{{ closeMentor }}" style="position:absolute;inset:0;background:rgba(30,33,36,.5)"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;top:70px;background:#fff;border-radius:22px 22px 0 0;display:flex;flex-direction:column;overflow:hidden">
+    <div style="padding:12px 20px 0;display:flex;justify-content:center"><span style="width:44px;height:5px;border-radius:99px;background:#d8d2c6"></span></div>
+    <div style="padding:10px 20px 6px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;letter-spacing:.13em;color:#4a90b8;font-weight:600">MENTOR PROFILE</span><span onClick="{{ closeMentor }}" style="color:#4a90b8;font-size:20px;cursor:pointer">✕</span></div>
+    <div style="flex:1;min-height:0;overflow-y:auto;padding:8px 22px 30px;text-align:center">
+      <span style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);display:inline-block"></span>
+      <div style="margin-top:14px;font-family:'Playfair Display',serif;font-size:24px;color:#1e2124;font-weight:600">Kelsey M.</div>
+      <div style="margin-top:6px;display:flex;align-items:center;justify-content:center;gap:7px"><span style="font-size:10px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:3px 10px">your mentor</span></div>
+      <div style="margin-top:6px;font-size:13px;color:#6b7076">Junior at UCLA · Psychology</div>
+      <div style="margin-top:18px;text-align:left;font-size:14px;line-height:1.6;color:#2c2f33">Hi Zoe! I'm Kelsey — I grew up in a big, loud family and figured a lot of this out the hard way, so I love being the person a few steps ahead. Outside of Vescent I run, over-caffeinate, and make way too many playlists. Can't wait to get to know you 💙</div>
+      <div style="margin-top:20px;text-align:left;font-size:10.5px;letter-spacing:.13em;color:#4a90b8;font-weight:600">WHAT YOU HAVE IN COMMON</div>
+      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+        <span style="border:1.5px solid #a9d6dc;background:#eef6f7;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">music</span>
+        <span style="border:1.5px solid #a9d6dc;background:#eef6f7;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">being outside</span>
+        <span style="border:1.5px solid #a9d6dc;background:#eef6f7;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">anxiety</span>
+        <span style="border:1.5px solid #a9d6dc;background:#eef6f7;border-radius:999px;padding:8px 13px;font-size:13px;color:#1e2124">night owl</span>
+      </div>
+      <div style="margin-top:22px;display:flex;flex-direction:column;gap:8px;text-align:left">
+        <div style="display:flex;align-items:center;justify-content:space-between;background:#f7f2ea;border-radius:12px;padding:13px 15px;font-size:13.5px;color:#1e2124;font-weight:500">Screened &amp; trained mentor<span style="color:#5DA4CD">✓</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;background:#f7f2ea;border-radius:12px;padding:13px 15px;font-size:13.5px;color:#1e2124;font-weight:500">Approved for your match by Olivia<span style="color:#5DA4CD">✓</span></div>
       </div>
     </div>
   </div>
@@ -628,9 +752,9 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;560px&quot;,&quot;height&quot;:&quot;1060px&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;560px&quot;,&quot;height&quot;:&quot;1060px&quot;},&quot;messageLimit&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:30,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:200,&quot;section&quot;:&quot;1:1 messaging&quot;,&quot;unit&quot;:&quot;msgs&quot;},&quot;messagesUsed&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:18,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:200,&quot;section&quot;:&quot;1:1 messaging&quot;,&quot;unit&quot;:&quot;msgs&quot;},&quot;messageResetLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;resets weekly&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;1:1 messaging&quot;}}">
 class Component extends DCLogic {
-  state = { screen: 'tierpick', tier: 2, qi: 0, li: 0, interests: [], tab: 'home', moduleOpen: false, composeOpen: false, draft: '', posted: false, sharpenPickerOpen: false, sharpen: null, quoteIdx: 0, reply: {}, sent: {}, pollVote: null, anon: false };
+  state = { screen: 'tierpick', tier: 2, qi: 0, li: 0, interests: [], interestOtherText: '', teamNote: '', expOtherOpen: false, expOtherText: '', expNone: false, goalOtherOpen: false, goalOtherText: '', tab: 'home', moduleOpen: false, mentorOpen: false, rosterOpen: false, personOpen: false, person: null, composeOpen: false, draft: '', posted: false, sharpenPickerOpen: false, sharpen: null, quoteIdx: 0, reply: {}, sent: {}, pollVote: null, anon: false };
 
   // PLACEHOLDER content — Eric to supply a real rotating set (see PROTOTYPE_CONTEXT action item).
   QUOTES = [
@@ -681,11 +805,27 @@ class Component extends DCLogic {
     ["Stick to a plan","Go with the flow"],
     ["Sweet","Salty"],
   ];
-  INTERESTS = ['drawing + art','sports + moving','music','gaming','reading + writing','animals','baking + cooking','fashion + thrifting','being outside','faith + community','shows + movies'];
+  INTERESTS = ['drawing + art','sports + moving','music','gaming','reading + writing','animals','baking + cooking','fashion + thrifting','being outside','faith + community','shows + movies','+ other'];
+  MENTORS = [
+    { name:'Jordan T.', role:'Mentor', sub:'Senior at USC · Design', grad:'linear-gradient(135deg,#c9b8e0,#a9d6dc)', bio:"Hey! I'm Jordan — I run our Monday check-ins and love a good playlist. I'm here whenever you want to talk it through.", tags:['drawing + art','music','being outside'] },
+    { name:'Priya M.', role:'Mentor', sub:'Junior at NYU · Journalism', grad:'linear-gradient(135deg,#a9d6dc,#7fbcc6)', bio:"Hi! I'm Priya — I keep our gratitude thread going. Big believer that small wins count. So glad you're here.", tags:['reading + writing','baking + cooking'] },
+  ];
+  GIRLS = [
+    { name:'Zoe R.', role:'You', sub:'you · 9th grade', grad:'linear-gradient(135deg,#FEC2B9,#a9d6dc)', bio:"This is you! Your circle can see your name, interests, and anything you post.", tags:['music','animals','being outside'] },
+    { name:'Mia', role:'Member', sub:'9th grade', grad:'linear-gradient(135deg,#FEC2B9,#f5c9a0)', bio:"Playlist queen and self-declared snack expert.", tags:['music','fashion + thrifting'] },
+    { name:'Ava', role:'Member', sub:'10th grade', grad:'#c9b8e0', bio:"Loves her little sister and true-crime podcasts.", tags:['shows + movies','baking + cooking'] },
+    { name:'Harper', role:'Member', sub:'9th grade', grad:'#a9d6dc', bio:"Soccer, dogs, and drawing in the margins of everything.", tags:['sports + moving','animals'] },
+    { name:'Sofia', role:'Member', sub:'10th grade', grad:'#f5a99e', bio:"Writes poetry she swears she'll never show anyone.", tags:['reading + writing','music'] },
+    { name:'Chloe', role:'Member', sub:'8th grade', grad:'#7fbcc6', bio:"Newest to the circle. Big into baking experiments.", tags:['baking + cooking','animals'] },
+    { name:'Nina', role:'Member', sub:'9th grade', grad:'linear-gradient(135deg,#c9b8e0,#a9d6dc)', bio:"Always down for a walk-and-talk.", tags:['being outside','faith + community'] },
+    { name:'Layla', role:'Member', sub:'10th grade', grad:'#FEC2B9', bio:"Thrift-store treasure hunter and playlist trader.", tags:['fashion + thrifting','music'] },
+    { name:'Grace', role:'Member', sub:'9th grade', grad:'linear-gradient(135deg,#a9d6dc,#7fbcc6)', bio:"Reads two books a week, quietly the funniest one here.", tags:['reading + writing','shows + movies'] },
+  ];
 
   chapterOf(s, tab) {
     if (['tierpick','welcome','personality','lightning','interests','responsiveness','fourh','exp','sms'].includes(s)) return 'onb';
     if (['done','breathe','prep','notif'].includes(s)) return 'match';
+    if (s === 'mmcircle') return 'mm';
     if (s === 'app') return tab === 'circle' ? 'circle' : 'home';
     return 'onb';
   }
@@ -705,6 +845,7 @@ class Component extends DCLogic {
       case 'breathe': return "Chapter 2 · A calm holding state while Olivia approves the match.";
       case 'prep': return "Chapter 2 · Harvest-the-wait: short reads that make the first week land better.";
       case 'notif': return "Chapter 2 · The Twilio text arrives — tap it to open straight into the app.";
+      case 'mmcircle': return "Chapter 5 · Inside a multi-member circle — the group feed (Creative Minds): office hours, pinned gratitude, and mentor posts with Sharpen cards + real comment threads.";
       default:
         if (s === 'app') {
           if (tab === 'circle') return "Chapter 4 · Inside a circle — the weekly focus, mentor posts, and the Sharpen module.";
@@ -730,6 +871,8 @@ class Component extends DCLogic {
           : "border:1.5px solid #ece7dd;background:#fff;border-radius:999px;padding:10px 16px;font-size:14px;color:#1e2124;cursor:pointer" };
     });
     const intCount = this.state.interests.length;
+    const chipOn = "border:1.5px solid #5DA4CD;background:#eef6f7;border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124;cursor:pointer";
+    const chipOff = "border:1.5px solid #ece7dd;border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124;cursor:pointer";
     const goResp = () => this.setState({ screen:'responsiveness' });
     const chap = this.chapterOf(screen, tab);
     const chStyle = (on) => on
@@ -769,11 +912,35 @@ class Component extends DCLogic {
       { title: 'In ten years, I hope to…', kind: 'Mindsharpener' },
       { title: 'Defined by Music', kind: 'Mindsharpener' },
     ];
+    const openPerson = (pp) => () => this.setState({ person: pp, personOpen: true });
+    const roster = this.GIRLS.map((g) => ({ ...g, open: openPerson(g) }));
+    const per = this.state.person || {};
     return {
+      rosterOpen: this.state.rosterOpen, personOpen: this.state.personOpen, roster,
+      openRoster: () => this.setState({ rosterOpen: true }),
+      closeRoster: () => this.setState({ rosterOpen: false }),
+      closePerson: () => this.setState({ personOpen: false }),
+      openJordan: openPerson(this.MENTORS[0]), openPriya: openPerson(this.MENTORS[1]),
+      personName: per.name, personSub: per.sub, personBio: per.bio, personRole: per.role,
+      personGrad: per.grad || 'linear-gradient(135deg,#FEC2B9,#a9d6dc)', personTags: per.tags || [],
       isTierpick: screen==='tierpick', isWelcome: screen==='welcome', isPersonality: screen==='personality',
       isLightning: screen==='lightning', isInterests: screen==='interests', isResp: screen==='responsiveness', isFourh: screen==='fourh',
       interestChips, intCount, toggleInt, goResp,
-      isExp: screen==='exp', isSms: screen==='sms', isDone: screen==='done', isBreathe: screen==='breathe',
+      interestOtherOpen: this.state.interests.includes('+ other'),
+      interestOtherText: this.state.interestOtherText,
+      onInterestOther: (e) => this.setState({ interestOtherText: e.target.value }),
+      teamNote: this.state.teamNote, onTeamNote: (e) => this.setState({ teamNote: e.target.value }),
+      expOtherOpen: this.state.expOtherOpen, expOtherText: this.state.expOtherText,
+      expOtherChip: this.state.expOtherOpen ? chipOn : chipOff,
+      expNoneChip: this.state.expNone ? chipOn : chipOff,
+      toggleExpOther: () => this.setState(st => ({ expOtherOpen: !st.expOtherOpen, expNone: false })),
+      toggleExpNone: () => this.setState(st => ({ expNone: !st.expNone, expOtherOpen: false })),
+      onExpOther: (e) => this.setState({ expOtherText: e.target.value }),
+      goalOtherOpen: this.state.goalOtherOpen, goalOtherText: this.state.goalOtherText,
+      goalOtherChip: this.state.goalOtherOpen ? chipOn : chipOff,
+      toggleGoalOther: () => this.setState(st => ({ goalOtherOpen: !st.goalOtherOpen })),
+      onGoalOther: (e) => this.setState({ goalOtherText: e.target.value }),
+      isExp: screen==='exp', isSms: screen==='sms', isDone: screen==='done', isBreathe: screen==='breathe', isMM: screen==='mmcircle',
       isPrep: screen==='prep', isNotif: screen==='notif', isReveal: screen==='reveal', isApp: screen==='app',
       isT1: tier===1, isT2: tier===2,
       isHome: tab==='home', isCircles: tab==='circles', isMessages: tab==='messages', isYou: tab==='you', isCircleFeed: tab==='circle',
@@ -793,13 +960,22 @@ class Component extends DCLogic {
       anonTrack: 'width:40px;height:24px;border-radius:99px;position:relative;flex:none;transition:background .2s;background:' + (anon ? '#5DA4CD' : '#d8d2c6'),
       anonKnob: 'position:absolute;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s;left:' + (anon ? '19px' : '3px'),
       composeName: anon ? 'Anonymous' : 'Zoe R.',
-      composeSub: anon ? 'Posting anonymously to Your Vescent Community' : 'Posting to Your Vescent Community',
+      composeSub: anon ? 'Posting anonymously to Your Nova Circle' : 'Posting to Your Nova Circle',
 
-      chOnb: chStyle(chap==='onb'), chMatch: chStyle(chap==='match'), chHome: chStyle(chap==='home'), chCircle: chStyle(chap==='circle'),
+      msgRemaining: Math.max(0, (this.props.messageLimit ?? 30) - (this.props.messagesUsed ?? 18)),
+      msgResetLabel: this.props.messageResetLabel ?? 'resets weekly',
+
+      chOnb: chStyle(chap==='onb'), chMatch: chStyle(chap==='match'), chHome: chStyle(chap==='home'), chCircle: chStyle(chap==='circle'), chMM: chStyle(chap==='mm'),
       goChOnb: () => this.setState({ screen:'tierpick', qi:0, li:0, moduleOpen:false, composeOpen:false }),
       goChMatch: () => this.setState({ screen:'done', moduleOpen:false, composeOpen:false }),
       goChHome: () => this.setState({ screen:'app', tab:'home', moduleOpen:false, composeOpen:false }),
       goChCircle: () => this.setState({ screen:'app', tab:'circle', moduleOpen:false, composeOpen:false }),
+      goChMM: () => this.setState({ screen:'mmcircle', moduleOpen:false, composeOpen:false }),
+      goMM: () => this.setState({ screen:'mmcircle', moduleOpen:false }),
+      mmHome: () => this.setState({ screen:'app', tab:'home', moduleOpen:false }),
+      mmCircles: () => this.setState({ screen:'app', tab:'circles', moduleOpen:false }),
+      mmMessages: () => this.setState({ screen:'app', tab:'messages', moduleOpen:false }),
+      mmYou: () => this.setState({ screen:'app', tab:'you', moduleOpen:false }),
 
       pickT1: () => this.setState({ tier:1, screen:'welcome' }),
       pickT2: () => this.setState({ tier:2, screen:'welcome' }),
@@ -825,6 +1001,7 @@ class Component extends DCLogic {
       wHome: tab==='home'?'700':'600', wCircles: (tab==='circles'||inCircle)?'700':'600', wMessages: tab==='messages'?'700':'600', wYou: tab==='you'?'700':'600',
 
       moduleOpen, openModule: set({ moduleOpen:true }), closeModule: set({ moduleOpen:false }),
+      mentorOpen: this.state.mentorOpen, openMentor: set({ mentorOpen:true }), closeMentor: set({ mentorOpen:false }),
       composeOpen, draft, posted, sharpenPickerOpen,
       hasSharpen: !!sharpen, sharpenTitle: sharpen ? sharpen.title : '',
       canPost: draft.trim().length > 0 || !!sharpen,
