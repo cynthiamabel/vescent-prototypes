@@ -181,6 +181,9 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
   <sc-if value="{{ expOtherOpen }}" hint-placeholder-val="{{ false }}">
   <input value="{{ expOtherText }}" onInput="{{ onExpOther }}" placeholder="Tell us in your words…" style="margin-top:12px;width:100%;border:1.5px solid #5DA4CD;border-radius:14px;padding:12px 15px;font-family:'Outfit',sans-serif;font-size:14px;color:#1e2124;background:#fbfaf7;outline:none;box-sizing:border-box">
   </sc-if>
+  <div style="margin-top:30px;font-family:'Playfair Display',serif;font-size:25px;line-height:1.25;color:#1e2124;font-weight:600">Anything else you want our team to know?</div>
+  <div style="margin-top:8px;font-size:13.5px;color:#6b7076;font-weight:300;line-height:1.5">Optional — anything we didn't cover.</div>
+  <textarea value="{{ teamNote }}" onInput="{{ onTeamNote }}" placeholder="Write as much or as little as you like…" style="margin-top:12px;width:100%;min-height:96px;box-sizing:border-box;border:1.5px solid #ece7dd;border-radius:14px;padding:13px 15px;font-family:'Outfit',sans-serif;font-size:14px;line-height:1.5;color:#1e2124;resize:none;outline:none;background:#fbfaf7"></textarea>
   <div style="margin-top:auto;padding-top:20px;display:flex;flex-direction:column;gap:10px">
     <div onClick="{{ next }}" style="background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Continue</div>
     <div onClick="{{ next }}" style="text-align:center;font-size:14px;color:#5f6b6d;font-weight:500;border:1.5px solid #e0dccf;border-radius:999px;padding:13px;cursor:pointer">Skip this — totally fine</div>
