@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400..900&family=Outfit:wght@300..700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f0eee9;font-family:'Outfit',system-ui,sans-serif}
+a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
+@keyframes vSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes vPulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.12);opacity:1}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:14px;padding:30px 20px 50px;box-sizing:border-box">
+<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center">
+  <span style="font:600 11px ui-monospace,Menlo,monospace;padding:4px 8px;background:#1a1a1a;color:#fff;border-radius:4px">PHASE 2 · INTERACTIVE</span>
+  <span style="font-size:12.5px;color:rgba(0,0,0,.55)">Your lightning-round answers shape the reveal — try different picks</span>
+  <span onClick="{{ restart }}" style="font-size:12px;color:#4a90b8;cursor:pointer;border:1px solid #cfe0ea;border-radius:999px;padding:4px 12px;background:#fff">↺ Restart</span>
+</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" title="" hint-size="420px,880px">
+<div style="height:100%;background:#faf7f1;position:relative;overflow:hidden">
+
+<sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:26px;font-size:11px;letter-spacing:.14em;color:#4a90b8;font-weight:500">SIMULATION · NOT AN IN-APP SCREEN</div>
+  <div style="margin-top:8px;font-family:'Playfair Display',serif;font-size:28px;line-height:1.2;color:#1e2124;font-weight:600">Which tier did<br>the parent buy?</div>
+  <div style="font-size:13.5px;color:#6b7076;margin-top:8px;font-weight:300;line-height:1.5">In the real flow the parent pays on the web first; the teen logs in with a code from her email and lands in the purchased tier. Pick one to preview that experience.</div>
+  <div style="margin-top:22px;display:flex;flex-direction:column;gap:12px">
+    <div onClick="{{ pickT1 }}" style="background:#fff;border:1.5px solid #ece7dd;border-radius:18px;padding:18px;cursor:pointer" style-hover="border-color:#5DA4CD">
+      <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-family:'Playfair Display',serif;font-size:19px;color:#1e2124">Circle</span><span style="font-size:14px;color:#6b7076">$10/mo</span></div>
+      <div style="font-size:13px;color:#6b7076;margin-top:6px;line-height:1.5">Your circle · weekly sessions · the Sharpen journey</div>
+    </div>
+    <div onClick="{{ pickT2 }}" style="background:#1e2124;border-radius:18px;padding:18px;cursor:pointer" style-hover="background:#2a2e33">
+      <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-family:'Playfair Display',serif;font-size:19px;color:#fff">Circle + One-on-one</span><span style="font-size:14px;color:#a9d6dc">$39/mo</span></div>
+      <div style="font-size:13px;color:rgba(255,255,255,.72);margin-top:6px;line-height:1.5">Everything in Circle, plus your own circle of two — just you and a mentor.</div>
+    </div>
+  </div>
+  <div style="margin-top:auto;text-align:center;font-size:12px;color:#9aa0a6">Age + parental consent are handled by the app-store APIs before this point.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s1 }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block"><span style="font-size:11px;color:#9aa0a6">{{ qNum }} of 4</span></div>
+  <div style="margin-top:24px;font-size:11px;letter-spacing:.14em;color:#4a90b8;font-weight:500">LIGHTNING ROUND · NO WRONG ANSWERS</div>
+  <div style="margin-top:10px;font-family:'Playfair Display',serif;font-size:27px;line-height:1.2;color:#1e2124;font-weight:600">{{ qText }}</div>
+  <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px">
+    <div onClick="{{ pickA }}" style="background:#fff;border:1.5px solid #ece7dd;border-radius:18px;padding:19px 18px;cursor:pointer;font-size:16px;color:#1e2124;font-weight:500" style-hover="border-color:#5DA4CD;background:#f4fafb">{{ qA }}</div>
+    <div onClick="{{ pickB }}" style="background:#fff;border:1.5px solid #ece7dd;border-radius:18px;padding:19px 18px;cursor:pointer;font-size:16px;color:#1e2124;font-weight:500" style-hover="border-color:#5DA4CD;background:#f4fafb">{{ qB }}</div>
+  </div>
+  <div style="margin-top:auto;text-align:center;font-size:12px;color:#9aa0a6">This helps us find your people — and it's the fun part.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s2 }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:24px;font-size:11px;letter-spacing:.14em;color:#4a90b8;font-weight:500">ONE LAST THING · YOUR WHY</div>
+  <div style="margin-top:10px;font-family:'Playfair Display',serif;font-size:26px;line-height:1.22;color:#1e2124;font-weight:600">What do you hope your mentor gets about you?</div>
+  <div style="margin-top:24px;display:flex;flex-direction:column;gap:11px">
+    <div onClick="{{ why1 }}" style="background:#fff;border:1.5px solid #ece7dd;border-radius:16px;padding:16px 17px;cursor:pointer;font-size:14.5px;color:#1e2124;line-height:1.45" style-hover="border-color:#5DA4CD">"I want somebody who gets it and won't judge me."</div>
+    <div onClick="{{ why2 }}" style="background:#fff;border:1.5px solid #ece7dd;border-radius:16px;padding:16px 17px;cursor:pointer;font-size:14.5px;color:#1e2124;line-height:1.45" style-hover="border-color:#5DA4CD">"I'm not broken — I just want someone in my corner."</div>
+    <div onClick="{{ why3 }}" style="background:#fff;border:1.5px solid #ece7dd;border-radius:16px;padding:16px 17px;cursor:pointer;font-size:14.5px;color:#1e2124;line-height:1.45" style-hover="border-color:#5DA4CD">"I have a lot going on and nobody really asks."</div>
+  </div>
+  <div style="margin-top:auto;text-align:center;font-size:12px;color:#9aa0a6">In the real app she types this in her own words.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s3 }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:28px 26px 30px;box-sizing:border-box">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="display:flex;flex-direction:column;align-items:center;margin-top:24px;gap:14px">
+    <svg width="72" height="72" viewBox="0 0 100 100" style="animation:vSpin 14s linear infinite"><g style="fill:#a9d6dc"><path d="M50 0 L56 40 L50 50 L44 40 Z"></path><path d="M50 100 L56 60 L50 50 L44 60 Z"></path><path d="M0 50 L40 44 L50 50 L40 56 Z"></path><path d="M100 50 L60 44 L50 50 L60 56 Z"></path><path d="M15 15 L45 41 L50 50 L41 45 Z"></path><path d="M85 85 L59 55 L50 50 L55 59 Z"></path><path d="M85 15 L55 41 L50 50 L59 45 Z"></path><path d="M15 85 L41 55 L50 50 L45 59 Z"></path></g></svg>
+    <div style="font-family:'Playfair Display',serif;font-size:25px;line-height:1.2;color:#1e2124;text-align:center;font-weight:600">We're finding<br>your people</div>
+  </div>
+  <div style="margin-top:24px;display:flex;flex-direction:column;gap:9px">
+    <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:12px 15px"><span style="width:22px;height:22px;border-radius:50%;background:#dff0e2;color:#3d8a55;display:flex;align-items:center;justify-content:center;font-size:12px">✓</span><span style="font-size:13.5px;color:#1e2124;flex:1">How she communicates</span><span style="font-size:11px;color:#9aa0a6">matched</span></div>
+    <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:12px 15px"><span style="width:22px;height:22px;border-radius:50%;background:#dff0e2;color:#3d8a55;display:flex;align-items:center;justify-content:center;font-size:12px">✓</span><span style="font-size:13.5px;color:#1e2124;flex:1">Where you are in your journey</span><span style="font-size:11px;color:#9aa0a6">matched</span></div>
+    <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #a9d6dc;border-radius:14px;padding:12px 15px"><span style="width:22px;height:22px;border-radius:50%;border:2.5px solid #a9d6dc;border-top-color:#4a90b8;box-sizing:border-box;animation:vSpin 1.2s linear infinite"></span><span style="font-size:13.5px;color:#1e2124;flex:1">What you both love</span><span style="font-size:11px;color:#4a90b8">weighing…</span></div>
+    <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:12px 15px;opacity:.55"><span style="width:22px;height:22px;border-radius:50%;background:#f0ede6"></span><span style="font-size:13.5px;color:#1e2124;flex:1">What you've both been through</span></div>
+    <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:12px 15px;opacity:.55"><span style="width:22px;height:22px;border-radius:50%;background:#f0ede6"></span><span style="font-size:13.5px;color:#1e2124;flex:1">Your vibe together</span></div>
+  </div>
+  <div style="margin-top:14px;display:flex;align-items:center;gap:10px;background:#eef6f7;border-radius:14px;padding:12px 15px"><span style="width:28px;height:28px;border-radius:50%;background:#5DA4CD;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">O</span><span style="font-size:12px;color:#3d6e84;line-height:1.4">A real person — Olivia, our program lead — approves every match.</span></div>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px"><div onClick="{{ goNotif }}" style="text-align:center;font-size:12.5px;color:#4a90b8;cursor:pointer;border:1px dashed #cfe0ea;border-radius:12px;padding:12px">▶ Simulate: text arrives — she taps the notification</div><div onClick="{{ goSpark }}" style="text-align:center;font-size:12.5px;color:#4a90b8;cursor:pointer;border:1px dashed #cfe0ea;border-radius:12px;padding:12px">▶ Simulate: she missed the text and opens the app</div></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s4 }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;background:linear-gradient(170deg,#20242a,#171a1d);display:flex;flex-direction:column;align-items:center;padding:70px 24px 44px;box-sizing:border-box">
+  <div style="font-size:60px;font-weight:200;color:#fff">9:41</div>
+  <div style="font-size:15px;color:rgba(255,255,255,.6);margin-top:4px">Sunday, July 19</div>
+  <div onClick="{{ goSpark }}" style="margin-top:48px;width:100%;background:rgba(255,255,255,.95);border-radius:18px;padding:14px 16px;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.3)">
+    <div style="display:flex;align-items:center;gap:8px"><span style="width:20px;height:20px;border-radius:6px;background:#5DA4CD;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-family:'Playfair Display',serif;font-weight:800">v</span><span style="font-size:12px;color:#6b7076;font-weight:500">VESCENT · now</span></div>
+    <div style="font-size:14px;color:#1e2124;font-weight:600;margin-top:6px">Olivia approved your match ✓</div>
+    <div style="font-size:13px;color:#3c4146;margin-top:2px;line-height:1.4">Someone can't wait to meet you.</div>
+    <div style="font-size:11.5px;color:#9aa0a6;margin-top:8px">Tap to open</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s5 }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;background:#171a1d;display:flex;flex-direction:column;align-items:center;padding:56px 30px 44px;box-sizing:border-box;text-align:center;position:relative;overflow:hidden">
+  <img src="assets/brand/vescent-logotype-white.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:56px;position:relative;width:200px;height:200px;display:flex;align-items:center;justify-content:center">
+    <svg width="200" height="200" viewBox="0 0 100 100" style="position:absolute;animation:vPulse 3.2s ease-in-out infinite"><g style="fill:#a9d6dc"><path d="M50 2 L55 42 L50 50 L45 42 Z"></path><path d="M50 98 L55 58 L50 50 L45 58 Z"></path><path d="M2 50 L42 45 L50 50 L42 55 Z"></path><path d="M98 50 L58 45 L50 50 L58 55 Z"></path><path d="M17 17 L44 42 L50 50 L42 44 Z"></path><path d="M83 83 L56 56 L50 50 L56 56 Z"></path><path d="M83 17 L56 44 L50 50 L58 46 Z"></path><path d="M17 83 L44 58 L50 50 L46 58 Z"></path></g></svg>
+    <div style="position:relative;width:100px;height:100px;border-radius:50%;background:rgba(254,194,185,.92);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:36px;color:rgba(140,74,63,.35)">?</div>
+  </div>
+  <div style="margin-top:44px;font-size:11px;letter-spacing:.18em;color:#a9d6dc;font-weight:500">A REAL CONNECTION, FOUND</div>
+  <div style="margin-top:10px;font-family:'Playfair Display',serif;font-size:28px;line-height:1.2;color:#f3efe7;font-weight:600">Someone can't wait<br>to meet you.</div>
+  <div style="margin-top:12px;font-size:13px;color:rgba(243,239,231,.55);font-weight:300">Chosen from 40+ mentors. Approved by Olivia.</div>
+  <div onClick="{{ goReveal }}" style="margin-top:auto;width:100%;background:#f3efe7;color:#171a1d;border-radius:999px;padding:16px;font-size:15px;font-weight:600;cursor:pointer">Tap to meet her ✦</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s6 }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:26px 24px 30px;box-sizing:border-box;overflow:auto">
+  <div style="text-align:center;font-size:11px;letter-spacing:.14em;color:#4a90b8;font-weight:500">YOUR MENTORS · APPROVED BY OLIVIA ✓</div>
+  <div style="margin-top:14px;background:#fff;border:1px solid #ece7dd;border-radius:20px;padding:18px;text-align:center;box-shadow:0 10px 30px rgba(30,33,36,.07)">
+    <div style="display:flex;justify-content:center;gap:14px">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:5px"><div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5a99e);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:24px;color:#8c4a3f">M</div><span style="font-size:12px;color:#1e2124;font-weight:600">Maya · 20</span></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:5px"><div style="width:70px;height:70px;border-radius:50%;background:#cfe5e8;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:24px;color:#3d6e84">R</div><span style="font-size:12px;color:#1e2124;font-weight:600">Rosa · 22</span></div>
+    </div>
+  </div>
+  <div style="margin-top:16px;font-family:'Playfair Display',serif;font-size:17px;color:#1e2124;font-weight:600">Why you're with them</div>
+  <div style="margin-top:9px;display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#5DA4CD;font-size:14px;line-height:1.4">✦</span><span style="font-size:13px;color:#3c4146;line-height:1.5">{{ reason1 }}</span></div>
+    <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#5DA4CD;font-size:14px;line-height:1.4">✦</span><span style="font-size:13px;color:#3c4146;line-height:1.5">{{ reason2 }}</span></div>
+    <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#5DA4CD;font-size:14px;line-height:1.4">✦</span><span style="font-size:13px;color:#3c4146;line-height:1.5">{{ reason3 }}</span></div>
+  </div>
+  <div style="margin-top:16px;background:#f2efe8;border-radius:14px;padding:13px 15px"><div style="font-size:10.5px;letter-spacing:.12em;color:#8a8271;font-weight:500">YOU TOLD US</div><div style="font-size:13px;color:#5c584e;margin-top:5px;font-style:italic;line-height:1.5">{{ whyQuote }}</div><div style="font-size:12px;color:#8a8271;margin-top:5px">Maya read it. She gets it.</div></div>
+  <div onClick="{{ goCircle }}" style="margin-top:auto;background:#1e2124;color:#fff;border-radius:999px;padding:14px;font-size:14px;font-weight:500;text-align:center;cursor:pointer">Now meet your circle →</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s7 }}" hint-placeholder-val="{{ false }}">
+<div style="height:100%;display:flex;flex-direction:column;padding:26px 26px 30px;box-sizing:border-box;overflow:auto">
+  <div style="text-align:center;font-size:11px;letter-spacing:.14em;color:#4a90b8;font-weight:500">BEAT TWO · YOUR PEOPLE</div>
+  <div style="margin-top:8px;text-align:center;font-family:'Playfair Display',serif;font-size:26px;line-height:1.18;color:#1e2124;font-weight:600">Welcome to<br>The Wednesday Circle</div>
+  <div style="margin-top:6px;text-align:center;font-size:13px;color:#6b7076;font-weight:300">8 girls your age · Maya &amp; Rosa lead</div>
+  <div style="margin-top:20px;display:flex;justify-content:center;align-items:flex-end;gap:12px">
+    <div style="width:46px;height:46px;border-radius:50%;background:#e4ddcf"></div>
+    <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5a99e);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;color:#8c4a3f;box-shadow:0 0 0 3px #faf7f1,0 0 0 5px #5DA4CD">M</div>
+    <div style="width:70px;height:70px;border-radius:50%;background:#cfe5e8;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;color:#3d6e84;box-shadow:0 0 0 3px #faf7f1,0 0 0 5px #5DA4CD">R</div>
+    <div style="width:46px;height:46px;border-radius:50%;background:#d8e4dc"></div>
+  </div>
+  <div style="text-align:center;font-size:12px;color:#9aa0a6;margin-top:8px">+ 6 more girls like you — you'll meet them Wednesday</div>
+  <div style="margin-top:16px;background:#fff;border:1px solid #ece7dd;border-radius:16px;padding:14px 16px"><div style="font-size:10.5px;letter-spacing:.12em;color:#4a90b8;font-weight:500">FIRST CIRCLE</div><div style="font-family:'Playfair Display',serif;font-size:17px;color:#1e2124;margin-top:5px">Wednesday · 7:00 pm</div><div style="font-size:12.5px;color:#6b7076;margin-top:4px;line-height:1.5">Low pressure. Cameras optional. You can just listen.</div></div>
+  <sc-if value="{{ isT2 }}" hint-placeholder-val="{{ false }}">
+  <div style="margin-top:11px;background:#1e2124;border-radius:16px;padding:14px 16px"><div style="font-size:10.5px;letter-spacing:.12em;color:#a9d6dc;font-weight:500">YOUR CIRCLE OF TWO</div><div style="font-family:'Playfair Display',serif;font-size:17px;color:#fff;margin-top:5px">Just you and Maya</div><div style="font-size:12.5px;color:rgba(255,255,255,.72);margin-top:4px;line-height:1.5">Your own space — chat and video, whenever you need it.</div></div>
+  </sc-if>
+  <sc-if value="{{ isT1 }}" hint-placeholder-val="{{ false }}">
+  <div style="margin-top:11px;background:#eef6f7;border-radius:16px;padding:13px 16px;display:flex;align-items:center;gap:11px"><span style="font-size:16px;color:#4a90b8">✦</span><div style="flex:1"><div style="font-size:12.5px;color:#1e2124;font-weight:500">Want a mentor all to yourself?</div><div style="font-size:11.5px;color:#5f7b8a;margin-top:2px">Tier 2 adds a circle of two — a parent can upgrade anytime.</div></div></div>
+  </sc-if>
+  <div style="text-align:center;font-size:11.5px;color:#9aa0a6;margin-top:14px">End of Phase 2 flow · <span onClick="{{ restart }}" style="color:#4a90b8;cursor:pointer">restart</span> to try other answers or the other tier</div>
+</div>
+</sc-if>
+
+</div>
+</x-import>
+<div style="max-width:440px;font-size:12.5px;line-height:1.55;color:rgba(0,0,0,.55);text-align:center">What Phase 2 adds over Phase 1: the lightning round + "Your Why" in onboarding, the matching-theater wait, the spark moment (1e), and a two-beat reveal — mentors with "why you're with them" (built from her actual answers), then the circle.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;520px&quot;,&quot;height&quot;:&quot;1000px&quot;}}">
+class Component extends DCLogic {
+  state = { s: 0, tier: 1, q: 0, picks: [], why: '' };
+  questions = [
+    { t: 'What matters most in a mentor?', a: 'Fast replies, checks in first', b: 'A really big listener' },
+    { t: 'Pancakes or waffles?', a: 'Pancakes, obviously', b: 'Waffles forever' },
+    { t: 'How do you recharge?', a: 'Drawing / making things', b: 'Music on, world off' },
+    { t: 'Mornings or nights?', a: 'Morning person', b: 'Night owl' }
+  ];
+  renderVals() {
+    const { s, tier, q, picks, why } = this.state;
+    const go = (n) => () => this.setState({ s: n });
+    const pick = (which) => () => {
+      const next = [...picks, which];
+      if (q < 3) this.setState({ q: q + 1, picks: next });
+      else this.setState({ picks: next, s: 2 });
+    };
+    const whys = [
+      "I want somebody who gets it and won't judge me.",
+      "I'm not broken — I just want someone in my corner.",
+      "I have a lot going on and nobody really asks."
+    ];
+    const setWhy = (i) => () => this.setState({ why: whys[i], s: 3 });
+    const cur = this.questions[Math.min(q, 3)];
+    const r1 = picks[0] === 'a' ? 'Maya answers fast and checks in first — you said that matters most.' : 'Maya is the listener of the two — you said that matters most.';
+    const r2 = picks[2] === 'a' ? 'You both draw. Maya keeps a sketchbook in her bag.' : 'You both recharge with headphones on. Maya makes playlists for her circle.';
+    const r3 = picks[1] === 'a'
+      ? (picks[3] === 'b' ? "Pancakes and late nights — Rosa says that's her whole personality." : 'Pancake people, both of you. Rosa makes them on Sundays.')
+      : (picks[3] === 'a' ? "Waffles and early mornings — Rosa's exact Saturday routine." : 'Team waffle, both of you. Rosa has opinions about this.');
+    return {
+      s0: s === 0, s1: s === 1, s2: s === 2, s3: s === 3, s4: s === 4, s5: s === 5, s6: s === 6, s7: s === 7,
+      isT1: tier === 1, isT2: tier === 2,
+      qNum: q + 1, qText: cur.t, qA: cur.a, qB: cur.b,
+      reason1: r1, reason2: r2, reason3: r3,
+      whyQuote: '"' + (why || whys[0]) + '"',
+      pickT1: () => this.setState({ tier: 1, s: 1 }),
+      pickT2: () => this.setState({ tier: 2, s: 1 }),
+      pickA: pick('a'), pickB: pick('b'),
+      why1: setWhy(0), why2: setWhy(1), why3: setWhy(2),
+      goNotif: go(4), goSpark: go(5), goReveal: go(6), goCircle: go(7),
+      restart: () => this.setState({ s: 0, tier: 1, q: 0, picks: [], why: '' })
+    };
+  }
+}
+</script>
+</body>
+</html>

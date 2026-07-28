@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@300..700&family=Space+Mono&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+:root{--v-bg:#faf7f1;--v-ink:#1e2124;--v-sub:#6b7076;--v-card:#fff;--v-border:#ece7dd;--v-accent:#2f6f96;--v-spark:#a9d6dc;--v-warm:#FEC2B9;--v-gold:#e0a458}
+body{margin:0;background:#f0eee9;font-family:'Outfit',system-ui,sans-serif}
+a{color:var(--v-accent);text-decoration:none}a:hover{text-decoration:underline}
+*{box-sizing:border-box}
+.dv-turn{padding:40px 44px 44px;border-bottom:1px solid rgba(0,0,0,.08)}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px;flex-wrap:wrap}
+.dv-tid{font:600 10px 'Space Mono',monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+.dv-tname{font:600 13px/1.4 'Outfit',sans-serif;color:#1a1a1a}
+.dv-intro{max-width:820px;font:300 13px/1.6 'Outfit',sans-serif;color:rgba(0,0,0,.62);margin:0 0 26px}
+.dv-opts{display:flex;flex-wrap:wrap;gap:34px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:10px}
+.dv-oid{font:600 10.5px 'Space Mono',monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11.5px/1.4 'Outfit',sans-serif;color:rgba(0,0,0,.6);max-width:420px}
+.dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+.bdg{font:700 9.5px 'Space Mono',monospace;letter-spacing:.04em;padding:2px 7px;border-radius:5px;white-space:nowrap;text-transform:uppercase}
+.same{background:#e5f4ec;color:#2f8f5b}.reframe{background:#e2eef7;color:#2f6f96}.skip{background:#efece4;color:#a3a8ac}.only{background:#f8efdb;color:#a9741f}
+.frow{display:flex;align-items:stretch;gap:0;border-top:1px solid var(--v-border)}
+.fstage{width:150px;flex-shrink:0;padding:11px 14px;font:600 11.5px/1.35 'Outfit';color:var(--v-ink);background:#f7f3ec;display:flex;align-items:center}
+.fcell{flex:1;padding:11px 14px;font:400 12px/1.4 'Outfit';color:#4a5056;display:flex;flex-direction:column;justify-content:center;gap:3px}
+.fcell.mut{color:#b3ada0}
+.fmid{width:118px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:6px}
+.fdiv{border-left:1px solid var(--v-border)}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">CHUNK 5 · MENTOR ONBOARDING</a><span class="dv-tname">Two-track flow map (<a class="dv-oid" href="#1a">1a</a>), the mentor-only screens (<a class="dv-oid" href="#1b">1b</a>–<a class="dv-oid" href="#1d">1d</a>), and decisions to settle (<a class="dv-oid" href="#1e">1e</a>)</span></div>
+<p class="dv-intro"><strong>Same onboarding spine, re-pointed for mentors.</strong> Mentors take the <em>same matching survey</em> as teens (they get a 4-letter type too — that's what the match compares), but the wrapper differs: no paywall, no age gate, plus a few mentor-only beats. <strong>1a</strong> maps every step and flags how it changes; <strong>1b–1d</strong> mock the new screens; <strong>1e</strong> lists what the team needs to decide. Grounded in Lauren's Stage-1 stories (§1 Mentor Login) + the badge doc. Fictional copy.</p>
+
+<div class="dv-opts">
+
+<!-- ================= 1a FLOW MAP ================= -->
+<div class="dv-opt" id="1a" style="max-width:1120px">
+<div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>The whole flow, teen vs mentor — each row flagged SAME / REFRAMED / SKIP / MENTOR-ONLY</div>
+<div style="background:var(--v-card);border:1px solid var(--v-border);border-radius:16px;padding:20px 22px;width:1080px">
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+    <span class="bdg same">■ same</span><span style="font:400 11px/1.6 Outfit;color:var(--v-sub)">identical to teen</span>
+    <span class="bdg reframe" style="margin-left:14px">■ reframed</span><span style="font:400 11px/1.6 Outfit;color:var(--v-sub)">same screen, mentor copy</span>
+    <span class="bdg skip" style="margin-left:14px">■ skip</span><span style="font:400 11px/1.6 Outfit;color:var(--v-sub)">teen has it, mentor doesn't</span>
+    <span class="bdg only" style="margin-left:14px">■ mentor-only</span><span style="font:400 11px/1.6 Outfit;color:var(--v-sub)">new for mentors</span>
+  </div>
+
+  <div style="display:flex;border-bottom:2px solid var(--v-ink)">
+    <div class="fstage" style="background:none;font-weight:700">Stage</div>
+    <div class="fcell" style="flex-direction:row;align-items:center;gap:8px;font:700 12px Outfit;color:var(--v-ink)"><span style="width:9px;height:9px;border-radius:99px;background:var(--v-spark)"></span>Teen track</div>
+    <div class="fmid"></div>
+    <div class="fcell fdiv" style="flex-direction:row;align-items:center;gap:8px;font:700 12px Outfit;color:var(--v-ink)"><span style="width:9px;height:9px;border-radius:99px;background:var(--v-gold)"></span>Mentor track</div>
+  </div>
+
+  <div class="frow"><div class="fstage">Precondition (off-app)</div>
+    <div class="fcell">Parent pays → ID + age verified → welcome email with secret word</div>
+    <div class="fmid"><span class="bdg reframe">differ</span></div>
+    <div class="fcell fdiv">Interviews · training · background check clear → invite link emailed. <em>No payment, no age gate.</em></div></div>
+
+  <div class="frow"><div class="fstage">Enter email + secret word</div>
+    <div class="fcell">Email + secret word</div>
+    <div class="fmid"><span class="bdg same">same</span></div>
+    <div class="fcell fdiv">Email + secret word <a href="#1e" style="font-size:11px">(⚑ retire? see 1e)</a></div></div>
+
+  <div class="frow"><div class="fstage">Privacy + T&amp;C</div>
+    <div class="fcell">Agree to Privacy Policy + Terms</div>
+    <div class="fmid"><span class="bdg same">same</span></div>
+    <div class="fcell fdiv">Agree to Privacy Policy + Terms</div></div>
+
+  <div class="frow"><div class="fstage">Welcome / what to expect</div>
+    <div class="fcell">"~5 minutes. Answer honestly — we'll find your circle."</div>
+    <div class="fmid"><span class="bdg reframe">reframed</span></div>
+    <div class="fcell fdiv"><strong>Commitment contract</strong> — "You're the steady presence. Weekly engagement." → <a href="#1b">1b</a></div></div>
+
+  <div class="frow"><div class="fstage">Personality (20 Jungian)</div>
+    <div class="fcell">Full 20-Q bank → 4-letter type</div>
+    <div class="fmid"><span class="bdg same">same</span></div>
+    <div class="fcell fdiv">Full 20-Q bank → 4-letter type <em>(match compares both sides)</em></div></div>
+
+  <div class="frow"><div class="fstage">Lightning + interests</div>
+    <div class="fcell">This-or-that + "what fills your time"</div>
+    <div class="fmid"><span class="bdg same">same</span></div>
+    <div class="fcell fdiv">This-or-that + interests <em>(feeds overlap)</em></div></div>
+
+  <div class="frow"><div class="fstage">Responsiveness / pace</div>
+    <div class="fcell">How fast she replies (gate signal)</div>
+    <div class="fmid"><span class="bdg same">same</span></div>
+    <div class="fcell fdiv">Her reply pace (gates against teen's)</div></div>
+
+  <div class="frow"><div class="fstage">4H journey</div>
+    <div class="fcell">Focus areas</div>
+    <div class="fmid"><span class="bdg same">same</span></div>
+    <div class="fcell fdiv">Focus areas</div></div>
+
+  <div class="frow"><div class="fstage">Experiences</div>
+    <div class="fcell">"What you're navigating" (anxiety, new school…)</div>
+    <div class="fmid"><span class="bdg reframe">reframed</span></div>
+    <div class="fcell fdiv">"What you've navigated &amp; can support" — powers "she's been there too"</div></div>
+
+  <div class="frow"><div class="fstage">Tier / paywall</div>
+    <div class="fcell">Parent bought Tier 1 ($10) or Tier 2 ($39)</div>
+    <div class="fmid"><span class="bdg skip">skip</span></div>
+    <div class="fcell fdiv mut">— mentors have no tier</div></div>
+
+  <div class="frow"><div class="fstage">Age verification</div>
+    <div class="fcell">Precondition of teen entry</div>
+    <div class="fmid"><span class="bdg skip">skip</span></div>
+    <div class="fcell fdiv mut">— cleared in off-app screening</div></div>
+
+  <div class="frow"><div class="fstage">Mentor bio</div>
+    <div class="fcell mut">—</div>
+    <div class="fmid"><span class="bdg only">mentor-only</span></div>
+    <div class="fcell fdiv"><strong>"About you"</strong> → becomes the bio card teens see at reveal. → <a href="#1c">1c</a></div></div>
+
+  <div class="frow"><div class="fstage">Availability &amp; training</div>
+    <div class="fcell mut">—</div>
+    <div class="fmid"><span class="bdg only">mentor-only</span></div>
+    <div class="fcell fdiv"><strong>Office-hours availability</strong> + confirm cert / mandated-reporter. → <a href="#1d">1d</a></div></div>
+
+  <div class="frow"><div class="fstage">Basic profile</div>
+    <div class="fcell">Photo · username · name · birthdate</div>
+    <div class="fmid"><span class="bdg same">same</span></div>
+    <div class="fcell fdiv">Photo · username · name · birthdate <em>(record only)</em></div></div>
+
+  <div class="frow"><div class="fstage">Notifications opt-in</div>
+    <div class="fcell">Relationship-focused (tagged, chat, milestone)</div>
+    <div class="fmid"><span class="bdg reframe">reframed</span></div>
+    <div class="fcell fdiv">Engagement categories (teen activity, content cadence, reconnection, milestone)</div></div>
+
+  <div class="frow" style="border-bottom:1px solid var(--v-border)"><div class="fstage">Land on homepage</div>
+    <div class="fcell">Cozy digest — "since you were away"</div>
+    <div class="fmid"><span class="bdg reframe">differ</span></div>
+    <div class="fcell fdiv"><strong>Triage home</strong> — "where am I needed" + role-gated <strong>⚙ gear → admin portal</strong> (mentor only)</div></div>
+
+</div>
+</div>
+
+<!-- ================= 1b WELCOME / COMMITMENT ================= -->
+<div class="dv-opt" id="1b">
+<div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a><span class="bdg reframe">reframed</span> Welcome — the commitment contract (replaces the teen's "5-minute" beat)</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" title="" hint-size="380px,800px">
+<div style="height:100%;background:var(--v-bg);display:flex;flex-direction:column;padding:30px 26px 30px;box-sizing:border-box">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:19px;align-self:flex-start">
+  <div style="margin-top:44px;font:400 11px/1 'Space Mono',monospace;letter-spacing:.18em;color:var(--v-accent);text-transform:uppercase">Welcome, mentor</div>
+  <div style="margin-top:14px;font-family:'Playfair Display',serif;font-size:27px;line-height:1.22;font-weight:600;color:var(--v-ink)">Before you meet your first teen</div>
+  <div style="margin-top:12px;font-size:14px;line-height:1.5;color:var(--v-sub);font-weight:300">You're the steady, known presence that makes a circle feel safe to enter. A few things we ask of you:</div>
+  <div style="margin-top:22px;display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;gap:12px;align-items:flex-start"><img src="assets/brand/vescent-star-blue.svg" style="width:17px;margin-top:2px" alt=""><div style="font-size:13.5px;line-height:1.45;color:var(--v-ink)"><strong>Show up weekly.</strong> At minimum, check in with your circle and teen once a week.</div></div>
+    <div style="display:flex;gap:12px;align-items:flex-start"><img src="assets/brand/vescent-star-blue.svg" style="width:17px;margin-top:2px" alt=""><div style="font-size:13.5px;line-height:1.45;color:var(--v-ink)"><strong>Guide the content.</strong> You lead the Sharpen resiliency modules at a steady rhythm.</div></div>
+    <div style="display:flex;gap:12px;align-items:flex-start"><img src="assets/brand/vescent-star-blue.svg" style="width:17px;margin-top:2px" alt=""><div style="font-size:13.5px;line-height:1.45;color:var(--v-ink)"><strong>This next survey pairs you.</strong> Same one your teens take — it's how we match.</div></div>
+  </div>
+  <label style="margin-top:auto;display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--v-border);border-radius:12px;padding:13px 15px;cursor:pointer">
+    <span style="width:20px;height:20px;border-radius:6px;border:2px solid var(--v-accent);background:var(--v-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">✓</span>
+    <span style="font-size:13px;color:var(--v-ink)">I'm ready to show up weekly.</span>
+  </label>
+  <div style="margin-top:12px;background:var(--v-ink);color:#fff;border-radius:999px;padding:15px;text-align:center;font-size:14.5px;font-weight:500">Start the survey</div>
+</div>
+</x-import>
+</div>
+
+<!-- ================= 1c BIO ================= -->
+<div class="dv-opt" id="1c">
+<div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a><span class="bdg only">mentor-only</span> "About you" — becomes the bio card teens see when matched</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" title="" hint-size="380px,800px">
+<div style="height:100%;background:var(--v-bg);display:flex;flex-direction:column;padding:30px 26px 30px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px"><span style="font-size:12px;color:var(--v-sub)">step 6 of 8</span></div>
+  <div style="margin-top:30px;font-family:'Playfair Display',serif;font-size:24px;line-height:1.25;font-weight:600;color:var(--v-ink)">Tell teens who you are</div>
+  <div style="margin-top:8px;font-size:13px;color:var(--v-sub);font-weight:300">This becomes the bio card she sees the moment you're matched. Warm, real, a little personal.</div>
+  <div style="margin-top:20px;font:600 11px 'Space Mono',monospace;letter-spacing:.08em;color:var(--v-sub);text-transform:uppercase">A little about me</div>
+  <div style="margin-top:8px;background:#fff;border:1px solid var(--v-border);border-radius:12px;padding:13px 15px;font-size:13px;line-height:1.5;color:#9a958c;font-style:italic;min-height:96px">I'm a junior at UGA studying psych. I grew up dancing, I make terrible playlists, and I'm here because someone did this for me once…</div>
+  <div style="margin-top:18px;font:600 11px 'Space Mono',monospace;letter-spacing:.08em;color:var(--v-sub);text-transform:uppercase">I'm here to help with</div>
+  <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+    <span style="border:1.5px solid var(--v-spark);background:#eef6f7;border-radius:999px;padding:8px 14px;font-size:13px;color:var(--v-ink)">anxiety</span>
+    <span style="border:1.5px solid var(--v-spark);background:#eef6f7;border-radius:999px;padding:8px 14px;font-size:13px;color:var(--v-ink)">new school</span>
+    <span style="border:1.5px solid var(--v-border);background:#fff;border-radius:999px;padding:8px 14px;font-size:13px;color:var(--v-ink)">friendships</span>
+    <span style="border:1.5px solid var(--v-border);background:#fff;border-radius:999px;padding:8px 14px;font-size:13px;color:var(--v-ink)">confidence</span>
+  </div>
+  <div style="margin-top:auto;background:var(--v-ink);color:#fff;border-radius:999px;padding:15px;text-align:center;font-size:14.5px;font-weight:500">Continue</div>
+</div>
+</x-import>
+</div>
+
+<!-- ================= 1d AVAILABILITY + TRAINING ================= -->
+<div class="dv-opt" id="1d">
+<div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a><span class="bdg only">mentor-only</span> Availability + training confirmation — the last mentor beat</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" title="" hint-size="380px,800px">
+<div style="height:100%;background:var(--v-bg);display:flex;flex-direction:column;padding:30px 26px 30px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px"><span style="font-size:12px;color:var(--v-sub)">step 7 of 8</span></div>
+  <div style="margin-top:30px;font-family:'Playfair Display',serif;font-size:24px;line-height:1.25;font-weight:600;color:var(--v-ink)">A few last things</div>
+  <div style="margin-top:18px;font:600 11px 'Space Mono',monospace;letter-spacing:.08em;color:var(--v-sub);text-transform:uppercase">When are you usually free?</div>
+  <div style="margin-top:9px;font-size:12px;color:var(--v-sub);font-weight:300">A rough window for office hours &amp; live sessions.</div>
+  <div style="margin-top:11px;display:flex;flex-wrap:wrap;gap:7px">
+    <span style="border:1.5px solid var(--v-border);background:#fff;border-radius:10px;padding:7px 12px;font-size:12.5px">Weekday AM</span>
+    <span style="border:1.5px solid var(--v-gold);background:#f8efdb;border-radius:10px;padding:7px 12px;font-size:12.5px;color:#a9741f">Weekday PM</span>
+    <span style="border:1.5px solid var(--v-border);background:#fff;border-radius:10px;padding:7px 12px;font-size:12.5px">Weekends</span>
+  </div>
+  <div style="margin-top:22px;font:600 11px 'Space Mono',monospace;letter-spacing:.08em;color:var(--v-sub);text-transform:uppercase">Your training — on file</div>
+  <div style="margin-top:10px;display:flex;flex-direction:column;gap:9px">
+    <div style="display:flex;gap:11px;align-items:center;background:#fff;border:1px solid var(--v-border);border-radius:11px;padding:11px 14px"><span style="width:20px;height:20px;border-radius:99px;background:#e5f4ec;color:#2f8f5b;display:flex;align-items:center;justify-content:center;font-size:12px">✓</span><span style="font-size:13px;color:var(--v-ink)">Sharpen certification</span></div>
+    <div style="display:flex;gap:11px;align-items:center;background:#fff;border:1px solid var(--v-border);border-radius:11px;padding:11px 14px"><span style="width:20px;height:20px;border-radius:99px;background:#e5f4ec;color:#2f8f5b;display:flex;align-items:center;justify-content:center;font-size:12px">✓</span><span style="font-size:13px;color:var(--v-ink)">Mentoring Central</span></div>
+    <div style="display:flex;gap:11px;align-items:center;background:#fff;border:1px solid var(--v-border);border-radius:11px;padding:11px 14px"><span style="width:20px;height:20px;border-radius:99px;background:#e5f4ec;color:#2f8f5b;display:flex;align-items:center;justify-content:center;font-size:12px">✓</span><span style="font-size:13px;color:var(--v-ink)">Mandated-reporter training</span></div>
+  </div>
+  <div style="margin-top:8px;font-size:11.5px;color:#9a958c;font-weight:300">Completed in your onboarding — confirm and you're set.</div>
+  <div style="margin-top:auto;background:var(--v-ink);color:#fff;border-radius:999px;padding:15px;text-align:center;font-size:14.5px;font-weight:500">Finish setup</div>
+</div>
+</x-import>
+</div>
+
+<!-- ================= 1e DECISIONS ================= -->
+<div class="dv-opt" id="1e" style="max-width:560px">
+<div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Decisions to settle with the team + open questions from Lauren's doc</div>
+<div style="background:var(--v-card);border:1px solid var(--v-border);border-radius:16px;padding:22px 24px;width:520px;display:flex;flex-direction:column;gap:16px">
+
+  <div>
+    <div style="font:700 10.5px 'Space Mono',monospace;letter-spacing:.06em;color:#a9741f;text-transform:uppercase;margin-bottom:9px">Calls I made (change if wrong)</div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;line-height:1.5;color:#4a5056">
+      <div><strong style="color:var(--v-ink)">Full assessment, not a short one.</strong> Mentors take the same 20-Q + lightning + 4H so the match compares like-for-like and gets their 4-letter type.</div>
+      <div><strong style="color:var(--v-ink)">Bio is collected in onboarding</strong> (1c), so bio cards are ready the instant a teen is matched — no chasing mentors later.</div>
+      <div><strong style="color:var(--v-ink)">Experiences reframed, not dropped</strong> — a mentor's "I've been there" is a real match signal.</div>
+      <div><strong style="color:var(--v-ink)">Gear lives on the mentor home only</strong> — role-gated entry to the admin portal, exactly like the current app. Teens never see it.</div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--v-border);padding-top:15px">
+    <div style="font:700 10.5px 'Space Mono',monospace;letter-spacing:.06em;color:var(--v-accent);text-transform:uppercase;margin-bottom:9px">Open — needs the team / Eric</div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;line-height:1.5;color:#4a5056">
+      <div>⚑ <strong style="color:var(--v-ink)">Secret word for mentors too?</strong> Same retirement question as teens — invite-link magic login may replace it.</div>
+      <div>• <strong style="color:var(--v-ink)">Do mentors answer responsiveness</strong> as a pace they'll <em>hold</em>, or a preference? Affects the gate math.</div>
+      <div>• <strong style="color:var(--v-ink)">Is the commitment checkbox (1b) a soft cue or a hard gate</strong> to proceed?</div>
+      <div>• <strong style="color:var(--v-ink)">Birthdate</strong> — keep collecting it for mentors (record only), or drop since age isn't gated?</div>
+      <div>• <strong style="color:var(--v-ink)">Availability (1d)</strong> — free-form window now, or a real scheduler later? Lauren + Cindy to define office-hours options.</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+</div>
+<p class="dv-next" style="font:12px/1.5 Outfit;color:rgba(0,0,0,.5);margin-top:24px">Next, once we settle 1e: build the mentor onboarding prototype (clickable), reusing the teen screens where they're marked <span class="bdg same">same</span> and swapping in 1b–1d.</p>
+</section>
+</x-dc>
+</body>
+</html>
