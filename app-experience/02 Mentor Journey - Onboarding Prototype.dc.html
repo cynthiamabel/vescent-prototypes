@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=GFS+Didot&amp;family=Mulish:ital,wght@0,300..800;1,300..800&amp;family=Space+Mono&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e7e2d8;font-family:'Mulish',Tahoma,system-ui,sans-serif}
+a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
+@keyframes vSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:16px;padding:26px 20px 56px;box-sizing:border-box">
+
+<div style="width:100%;max-width:560px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:12px">
+    <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:19px;display:block">
+    <span style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:16px;color:#1e2124">Mentor onboarding journey</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span style="font:600 11px 'Space Mono',monospace;color:#a9741f;background:#f8efdb;border-radius:999px;padding:4px 10px">MENTOR ROLE</span>
+    <span onClick="{{ restart }}" style="font-size:12px;color:#4a90b8;cursor:pointer;border:1px solid #cfe0ea;border-radius:999px;padding:4px 12px;background:#fff">↺ Restart</span>
+  </div>
+</div>
+
+<div style="display:flex;gap:5px;background:#d9d3c7;border-radius:999px;padding:5px;flex-wrap:wrap;justify-content:center">
+  <span onClick="{{ goCh1 }}" style="{{ ch1 }}">1 · Getting in</span>
+  <span onClick="{{ goCh2 }}" style="{{ ch2 }}">2 · Same survey</span>
+  <span onClick="{{ goCh3 }}" style="{{ ch3 }}">3 · Mentor-only</span>
+  <span onClick="{{ goCh4 }}" style="{{ ch4 }}">4 · Mentor home</span>
+  <span onClick="{{ goCh5 }}" style="{{ ch5 }}">5 · For Eric</span>
+</div>
+
+<sc-if value="{{ showPhone }}" hint-placeholder-val="{{ true }}">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" title="" hint-size="420px,880px">
+<div style="height:100%;background:#faf7f1;position:relative;overflow:hidden;font-family:'Mulish',Tahoma,sans-serif">
+
+<sc-if value="{{ isEntry }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="Entry (simulation)" style="height:100%;display:flex;flex-direction:column;padding:28px 26px 30px;box-sizing:border-box;overflow-y:auto">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:22px;font-size:11px;letter-spacing:.14em;color:#a9741f;font-weight:600">SIMULATION · DECISION NEEDED FROM ERIC</div>
+  <div style="margin-top:8px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:26px;line-height:1.2;color:#1e2124;font-weight:600">How does the app<br>know she's a mentor?</div>
+  <div style="margin-top:9px;font-size:13.5px;color:#6b7076;font-weight:300;line-height:1.5">Everything before this happens off-app: application, interview with Olivia, Sharpen + Mentoring Central + mandated-reporter training, background check. She only reaches account creation once all of it clears.</div>
+  <div style="margin-top:10px;font-size:13px;color:#1e2124;font-weight:500;line-height:1.5">Today someone flips her role by hand afterward, so she gets fed the teen flow. Pick the fix to preview:</div>
+  <div style="margin-top:16px;display:flex;flex-direction:column;gap:11px">
+    <div onClick="{{ pickA }}" style="background:#fff;border:1.5px solid #ece7dd;border-radius:18px;padding:16px;cursor:pointer" style-hover="border-color:#5DA4CD">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px"><span style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:17px;color:#1e2124">A · Pre-provisioned invite</span><span style="font:600 9.5px 'Space Mono',monospace;color:#2f8f5b;background:#e5f4ec;border-radius:5px;padding:3px 7px;white-space:nowrap">LAUREN'S PROPOSAL</span></div>
+      <div style="font-size:12.5px;color:#6b7076;margin-top:6px;line-height:1.5">Olivia creates the mentor record when screening clears; the app emails an invite link. Role is set before the account exists.</div>
+    </div>
+    <div onClick="{{ pickB }}" style="background:#fff;border:1.5px solid #ece7dd;border-radius:18px;padding:16px;cursor:pointer" style-hover="border-color:#5DA4CD">
+      <div style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:17px;color:#1e2124">B · Role code at signup</div>
+      <div style="font-size:12.5px;color:#6b7076;margin-top:6px;line-height:1.5">She signs up like anyone, then enters a mentor code from her welcome email. The code sets the role at creation.</div>
+    </div>
+  </div>
+  <div style="margin-top:14px;background:#f8efdb;border-radius:14px;padding:12px 14px;font-size:11.5px;color:#8a5f18;line-height:1.5">Either way, the rule is the same: <strong>no human edits a role after the fact.</strong> Everything from the next screen on is identical.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Login" style="height:100%;display:flex;flex-direction:column;padding:28px 26px 30px;box-sizing:border-box;overflow-y:auto">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:32px;font-size:11px;letter-spacing:.14em;color:#4a90b8;font-weight:600">{{ loginKicker }}</div>
+  <div style="margin-top:10px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:26px;line-height:1.2;color:#1e2124;font-weight:600">{{ loginTitle }}</div>
+  <div style="margin-top:10px;font-size:13.5px;color:#6b7076;font-weight:300;line-height:1.55">{{ loginBody }}</div>
+  <div style="margin-top:20px;background:#fff;border:1px solid #ece7dd;border-radius:16px;padding:15px">
+    <div style="font-size:10.5px;letter-spacing:.1em;color:#9a8579;font-weight:600">EMAIL</div>
+    <div style="margin-top:5px;font-size:14.5px;color:#1e2124">{{ mentorEmail }}</div>
+  </div>
+  <div style="margin-top:11px;background:#fff;border:1.5px solid #5DA4CD;border-radius:16px;padding:15px">
+    <div style="font-size:10.5px;letter-spacing:.1em;color:#9a8579;font-weight:600">{{ codeLabel }}</div>
+    <div style="margin-top:9px;display:flex;gap:7px">
+      <sc-for list="{{ codeChars }}" as="c" hint-placeholder-count="6">
+      <span style="flex:1;border:1px solid #ece7dd;border-radius:10px;padding:11px 0;text-align:center;font:600 17px 'Space Mono',monospace;color:#1e2124">{{ c.ch }}</span>
+      </sc-for>
+    </div>
+    <div style="margin-top:9px;font-size:11.5px;color:#6b7076;line-height:1.45">{{ codeHint }}</div>
+  </div>
+  <div style="margin-top:14px;background:#f8efdb;border-radius:14px;padding:12px 14px;font-size:11.5px;color:#8a5f18;line-height:1.5">Lauren's steps list <strong>email + secret word</strong> for both roles. Same open question on both sides: does magic-link login make the secret word unnecessary?</div>
+  <div onClick="{{ next }}" style="margin-top:auto;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">{{ loginCta }}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isTerms }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Privacy and terms" style="height:100%;display:flex;flex-direction:column;padding:28px 26px 30px;box-sizing:border-box;overflow-y:auto">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:32px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:26px;line-height:1.22;color:#1e2124;font-weight:600">Before we start,<br>the ground rules.</div>
+  <div style="margin-top:10px;font-size:13.5px;color:#6b7076;font-weight:300;line-height:1.55">Same agreement the teens and their parents sign — plus the parts that apply to you as a trained mentor.</div>
+  <div style="margin-top:18px;background:#fff;border:1px solid #ece7dd;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px">
+    <div onClick="{{ toggleTerm0 }}" style="display:flex;gap:11px;align-items:flex-start;cursor:pointer"><span style="width:20px;height:20px;border-radius:6px;background:{{ termBg0 }};border:1.5px solid #5DA4CD;box-sizing:border-box;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex:none">{{ termMark0 }}</span><div style="font-size:13px;color:#1e2124;line-height:1.5">I agree to the <a href="#">Privacy Policy</a> and <a href="#">Terms &amp; Conditions</a>.</div></div>
+    <div onClick="{{ toggleTerm1 }}" style="display:flex;gap:11px;align-items:flex-start;cursor:pointer"><span style="width:20px;height:20px;border-radius:6px;background:{{ termBg1 }};border:1.5px solid #5DA4CD;box-sizing:border-box;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex:none">{{ termMark1 }}</span><div style="font-size:13px;color:#1e2124;line-height:1.5">I understand I'm a <strong>mandated reporter</strong> and know how to escalate a concern to the Program Manager.</div></div>
+    <div onClick="{{ toggleTerm2 }}" style="display:flex;gap:11px;align-items:flex-start;cursor:pointer"><span style="width:20px;height:20px;border-radius:6px;background:{{ termBg2 }};border:1.5px solid #5DA4CD;box-sizing:border-box;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex:none">{{ termMark2 }}</span><div style="font-size:13px;color:#1e2124;line-height:1.5">I'll keep what teens share private, except where safety requires otherwise.</div></div>
+  </div>
+  <div style="margin-top:14px;background:#eef6f7;border-radius:14px;padding:12px 14px;font-size:11.5px;color:#3d6e84;line-height:1.5">Unchecked by default — she has to read and acknowledge each one. The first line is the teen's screen exactly; the two below it are mentor-only.</div>
+  <div onClick="{{ agreeNext }}" style="margin-top:auto;background:{{ agreeBtnBg }};color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:{{ agreeCursor }}">Agree and continue</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isWelcome }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Welcome" style="height:100%;display:flex;flex-direction:column;padding:28px 26px 30px;box-sizing:border-box;overflow-y:auto">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:26px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:27px;line-height:1.2;color:#1e2124;font-weight:600">You're in, {{ firstName }}.</div>
+  <div style="margin-top:10px;font-size:13.5px;color:#6b7076;font-weight:300;line-height:1.55">Your interview, training and background check are done. You're in. Here's what's next, and what we're counting on from you.</div>
+  <div style="margin-top:18px;display:flex;flex-direction:column;gap:10px">
+    <div style="background:#fff;border:1px solid #ece7dd;border-radius:16px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start"><span style="width:26px;height:26px;border-radius:50%;background:#eef6f7;color:#4a90b8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">1</span><div><div style="font-size:13.5px;font-weight:600;color:#1e2124">The same survey your teens take</div><div style="font-size:12.5px;color:#6b7076;line-height:1.45;margin-top:3px">Matching compares both sides — so answer as yourself, not as a mentor.</div></div></div>
+    <div style="background:#fff;border:1px solid #ece7dd;border-radius:16px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start"><span style="width:26px;height:26px;border-radius:50%;background:#eef6f7;color:#4a90b8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">2</span><div><div style="font-size:13.5px;font-weight:600;color:#1e2124">A short bio for your profile</div><div style="font-size:12.5px;color:#6b7076;line-height:1.45;margin-top:3px">The first thing a teen reads when she's matched with you.</div></div></div>
+    <div style="background:#fffdf9;border:1.5px solid #cfe0ea;border-radius:16px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start"><img src="assets/brand/vescent-star-blue.svg" alt="" style="width:20px;margin-top:2px;flex:none"><div><div style="font-size:13.5px;font-weight:600;color:#1e2124">Weekly, at minimum</div><div style="font-size:12.5px;color:#6b7076;line-height:1.45;margin-top:3px">Check in with your circles and your teens at least once a week. That rhythm is the whole thing — it's what makes you a known presence instead of a stranger.</div></div></div>
+  </div>
+  <div onClick="{{ next }}" style="margin-top:20px;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Start the survey — about 6 minutes</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPersonality }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Personality" style="height:100%;background:#faf7f1;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#6b7076">{{ pCount }} of 20</span></div>
+  <div style="margin-top:14px;height:4px;background:#ece7dd;border-radius:99px"><div style="width:{{ pPct }};height:100%;background:#5DA4CD;border-radius:99px;transition:width .3s"></div></div>
+  <div style="margin-top:40px;font-size:11px;letter-spacing:.14em;color:#4a90b8;font-weight:500">{{ pDim }} · ANSWER AS YOURSELF</div>
+  <div style="margin-top:10px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:25px;line-height:1.25;color:#1e2124;font-weight:600">{{ pQ }}</div>
+  <div style="margin-top:30px;display:flex;flex-direction:column;gap:12px">
+    <div onClick="{{ ansA }}" style="background:#fff;border:2px solid #ece7dd;border-radius:18px;padding:19px;font-size:15px;line-height:1.45;color:#1e2124;cursor:pointer" style-hover="border-color:#5DA4CD;background:#eef6f7">{{ pA }}</div>
+    <div onClick="{{ ansB }}" style="background:#fff;border:2px solid #ece7dd;border-radius:18px;padding:19px;font-size:15px;line-height:1.45;color:#1e2124;cursor:pointer" style-hover="border-color:#5DA4CD;background:#eef6f7">{{ pB }}</div>
+  </div>
+  <div style="margin-top:auto;text-align:center;font-size:12.5px;color:#9aa0a6">same 20 questions, same order — worded for a college student</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLightning }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Lightning round" style="height:100%;background:#1e2124;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype-white.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#a9d6dc">lightning round · {{ lCount }} of 8</span></div>
+  <div style="margin-top:26px;text-align:center;font-size:11px;letter-spacing:.16em;color:#a9d6dc;font-weight:500">DON'T THINK — JUST TAP</div>
+  <div style="margin-top:20px;flex:1;display:flex;flex-direction:column;gap:14px">
+    <div onClick="{{ lA }}" style="flex:1;background:linear-gradient(135deg,#FEC2B9,#f5a99e);border-radius:22px;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:27px;color:#5d2c22;font-weight:600;cursor:pointer">{{ lOptA }}</div>
+    <div style="text-align:center;font-size:12px;color:#8b9094;font-weight:500">or</div>
+    <div onClick="{{ lB }}" style="flex:1;background:linear-gradient(135deg,#a9d6dc,#7fbcc6);border-radius:22px;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:27px;color:#1d4a56;font-weight:600;cursor:pointer">{{ lOptB }}</div>
+  </div>
+  <div style="margin-top:20px;text-align:center;font-size:12.5px;color:#8b9094">identical to the teen set — the overlap is the whole point</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isInterests }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Interests" style="height:100%;display:flex;flex-direction:column;padding:28px 26px 34px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#6b7076">almost done</span></div>
+  <div style="margin-top:34px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:26px;line-height:1.25;color:#1e2124;font-weight:600">What fills your time?</div>
+  <div style="margin-top:8px;font-size:13.5px;color:#6b7076;font-weight:300">Tap everything that's true. This is where a lot of first conversations start.</div>
+  <div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:9px">
+    <sc-for list="{{ interestChips }}" as="chip" hint-placeholder-count="12">
+      <span onClick="{{ chip.toggle }}" style="{{ chip.chipStyle }}">{{ chip.label }}</span>
+    </sc-for>
+  </div>
+  <sc-if value="{{ interestOtherOpen }}" hint-placeholder-val="{{ false }}">
+  <input value="{{ interestOther }}" onInput="{{ onInterestOther }}" placeholder="What else fills your time?" style="margin-top:14px;width:100%;border:1.5px solid #5DA4CD;border-radius:14px;padding:12px 15px;font-family:'Mulish',Tahoma,sans-serif;font-size:14px;color:#1e2124;background:#fbfaf7;outline:none;box-sizing:border-box">
+  </sc-if>
+  <div onClick="{{ next }}" style="margin-top:auto;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Next — how you text</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isResp }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Responsiveness" style="height:100%;display:flex;flex-direction:column;padding:28px 26px 30px;box-sizing:border-box;overflow-y:auto">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#6b7076">how you text</span></div>
+  <div style="margin-top:30px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:25px;line-height:1.25;color:#1e2124;font-weight:600">When a teen messages you, how fast can you honestly reply?</div>
+  <div style="margin-top:8px;font-size:13.5px;color:#6b7076;font-weight:300;line-height:1.5">Not your best week. Your normal one. We pair you with someone whose pace matches, so nobody's left hanging.</div>
+  <div style="margin-top:18px;display:flex;flex-direction:column;gap:10px">
+    <sc-for list="{{ paceOpts }}" as="p" hint-placeholder-count="3">
+      <div onClick="{{ p.pick }}" style="{{ p.optStyle }}">{{ p.label }}</div>
+    </sc-for>
+  </div>
+  
+  <div onClick="{{ next }}" style="margin-top:auto;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Continue</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isExp }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Lived experience" style="height:100%;display:flex;flex-direction:column;padding:28px 26px 30px;box-sizing:border-box;overflow-y:auto">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#6b7076">optional</span></div>
+  <div style="margin-top:28px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:23px;line-height:1.28;color:#1e2124;font-weight:600">Sometimes life experiences can be so helpful in a near-peer relationship.</div>
+  <div style="margin-top:10px;font-size:14px;color:#4a4d51;line-height:1.5">Are there any of the following personal experiences in your life that might be relevant for your match?</div>
+  <div style="margin-top:8px;font-size:12.5px;color:#6b7076;font-weight:300;line-height:1.5">Only the matching team sees this — it never appears on your profile or in a circle.</div>
+  <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:9px">
+    <sc-for list="{{ expChips }}" as="chip" hint-placeholder-count="9">
+      <span onClick="{{ chip.toggle }}" style="{{ chip.chipStyle }}">{{ chip.label }}</span>
+    </sc-for>
+  </div>
+  <sc-if value="{{ expOtherOpen }}" hint-placeholder-val="{{ false }}">
+  <input value="{{ expOther }}" onInput="{{ onExpOther }}" placeholder="In your words…" style="margin-top:12px;width:100%;border:1.5px solid #5DA4CD;border-radius:14px;padding:12px 15px;font-family:'Mulish',Tahoma,sans-serif;font-size:14px;color:#1e2124;background:#fbfaf7;outline:none;box-sizing:border-box">
+  </sc-if>
+  <div style="margin-top:16px;background:#eef6f7;border-radius:14px;padding:12px 14px;font-size:11.5px;color:#3d6e84;line-height:1.5">This is the mentor half of the teen's "want someone who's been through it too?" — without both sides there's nothing to intersect.</div>
+  <div style="margin-top:auto;padding-top:18px;display:flex;flex-direction:column;gap:9px">
+    <div onClick="{{ next }}" style="background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Continue</div>
+    <div onClick="{{ next }}" style="text-align:center;font-size:14px;color:#5f6b6d;font-weight:500;border:1.5px solid #e0dccf;border-radius:999px;padding:13px;cursor:pointer">Skip this — totally fine</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isBio }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Bio" style="height:100%;display:flex;flex-direction:column;padding:28px 26px 30px;box-sizing:border-box;overflow-y:auto">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#a9741f;font-weight:600">mentor only</span></div>
+  <div style="margin-top:26px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:25px;line-height:1.25;color:#1e2124;font-weight:600">Tell teens who you are</div>
+  <div style="margin-top:8px;font-size:13.5px;color:#6b7076;font-weight:300;line-height:1.5">This lives on your profile and it's the first thing a teen reads when she's matched with you. Warm, real, a little personal.</div>
+  <textarea value="{{ bio }}" onInput="{{ onBio }}" placeholder="I'm a junior at UGA studying psych. I grew up dancing, I make terrible playlists, and I'm here because someone did this for me once…" style="margin-top:16px;width:100%;min-height:104px;box-sizing:border-box;border:1.5px solid #ece7dd;border-radius:14px;padding:13px 15px;font-family:'Mulish',Tahoma,sans-serif;font-size:14px;line-height:1.5;color:#1e2124;resize:none;outline:none;background:#fbfaf7"></textarea>
+  <div style="margin-top:16px;font:600 11px 'Space Mono',monospace;letter-spacing:.08em;color:#6b7076;text-transform:uppercase">I'm here to help with</div>
+  <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+    <sc-for list="{{ helpChips }}" as="chip" hint-placeholder-count="8">
+      <span onClick="{{ chip.toggle }}" style="{{ chip.chipStyle }}">{{ chip.label }}</span>
+    </sc-for>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px dashed #ddd6c8">
+    <div style="font-size:10.5px;letter-spacing:.12em;color:#4a90b8;font-weight:600">WHAT SHE'LL SEE</div>
+    <div style="margin-top:11px;background:#fff;border:1px solid #ece7dd;border-radius:18px;padding:20px 18px;text-align:center">
+      <span style="width:70px;height:70px;border-radius:50%;display:inline-block;background:linear-gradient(135deg,#c9b8e0,#a9d6dc)"></span>
+      <div style="margin-top:12px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:20px;color:#1e2124;font-weight:600">{{ mentorName }}</div>
+      <div style="margin-top:6px"><span style="font-size:10px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:3px 10px">Mentor</span></div>
+      <div style="margin-top:12px;text-align:left;font-size:13.5px;line-height:1.6;color:{{ bioPreviewColor }}">{{ bioPreview }}</div>
+      <sc-if value="{{ hasHelp }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:14px;text-align:left;font-size:10px;letter-spacing:.12em;color:#4a90b8;font-weight:600">HERE TO HELP WITH</div>
+      <div style="margin-top:9px;display:flex;flex-wrap:wrap;gap:7px">
+        <sc-for list="{{ helpSelected }}" as="t" hint-placeholder-count="2">
+        <span style="border:1.5px solid #a9d6dc;background:#eef6f7;border-radius:999px;padding:6px 12px;font-size:12.5px;color:#1e2124">{{ t }}</span>
+        </sc-for>
+      </div>
+      </sc-if>
+    </div>
+  </div>
+  <div onClick="{{ next }}" style="margin-top:20px;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Continue</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Profile basics" style="height:100%;display:flex;flex-direction:column;padding:28px 26px 30px;box-sizing:border-box;overflow-y:auto">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#6b7076">nearly there</span></div>
+  <div style="margin-top:28px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:25px;line-height:1.25;color:#1e2124;font-weight:600">Your profile basics</div>
+  <div style="margin-top:8px;font-size:13.5px;color:#6b7076;font-weight:300;line-height:1.5">The exact same four fields the teen fills in. Your photo, username and role badge are what a circle sees.</div>
+  <div style="margin-top:18px;display:flex;align-items:center;gap:14px">
+    <span style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#c9b8e0,#a9d6dc);flex:none"></span>
+    <span style="font-size:13.5px;color:#4a90b8;font-weight:600;border:1px solid #cfe0ea;border-radius:999px;padding:9px 16px">Add a photo</span>
+  </div>
+  <div style="margin-top:16px;display:flex;flex-direction:column;gap:9px">
+    <div style="background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:12px 15px"><div style="font-size:10.5px;letter-spacing:.1em;color:#9a8579;font-weight:600">USERNAME</div><div style="margin-top:4px;font-size:14.5px;color:#1e2124">{{ displayName }}</div></div>
+    <div style="background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:12px 15px"><div style="font-size:10.5px;letter-spacing:.1em;color:#9a8579;font-weight:600">FIRST AND LAST NAME</div><div style="margin-top:4px;font-size:14.5px;color:#1e2124">{{ fullName }}</div></div>
+    <div style="background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:12px 15px"><div style="font-size:10.5px;letter-spacing:.1em;color:#9a8579;font-weight:600">BIRTHDATE</div><div style="margin-top:4px;font-size:14.5px;color:#1e2124">March 2, 2005</div></div>
+    <div style="background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:12px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px"><div><div style="font-size:10.5px;letter-spacing:.1em;color:#9a8579;font-weight:600">YOUR ROLE BADGE</div><div style="margin-top:4px;font-size:12.5px;color:#6b7076;line-height:1.4">Shown on your profile and beside your name in chat</div></div><span style="font-size:10px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:4px 11px;flex:none">Mentor</span></div>
+  </div>
+  <div style="margin-top:13px;background:#e5f4ec;border-radius:14px;padding:12px 14px;font-size:11.5px;color:#256d47;line-height:1.5">Not open — Lauren's Stage 1 stories give both roles the same basic profile: <strong>photo, username, first and last name, birthdate</strong>. The only difference is mentors skip age verification.</div>
+  <div onClick="{{ next }}" style="margin-top:18px;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Continue</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isNotifs }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Notifications" style="height:100%;display:flex;flex-direction:column;padding:28px 26px 30px;box-sizing:border-box;overflow-y:auto">
+  <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:18px;display:block"><span style="font-size:12px;color:#6b7076">last step</span></div>
+  <div style="margin-top:28px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:25px;line-height:1.25;color:#1e2124;font-weight:600">How should we reach you?</div>
+  <div style="margin-top:8px;font-size:13.5px;color:#6b7076;font-weight:300;line-height:1.5">We keep it minimal. Just the stuff that actually matters, like what your teen needs from you.</div>
+  <div style="margin-top:18px;display:flex;flex-direction:column;gap:9px">
+    <sc-for list="{{ notifRows }}" as="n" hint-placeholder-count="4">
+    <div onClick="{{ n.toggle }}" style="{{ n.rowStyle }}">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13.5px;font-weight:600;color:#1e2124">{{ n.label }}</div>
+        <div style="margin-top:3px;font-size:12px;color:#6b7076;line-height:1.45">{{ n.sub }}</div>
+        <div style="margin-top:5px;font:600 9.5px 'Space Mono',monospace;color:#9a8579">{{ n.cap }}</div>
+      </div>
+      <span style="{{ n.track }}"><span style="{{ n.knob }}"></span></span>
+    </div>
+    </sc-for>
+  </div>
+  <div style="margin-top:13px;background:#eef6f7;border-radius:14px;padding:12px 14px;font-size:11.5px;color:#3d6e84;line-height:1.5">Straight from Lauren's trigger table, in her priority order. If you go quiet for a week you get one gentle note, then Olivia follows up personally — the app won't keep pinging you.</div>
+  <div onClick="{{ next }}" style="margin-top:auto;padding-top:18px"><div style="background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;text-align:center;cursor:pointer">Finish setup</div></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Done" style="height:100%;display:flex;flex-direction:column;align-items:center;padding:56px 30px 40px;box-sizing:border-box;text-align:center">
+  <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:20px;display:block">
+  <div style="margin-top:44px"><svg width="80" height="80" viewBox="0 0 100 100" style="animation:vSpin 14s linear infinite"><g style="fill:#a9d6dc"><path d="M50 0 L56 40 L50 50 L44 40 Z"></path><path d="M50 100 L56 60 L50 50 L44 60 Z"></path><path d="M0 50 L40 44 L50 50 L40 56 Z"></path><path d="M100 50 L60 44 L50 50 L60 56 Z"></path><path d="M15 15 L45 41 L50 50 L41 45 Z"></path><path d="M85 85 L59 55 L50 50 L55 59 Z"></path><path d="M85 15 L55 41 L50 50 L59 45 Z"></path><path d="M15 85 L41 55 L50 50 L45 59 Z"></path></g></svg></div>
+  <div style="margin-top:28px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:27px;line-height:1.2;color:#1e2124;font-weight:600">All set, {{ firstName }}.</div>
+  <div style="margin-top:12px;font-size:14px;color:#6b7076;line-height:1.55;font-weight:300;max-width:280px">Your answers are with Olivia for matching. She'll assign your circle — we'll let you know the moment it's live.</div>
+  <div style="margin-top:20px;background:#f4f2ee;border-radius:14px;padding:12px 15px;font-size:11.5px;color:#6b7076;line-height:1.5;text-align:left">This was a one-time setup. From now on you stay signed in — we'll only ask you to log in again if your session expires.</div>
+  <div onClick="{{ next }}" style="margin-top:auto;width:100%;background:#1e2124;color:#fff;border-radius:999px;padding:15px;font-size:14.5px;font-weight:500;cursor:pointer">Go to my home</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Mentor home" style="height:100%;background:#f7f2ea;position:relative;display:flex;flex-direction:column">
+<div style="flex:1;min-height:0;overflow-y:auto">
+<div style="padding:24px 22px 96px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <img src="assets/brand/vescent-logotype.svg" alt="vescent" style="height:19px;display:block">
+    <div style="display:flex;align-items:center;gap:13px">
+      <span onClick="{{ openGear }}" style="cursor:pointer;display:flex;align-items:center">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5f6b6d" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3.4"></circle><circle cx="12" cy="12" r="7.6"></circle><path d="M12 4.4V2.2M12 19.6v2.2M4.4 12H2.2M19.6 12h2.2M6.6 6.6L5 5M17.4 17.4l1.6 1.6M6.6 17.4L5 19M17.4 6.6L19 5"></path></svg>
+      </span>
+      <span onClick="{{ openProfile }}" style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#c9b8e0,#a9d6dc);cursor:pointer"></span>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;display:flex;align-items:baseline;justify-content:space-between">
+    <span style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:22px;color:#1e2124;font-weight:600">Evening, {{ firstName }}.</span>
+    <span style="font-size:11px;color:#9a8579;font-weight:600">{{ waitingLabel }}</span>
+  </div>
+  <div style="margin-top:5px;font-size:10.5px;letter-spacing:.13em;color:#4a90b8;font-weight:600">NEW FOR YOU</div>
+
+  <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+    <sc-for list="{{ cards }}" as="c" hint-placeholder-count="4">
+    <div style="{{ c.cardStyle }}">
+      <div style="display:flex;gap:12px;align-items:center">
+        <span style="width:42px;height:42px;border-radius:{{ c.radius }};background:{{ c.grad }};flex:none"></span>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600;color:#1e2124">{{ c.name }}</span><span style="{{ c.badgeStyle }}">{{ c.badge }}</span><span style="{{ c.timeStyle }}">{{ c.time }}</span></div>
+          <div style="margin-top:2px;font-size:13px;color:#4a4f54;line-height:1.4">{{ c.snippet }}</div>
+        </div>
+        <span style="flex:none;font-size:12.5px;color:#4a90b8;font-weight:600">Open →</span>
+      </div>
+    </div>
+    </sc-for>
+  </div>
+
+  <div style="margin-top:20px;font-size:10.5px;letter-spacing:.13em;color:#4a90b8;font-weight:600">A MOMENT FOR YOU</div>
+  <div style="margin-top:8px;position:relative;background:linear-gradient(160deg,#fbf1ec,#f6ede2);border:1px solid #f0e2d8;border-radius:18px;padding:16px 16px 15px;overflow:hidden">
+    <span style="position:absolute;top:-24px;right:-18px;width:78px;height:78px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#FEC2B9,#f5a99e);opacity:.4"></span>
+    <div style="position:relative;display:flex;align-items:center;justify-content:space-between">
+      <span style="font:700 9px 'Space Mono',monospace;letter-spacing:.12em;color:#9a8579">{{ momentLabel }}</span>
+      <span onClick="{{ swapMoment }}" style="font-size:11.5px;color:#9a8579;cursor:pointer">↻ new</span>
+    </div>
+    <div style="position:relative;margin-top:8px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-style:italic;font-size:18px;line-height:1.35;color:#5d3a2e">“{{ moment }}”</div>
+  </div>
+</div>
+</div>
+
+<sc-if value="{{ gearOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:20">
+  <div onClick="{{ closeGear }}" style="position:absolute;inset:0;background:rgba(30,33,36,.5)"></div>
+  <sc-if value="{{ gearMenu }}" hint-placeholder-val="{{ true }}">
+  <div style="position:absolute;left:0;right:0;bottom:0;background:#1e2124;border-radius:22px 22px 0 0;display:flex;flex-direction:column;overflow:hidden;max-height:82%">
+    <div style="padding:12px 20px 0;display:flex;justify-content:center"><span style="width:44px;height:5px;border-radius:99px;background:#3c4046"></span></div>
+    <div style="padding:16px 22px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #33373c">
+      <div style="display:flex;align-items:center;gap:10px">
+        <svg width="18" height="18" viewBox="0 0 100 100"><path d="M50 0 L62 38 L100 50 L62 62 L50 100 L38 62 L0 50 L38 38 Z" fill="#fff"></path></svg>
+        <div><div style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:17px;font-weight:700;color:#fff">Vescent</div><div style="font-size:9.5px;letter-spacing:.18em;color:#8b9094;font-weight:600">ADMIN PORTAL</div></div>
+      </div>
+      <span onClick="{{ closeGear }}" style="color:#8b9094;font-size:20px;cursor:pointer">✕</span>
+    </div>
+    <div style="flex:1;min-height:0;overflow-y:auto;padding:14px 14px 22px">
+      <div onClick="{{ openGearUsers }}" style="display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:12px;background:#33373c;cursor:pointer">
+        <span style="width:16px;height:16px;border-radius:50%;border:2.5px solid #c8ccd0;box-sizing:border-box;flex:none"></span>
+        <span style="flex:1;font-size:15px;font-weight:600;color:#fff">Users</span>
+        <span style="color:#8b9094;font-size:17px">›</span>
+      </div>
+      <div style="margin-top:16px;background:#2a2e33;border-radius:14px;padding:13px 15px;font-size:11.5px;color:#9aa0a6;line-height:1.5">The mentor role sees only the portal areas granted to it — Users for now. The full menu (match queue, flagged content, roles) is Super-admin. Teens never see the gear.</div>
+    </div>
+  </div>
+  </sc-if>
+  <sc-if value="{{ gearUsersView }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;display:flex;flex-direction:column;overflow:hidden;max-height:82%">
+    <div style="padding:12px 20px 0;display:flex;justify-content:center"><span style="width:44px;height:5px;border-radius:99px;background:#d8d2c6"></span></div>
+    <div style="padding:14px 20px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee7db">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span onClick="{{ backToGearMenu }}" style="color:#4a90b8;font-size:18px;cursor:pointer;line-height:1">‹</span>
+        <div><div style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:18px;font-weight:600;color:#1e2124">Users</div><div style="font-size:11px;color:#a9741f;font-weight:600;margin-top:2px">ROLE-GATED · VIEW ONLY · TEENS NEVER SEE THIS</div></div>
+      </div>
+      <span onClick="{{ closeGear }}" style="color:#4a90b8;font-size:20px;cursor:pointer">✕</span>
+    </div>
+    <div style="flex:1;min-height:0;overflow-y:auto;padding:6px 18px 22px">
+      <sc-for list="{{ gearUsers }}" as="g" hint-placeholder-count="6">
+      <div style="display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid #f2ede3">
+        <span style="width:34px;height:34px;border-radius:50%;flex:none;background:{{ g.color }};display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;font-weight:700">{{ g.initial }}</span>
+        <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600;color:#1e2124">{{ g.name }}</div><div style="font-size:11.5px;color:#6b7076;line-height:1.4">{{ g.sub }}</div></div>
+        <span style="{{ g.badgeStyle }}">{{ g.role }}</span>
+      </div>
+      </sc-for>
+      <div style="margin-top:16px;background:#eef6f7;border-radius:14px;padding:13px 15px;font-size:11.5px;color:#3d6e84;line-height:1.5">Mentors see the full user list, view only — no role changes, no blocking. Those actions live in the Super-admin portal. Profile and log out live under your avatar, same as the current app.</div>
+    </div>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ profileOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:20">
+  <div onClick="{{ closeProfile }}" style="position:absolute;inset:0;background:rgba(30,33,36,.5)"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;display:flex;flex-direction:column;overflow:hidden;max-height:88%">
+    <div style="padding:12px 20px 0;display:flex;justify-content:center"><span style="width:44px;height:5px;border-radius:99px;background:#d8d2c6"></span></div>
+    <div style="padding:14px 20px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee7db">
+      <div style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:18px;font-weight:600;color:#1e2124">Personal information</div>
+      <span onClick="{{ logOut }}" style="color:#4a90b8;font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline">Log out</span>
+    </div>
+    <div style="flex:1;min-height:0;overflow-y:auto;padding:16px 20px 24px">
+      <div style="display:flex;align-items:center;gap:14px">
+        <span style="width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#c9b8e0,#a9d6dc);flex:none"></span>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <span style="border:1.5px solid #5DA4CD;color:#2f6f96;background:#eef6f7;border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;text-align:center">Edit profile</span>
+          <span style="border:1.5px solid #ece7dd;color:#6b7076;background:#fff;border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;text-align:center">Reset secret word</span>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;flex-direction:column">
+        <sc-for list="{{ profileRows }}" as="p" hint-placeholder-count="6">
+        <div style="display:flex;align-items:center;padding:12px 2px;border-bottom:1px solid #f2ede3">
+          <span style="width:130px;flex:none;font-size:12.5px;color:#8b9094;font-weight:600">{{ p.label }}</span>
+          <span style="font-size:14px;color:#1e2124">{{ p.val }}</span>
+        </div>
+        </sc-for>
+      </div>
+      <div style="margin-top:16px;background:#f4f2ee;border-radius:14px;padding:13px 15px;font-size:11.5px;color:#6b7076;line-height:1.5">Same surface for every role — this mirrors the current app: profile and log out under the avatar, role tools behind the gear.</div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<div style="position:absolute;bottom:0;left:0;right:0;height:66px;background:rgba(255,253,249,.94);border-top:1px solid #ece3d5;display:flex;align-items:center;justify-content:space-around;padding-bottom:6px;box-sizing:border-box">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#1e2124"><svg width="22" height="22"><rect x="4" y="4" width="14" height="14" rx="4" fill="currentColor"></rect></svg><span style="font-size:10px;font-weight:700">Home</span></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#9aa0a6"><svg width="28" height="22"><circle cx="10" cy="11" r="6" fill="none" stroke="currentColor" stroke-width="2"></circle><circle cx="19" cy="11" r="6" fill="none" stroke="currentColor" stroke-width="2"></circle></svg><span style="font-size:10px;font-weight:600">Circles</span></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#9aa0a6"><svg width="22" height="22"><rect x="3" y="5" width="16" height="12" rx="4" fill="none" stroke="currentColor" stroke-width="2"></rect></svg><span style="font-size:10px;font-weight:600">Messages</span></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#9aa0a6"><svg width="22" height="22"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"></circle></svg><span style="font-size:10px;font-weight:600">You</span></div>
+</div>
+</div>
+</sc-if>
+
+</div>
+</x-import>
+</sc-if>
+
+<sc-if value="{{ isChecklist }}" hint-placeholder-val="{{ false }}">
+<div style="width:100%;max-width:820px;background:#fffdf9;border:1px solid #e6ded0;border-radius:20px;padding:30px 32px 34px;box-sizing:border-box">
+  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap">
+    <div style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:24px;color:#1e2124;font-weight:600">Mentor vs. teen onboarding — the full diff</div>
+    <span style="font:600 10px 'Space Mono',monospace;color:#6b7076">FOR ERIC · {{ today }}</span>
+  </div>
+  <div style="margin-top:9px;font-size:13.5px;color:#6b7076;line-height:1.55;max-width:660px">Every place the mentor flow departs from the teen flow, and every place it deliberately doesn't. Built against Lauren's Stage 1 stories (§1 Mentor Login) and the roles &amp; badges doc. <strong style="color:#1e2124">Rule of thumb: same screen wherever we can — we don't want an exception screen per role.</strong></div>
+
+  <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    <span style="font:700 9.5px 'Space Mono',monospace;letter-spacing:.05em;padding:3px 8px;border-radius:5px;background:#e5f4ec;color:#2f8f5b">SAME</span><span style="font-size:11.5px;color:#6b7076">reused as-is</span>
+    <span style="font:700 9.5px 'Space Mono',monospace;letter-spacing:.05em;padding:3px 8px;border-radius:5px;background:#e2eef7;color:#2f6f96;margin-left:8px">REFRAMED</span><span style="font-size:11.5px;color:#6b7076">same screen, mentor copy</span>
+    <span style="font:700 9.5px 'Space Mono',monospace;letter-spacing:.05em;padding:3px 8px;border-radius:5px;background:#f3ece4;color:#8a7a66;margin-left:8px">SKIP</span><span style="font-size:11.5px;color:#6b7076">teen has it, mentor doesn't</span>
+    <span style="font:700 9.5px 'Space Mono',monospace;letter-spacing:.05em;padding:3px 8px;border-radius:5px;background:#f8efdb;color:#a9741f;margin-left:8px">MENTOR-ONLY</span><span style="font-size:11.5px;color:#6b7076">new build</span>
+  </div>
+
+  <sc-for list="{{ diffGroups }}" as="grp" hint-placeholder-count="6">
+  <div style="margin-top:26px">
+    <div style="font:700 10.5px 'Space Mono',monospace;letter-spacing:.06em;color:#1e2124;text-transform:uppercase;padding-bottom:9px;border-bottom:2px solid #1e2124">{{ grp.title }}</div>
+    <sc-for list="{{ grp.rows }}" as="r" hint-placeholder-count="4">
+    <div style="display:flex;gap:14px;align-items:flex-start;padding:13px 2px;border-bottom:1px solid #f0e9dd">
+      <span style="{{ r.tagStyle }}">{{ r.tag }}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13.5px;font-weight:600;color:#1e2124;line-height:1.4">{{ r.what }}</div>
+        <div style="margin-top:3px;font-size:12.5px;color:#5f6b6d;line-height:1.5">{{ r.detail }}</div>
+        <sc-if value="{{ r.hasAsk }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:7px;font-size:12px;color:#8a5f18;background:#f8efdb;border-radius:9px;padding:8px 11px;line-height:1.45"><strong>Needs Eric:</strong> {{ r.ask }}</div>
+        </sc-if>
+      </div>
+    </div>
+    </sc-for>
+  </div>
+  </sc-for>
+
+  <div style="margin-top:26px;background:#f4f2ee;border-radius:16px;padding:18px 20px">
+    <div style="font:700 10.5px 'Space Mono',monospace;letter-spacing:.06em;color:#6b7076;text-transform:uppercase">Deliberately not in this prototype</div>
+    <div style="margin-top:7px;font-size:12.5px;color:#5f6b6d;line-height:1.6">We prototyped onboarding only, because that's where the two roles genuinely diverge. The rest of the mentor experience — circle ownership (update circle photo, add/remove members, moderate and remove content), the flagged-content queue, Program Manager escalation, and the 12-week playbook surface — is still to be designed. Lauren's stories cover them; the screens don't exist yet.</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showPhone }}" hint-placeholder-val="{{ true }}">
+<div style="max-width:430px;width:100%;display:flex;flex-direction:column;align-items:center;gap:8px">
+  <sc-if value="{{ showFlag }}" hint-placeholder-val="{{ true }}">
+  <span style="{{ flagStyle }}">{{ flagLabel }}</span>
+  </sc-if>
+  <div style="text-align:center;font-size:12.5px;line-height:1.5;color:#5f6b6d">{{ caption }}</div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;900px&quot;,&quot;height&quot;:&quot;1120px&quot;},&quot;mentorName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Kelsey B.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo mentor&quot;},&quot;showFlags&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;For Eric&quot;}}">
+class Component extends DCLogic {
+  state = { screen:'entry', mode:'A', terms:[false,false,false], qi:0, li:0, interests:['music','being outside'], interestOther:'', interestOtherOpen:false, pace:1, exp:['anxiety'], expOther:'', expOtherOpen:false, expNone:false, bio:'', help:['anxiety','confidence'], notifs:[true,true,true,true], gearOpen:false, gearView:'menu', profileOpen:false, momentIdx:0 };
+
+  ORDER = ['entry','login','terms','welcome','personality','lightning','interests','resp','exp','bio','profile','notifs','done','home','checklist'];
+
+  PQ = [
+    { d:'ENERGY', q:"After a long day of classes, what sounds better?", a:"Being around people", b:"Chilling alone" },
+    { d:'ENERGY', q:"When you're stressed, what helps more?", a:"Venting to a friend or being around people", b:"Taking space and processing it alone" },
+    { d:'ENERGY', q:"At a party or group hangout, you're more likely to…", a:"Talk to lots of different people", b:"Stick with one or two you know" },
+    { d:'HOW YOU TAKE THINGS IN', q:"When someone gives you directions, what works better?", a:"Step-by-step details", b:"The general idea — I'll figure it out" },
+    { d:'HOW YOU TAKE THINGS IN', q:"You're more drawn to…", a:"What's real and happening now", b:"Ideas and what could be" },
+    { d:'HOW YOU TAKE THINGS IN', q:"Learning something new, you focus on…", a:"The facts and how it works", b:"The big picture and what it means" },
+    { d:'HOW YOU DECIDE', q:"When a friend has a problem, you first…", a:"Help them solve it", b:"Make sure they feel heard" },
+    { d:'HOW YOU DECIDE', q:"Making a tough choice, you go with…", a:"What makes the most sense", b:"What feels right" },
+    { d:'HOW YOU DECIDE', q:"You'd rather be seen as…", a:"Fair", b:"Kind" },
+    { d:'HOW YOU LIVE', q:"Your weekend is better when…", a:"You have a plan", b:"You keep it open" },
+    { d:'HOW YOU LIVE', q:"With coursework, you…", a:"Start early and go steady", b:"Do it when the pressure hits" },
+    { d:'HOW YOU LIVE', q:"You feel better when things are…", a:"Decided and settled", b:"Open to change" },
+    { d:'ENERGY', q:"You get your energy from…", a:"Being with other people", b:"Time to yourself" },
+    { d:'ENERGY', q:"In a group project you'd rather…", a:"Talk it all out together", b:"Take a piece and work on it solo" },
+    { d:'HOW YOU TAKE THINGS IN', q:"You tend to trust…", a:"What you can see and prove", b:"Your gut and your hunches" },
+    { d:'HOW YOU TAKE THINGS IN', q:"You'd rather a professor who…", a:"Gives clear examples to follow", b:"Lets you explore your own ideas" },
+    { d:'HOW YOU DECIDE', q:"When someone's upset with you, you first want to…", a:"Understand what's fair", b:"Fix how they're feeling" },
+    { d:'HOW YOU DECIDE', q:"A good decision is one that's…", a:"Logical", b:"True to your heart" },
+    { d:'HOW YOU LIVE', q:"Your room or bag is usually…", a:"Pretty organized", b:"A bit of controlled chaos" },
+    { d:'HOW YOU LIVE', q:"Plans changing last minute feels…", a:"Kind of stressful", b:"Kind of exciting" },
+  ];
+  LR = [
+    ["Making a playlist","Making a mess in the kitchen"],
+    ["Big group hangout","One close friend"],
+    ["Texting","Calling"],
+    ["Early bird","Night owl"],
+    ["Beach day","Mountain trip"],
+    ["Rom-com","True crime"],
+    ["Stick to a plan","Go with the flow"],
+    ["Sweet","Salty"],
+  ];
+  INTERESTS = ['drawing + art','sports + moving','music','gaming','reading + writing','animals','baking + cooking','fashion + thrifting','being outside','faith + community','shows + movies','+ other'];
+  EXPS = ['switching schools','parents splitting up','anxiety','losing someone','feeling left out','body image','family stress'];
+  HELP = ['anxiety','new school','friendships','confidence','body image','family stress','losing someone','school pressure'];
+  PACE = ["Same day, usually within a couple of hours","Every evening — I check in once a day","Every couple of days, reliably"];
+  NOTIFS = [
+    { label:'Teen activity', sub:"When one of your girls posts, replies, or asks something.", cap:'REAL-TIME, OR ONE DIGEST A DAY' },
+    { label:"This week's content", sub:"The new module unlocking, and how to guide the conversation.", cap:'ONCE A WEEK' },
+    { label:'Reconnection', sub:"Looks like she's waiting to hear back. No pressure, just a heads-up.", cap:'ONCE, THEN OLIVIA REACHES OUT' },
+    { label:'Milestones', sub:"When your circle hits a milestone, or a teen says you helped. Joins in Phase 2 \u2014 new mentors won't have milestones for a while.", cap:'PHASE 2' },
+  ];
+  MOMENTS = [
+    { k:'FROM THE QUOTE BANK · PLACEHOLDER', t:"Showing up is most of the work. The rest is listening." },
+    { k:'YOUR IMPACT THIS WEEK', t:"Your Nova Circle hit four weeks together." },
+    { k:'FROM THE QUOTE BANK · PLACEHOLDER', t:"You don't need the perfect words. You need to be there this week." },
+    { k:'YOUR IMPACT THIS WEEK', t:"Maya said your advice about her presentation actually helped." },
+    { k:'YOUR IMPACT THIS WEEK', t:"Seven girls answered the gratitude prompt you posted." },
+  ];
+
+  CH = { entry:1, login:1, terms:1, welcome:1, personality:2, lightning:2, interests:2, resp:2, exp:2, bio:3, profile:3, notifs:3, done:4, home:4, checklist:5 };
+
+  FLAGS = {
+    entry:      ['DIFFERS', 'teen: parent pays, then age check'],
+    login:      ['SAME', 'email + secret word, both roles'],
+    terms:      ['REFRAMED', 'teen line 1, mentor lines 2–3'],
+    welcome:    ['REFRAMED', 'sets the weekly-engagement expectation'],
+    personality:['SAME', 'same 20 Qs, college wording'],
+    lightning:  ['SAME', 'identical to the teen set'],
+    interests:  ['SAME', 'identical chip set'],
+    resp:       ['REFRAMED', 'a pace she can hold'],
+    exp:        ['REFRAMED', "Cynthia's wording"],
+    bio:        ['MENTOR-ONLY', 'no teen equivalent'],
+    profile:    ['SAME', 'identical four fields + role badge'],
+    notifs:     ['REFRAMED', "Lauren's four mentor categories"],
+    done:       ['REFRAMED', 'she waits for a circle, not a match'],
+    home:       ['SAME SHELL', 'teen layout, mentor content'],
+  };
+
+  captionOf(s) {
+    switch (s) {
+      case 'entry': return "Chapter 1 · Not an in-app screen — the one thing Eric needs to decide. All screening happens off-app; the app inherits an already-approved mentor.";
+      case 'login': return "Chapter 1 · Lauren's steps: email + secret word, same as the teen. Only the role behind it differs.";
+      case 'terms': return "Chapter 1 · Privacy + T&C is a shared screen. Mentors get two extra acknowledgements because they're mandated reporters.";
+      case 'welcome': return "Chapter 1 · Where the weekly-engagement expectation gets set — Lauren's stories put that here, in onboarding, not in a policy doc.";
+      case 'personality': return "Chapter 2 · The same 20 Jungian questions, same fixed order — reworded for a college student. This produces her 4-letter type.";
+      case 'lightning': return "Chapter 2 · Byte-for-byte the teen's set. Overlap here is the Interests signal.";
+      case 'interests': return "Chapter 2 · Same chips as the teen. A mentor-specific list would break the comparison.";
+      case 'resp': return "Chapter 2 · Reworded to ask what she can sustain. Responsiveness is the gate signal on both sides.";
+      case 'exp': return "Chapter 2 · Cynthia's wording. The mentor half of the teen's lived-experience question — without it there's nothing to intersect.";
+      case 'bio': return "Chapter 3 · The one genuinely new screen. Collected now so the bio card is ready the instant a teen is matched.";
+      case 'profile': return "Chapter 3 · Identical to the teen's four fields per Lauren's stories, plus the role badge. \"Where you are\" (4H) is skipped for mentors.";
+      case 'notifs': return "Chapter 3 · Lauren's four categories in her priority order, with her frequency caps and her tone rule: say what the teen needs, never what the mentor hasn't done.";
+      case 'done': return "Chapter 4 · One-time setup ends here. Her answers go to Olivia's matching tool; the session persists from now on.";
+      case 'home': return "Chapter 4 · Same shell as the teen home — same nav, same card, same NEW FOR YOU bucket — carrying mentor content. The gear (mentor-only) shows the user list, view only; the avatar opens profile + log out.";
+      default: return "";
+    }
+  }
+
+  go(s) { return () => this.setState({ screen:s, gearOpen:false, profileOpen:false }); }
+
+  chStyle(n) {
+    const on = this.CH[this.state.screen] === n;
+    return `font-size:11.5px;font-weight:${on?600:500};padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;background:${on?'#fffdf9':'transparent'};color:${on?'#1e2124':'#7d7768'}`;
+  }
+  chip(label, on) {
+    return `border:1.5px solid ${on?'#5DA4CD':'#ece7dd'};background:${on?'#eef6f7':'#fff'};border-radius:999px;padding:9px 15px;font-size:13.5px;color:#1e2124;cursor:pointer`;
+  }
+  tag(kind) {
+    const tone = { 'SAME':['#e5f4ec','#2f8f5b'], 'REFRAMED':['#e2eef7','#2f6f96'], 'SKIP':['#f3ece4','#8a7a66'], 'MENTOR-ONLY':['#f8efdb','#a9741f'], 'DECIDE':['#fbe9e5','#b4503c'] }[kind] || ['#eee','#666'];
+    return `font:700 9.5px 'Space Mono',monospace;letter-spacing:.04em;padding:4px 8px;border-radius:5px;background:${tone[0]};color:${tone[1]};white-space:nowrap;flex:none;min-width:88px;text-align:center`;
+  }
+  toggleIn(key, v) {
+    return () => this.setState(s => {
+      const list = s[key];
+      return { [key]: list.indexOf(v) >= 0 ? list.filter(x => x !== v) : list.concat([v]) };
+    });
+  }
+
+  DIFFS = [
+    { title:'Getting in', rows:[
+      { tag:'DECIDE', what:'The role must exist before her first login', detail:"Today the role is flipped by hand after the account is made, so she gets served the teen flow. Option A: Olivia pre-provisions the mentor record when screening clears and the app emails an invite link (this is what Lauren's doc proposes). Option B: she signs up normally and enters a mentor code that sets the role at creation.", ask:'A or B? Either way, no human edits a role after the fact. A also gives Olivia a place to see who was invited but hasn\u2019t finished their survey.' },
+      { tag:'SKIP', what:'No payment and no tier', detail:"A teen's tier comes from the parent's purchase and drives her entitlements. Mentors have no tier at all — their access comes from role." },
+      { tag:'SKIP', what:'No age verification', detail:'Cleared during screening. Teens still gate on the app-store age and consent APIs; mentors bypass that path entirely.' },
+      { tag:'SAME', what:'Email + secret word', detail:"Lauren's steps list it for both roles. The open retirement question (does magic-link login make it unnecessary?) applies to both — answer it once." },
+      { tag:'REFRAMED', what:'Privacy Policy + T&C', detail:'Shared screen. Mentors acknowledge two extra things in-app: mandated-reporter status with the PM escalation path, and the confidentiality boundary.' },
+      { tag:'REFRAMED', what:'Welcome sets the weekly-engagement expectation', detail:"Per Lauren: the minimum-weekly-engagement expectation is set during onboarding. It's a stated expectation, not a checkbox gate — the real commitment was signed in her application." },
+    ]},
+    { title:'The matching survey', rows:[
+      { tag:'SAME', what:'20 personality questions, fixed order', detail:"Identical bank and order, reworded for a college student (school → classes, teacher → professor). Produces her 4-letter type; Olivia's tool compares both sides, so the sets can't diverge." },
+      { tag:'SAME', what:'8-item lightning round', detail:'Byte-for-byte the teen set. The overlap IS the Interests signal.' },
+      { tag:'SAME', what:'Interests chips', detail:'Identical list. A mentor-specific list would break the comparison.' },
+      { tag:'REFRAMED', what:'Responsiveness / how you text', detail:'Asked as what she can sustain on a normal week rather than what she habitually does. Still the gate signal on both sides.', ask:'Is the mentor answer a pace she commits to hold, or a preference? The teen answers it as a habit — that asymmetry changes the gate math.' },
+      { tag:'SKIP', what:'4H "where you are"', detail:'Not asked of mentors. Nothing to collect and nothing to compare.' },
+      { tag:'REFRAMED', what:'Lived experience (optional)', detail:'Cynthia\u2019s wording: "Sometimes life experiences can be so helpful in a near-peer relationship. Are there any of the following personal experiences in your life that might be relevant for your match?" Matching-team visibility only, never on her profile.' },
+    ]},
+    { title:'Profile', rows:[
+      { tag:'MENTOR-ONLY', what:'Bio + "here to help with" tags', detail:"The one genuinely new screen. Collected during onboarding so the bio card is ready the moment a teen is matched — no chasing mentors later. Feeds the reveal." },
+      { tag:'SAME', what:'Basic profile: photo, username, first and last name, birthdate', detail:"Per Stage 1, both roles complete the identical four fields. Birthdate is collected for mentors too — it just isn't gating anything, because age was verified in screening." },
+      { tag:'SAME', what:'Role badge', detail:'Per the roles doc: every profile shows the assigned role badge, and it appears beside the username in chat so teens can tell who they\u2019re talking to.' },
+    ]},
+    { title:'Notifications', rows:[
+      { tag:'REFRAMED', what:"Three mentor categories in Phase 1, in Lauren's priority order", detail:'Teen activity → this week\u2019s content → reconnection → milestones. Caps per her trigger table: activity real-time or one daily digest, content weekly, reconnection once. Tone rule: say what the teen is doing or needs, never what the mentor hasn\u2019t done.' },
+      { tag:'MENTOR-ONLY', what:'Inactivity hands off to a human', detail:"No login in 7 days = one gentle note, then Olivia follows up personally. The app must not keep pinging — that's explicit in Lauren's doc." },
+    ]},
+    { title:'Home + session', rows:[
+      { tag:'SAME', what:'Same home shell, mentor content inside it', detail:"Same nav (Home · Circles · Messages · You), same card component, same NEW FOR YOU bucket, same closing warm card. The buckets are Lauren's: missed chat from a teen, missed circle activity, and what to post this week. Static content is fine for v1 per her note." },
+      { tag:'MENTOR-ONLY', what:'Role-gated gear icon → Users (view only)', detail:'Gear renders for mentor and admin roles; teens never see it. For mentors it holds exactly one option: the full user list, view only — no role changes, no blocking (those stay in the Super-admin portal). Profile + log out live under the avatar, same as the current app.' },
+      { tag:'SAME', what:'Persistent session', detail:'Remember-me on both roles; re-prompt only when the session expires. Onboarding is one-time setup.' },
+    ]},
+  ];
+
+  renderVals() {
+    const { screen, mode, qi, li, interests, exp, help, bio, pace, gearOpen, notifs, momentIdx } = this.state;
+    const set = (o) => () => this.setState(o);
+    const mentorName = this.props.mentorName ?? 'Kelsey B.';
+    const firstName = mentorName.split(' ')[0];
+    const q = this.PQ[qi] || this.PQ[0];
+    const l = this.LR[li] || this.LR[0];
+    const idx = this.ORDER.indexOf(screen);
+    const nextScreen = this.ORDER[Math.min(idx + 1, this.ORDER.length - 1)];
+    const flag = this.FLAGS[screen] || ['', ''];
+    const flagTone = { 'SAME':['#e5f4ec','#2f8f5b'], 'SAME SHELL':['#e5f4ec','#2f8f5b'], 'REFRAMED':['#e2eef7','#2f6f96'], 'MENTOR-ONLY':['#f8efdb','#a9741f'], 'DIFFERS':['#f3ece4','#8a7a66'] }[flag[0]] || ['#eee','#666'];
+
+    const cardBase = "background:#fffdf9;border:1px solid #ece3d5;border-radius:18px;padding:14px 15px;cursor:pointer";
+    const cardHot = "background:#fffdf9;border:1px solid #b8d9e2;border-radius:18px;padding:14px 15px;box-shadow:0 8px 22px -18px rgba(93,164,205,.55);cursor:pointer";
+    const badgeMentor = "font-size:9.5px;font-weight:600;color:#3d6e84;background:#dcecf3;border-radius:99px;padding:2px 7px";
+    const badgeQuiet = "font-size:9.5px;font-weight:600;color:#6b7076;background:#f0ece3;border-radius:99px;padding:2px 7px";
+    const timeHot = "margin-left:auto;font-size:11px;color:#c0563f;font-weight:600";
+    const timeQuiet = "margin-left:auto;font-size:11px;color:#9aa0a6;font-weight:600";
+
+    const cards = [
+      { name:'Maya R.', badge:'1-on-1', badgeStyle:badgeMentor, time:'12d', timeStyle:timeHot, snippet:"Quiet since your last message — a quick check-in could mean a lot.", grad:'linear-gradient(135deg,#FEC2B9,#f5c9a0)', radius:'50%', cardStyle:cardHot },
+      { name:'Your Nova Circle', badge:'circle', badgeStyle:badgeQuiet, time:'1h', timeStyle:timeHot, snippet:"4 girls replied to your module post — 2 asked you something.", grad:"url('assets/photos/circle-group.jpg') center/cover", radius:'12px', cardStyle:cardBase },
+      { name:'13. Coping Skills', badge:'to post', badgeStyle:badgeQuiet, time:'this week', timeStyle:timeQuiet, snippet:"Draft's written for you — one edit and it's up.", grad:'linear-gradient(150deg,#8f6ce0,#5b39c9)', radius:'11px', cardStyle:cardBase },
+      { name:'Office hours', badge:'Thursday 7pm', badgeStyle:badgeQuiet, time:'weekly', timeStyle:timeQuiet, snippet:"Set up front. Need to adjust a week? Post in the circle.", grad:'linear-gradient(135deg,#a9d6dc,#7fbcc6)', radius:'12px', cardStyle:cardBase },
+    ];
+
+    return {
+      isEntry: screen==='entry', isLogin: screen==='login', isTerms: screen==='terms', isWelcome: screen==='welcome',
+      isPersonality: screen==='personality', isLightning: screen==='lightning', isInterests: screen==='interests',
+      isResp: screen==='resp', isExp: screen==='exp', isBio: screen==='bio', isProfile: screen==='profile',
+      isNotifs: screen==='notifs', isDone: screen==='done', isHome: screen==='home',
+      isChecklist: screen==='checklist', showPhone: screen !== 'checklist',
+
+      mentorName, firstName, fullName: firstName + ' Brooks',
+      displayName: firstName.toLowerCase() + '.v',
+      mentorEmail: firstName.toLowerCase() + '.brooks@uga.edu',
+      codeLabel: mode === 'B' ? 'MENTOR CODE' : 'SECRET WORD',
+      codeChars: (mode === 'B' ? ['M','4','K','9','T','2'] : ['S','P','A','R','K','·']).map((ch, i) => ({ ch, i })),
+      codeHint: mode === 'B'
+        ? "From Olivia's welcome email. This is what makes her a mentor, not a teen."
+        : "From her invite email. Her role was already set when Olivia provisioned the account.",
+      loginKicker: mode === 'B' ? 'MENTOR CODE' : 'FROM YOUR INVITE EMAIL',
+      loginTitle: mode === 'B' ? 'Create your account' : 'Welcome, mentor.',
+      loginBody: mode === 'B'
+        ? "You signed up like anyone else. The code below is what tells us you're a mentor — it sets your role the moment the account is created."
+        : "Olivia set your account up when your screening cleared. Your role is already mentor — you just need to get in.",
+      loginCta: mode === 'B' ? 'Verify and continue' : 'Continue as mentor',
+
+      pickA: () => this.setState({ mode:'A', screen:'login' }),
+      pickB: () => this.setState({ mode:'B', screen:'login' }),
+      next: set({ screen: nextScreen }),
+      toggleTerm0: () => this.setState(s => ({ terms: s.terms.map((v,i) => i===0 ? !v : v) })),
+      toggleTerm1: () => this.setState(s => ({ terms: s.terms.map((v,i) => i===1 ? !v : v) })),
+      toggleTerm2: () => this.setState(s => ({ terms: s.terms.map((v,i) => i===2 ? !v : v) })),
+      termBg0: this.state.terms[0] ? '#5DA4CD' : '#fff', termBg1: this.state.terms[1] ? '#5DA4CD' : '#fff', termBg2: this.state.terms[2] ? '#5DA4CD' : '#fff',
+      termMark0: this.state.terms[0] ? '✓' : '', termMark1: this.state.terms[1] ? '✓' : '', termMark2: this.state.terms[2] ? '✓' : '',
+      agreeBtnBg: this.state.terms.every(Boolean) ? '#1e2124' : '#c3bdb1',
+      agreeCursor: this.state.terms.every(Boolean) ? 'pointer' : 'default',
+      agreeNext: () => { if (this.state.terms.every(Boolean)) this.setState({ screen: nextScreen }); },
+      restart: set({ screen:'entry', qi:0, li:0, gearOpen:false }),
+      goCh1: this.go('entry'), goCh2: this.go('personality'), goCh3: this.go('bio'), goCh4: this.go('home'), goCh5: this.go('checklist'),
+      ch1: this.chStyle(1), ch2: this.chStyle(2), ch3: this.chStyle(3), ch4: this.chStyle(4), ch5: this.chStyle(5),
+
+      pCount: qi + 1, pPct: Math.round(((qi + 1) / 20) * 100) + '%',
+      pDim: q.d, pQ: q.q, pA: q.a, pB: q.b,
+      ansA: () => this.advanceQ(), ansB: () => this.advanceQ(),
+      lCount: li + 1, lOptA: l[0], lOptB: l[1],
+      lA: () => this.advanceL(), lB: () => this.advanceL(),
+
+      interestChips: this.INTERESTS.map(v => ({ label:v, chipStyle:this.chip(v, interests.indexOf(v)>=0), toggle: v === '+ other' ? set({ interestOtherOpen: !this.state.interestOtherOpen }) : this.toggleIn('interests', v) })),
+      interestOtherOpen: this.state.interestOtherOpen,
+      interestOther: this.state.interestOther,
+      onInterestOther: (e) => this.setState({ interestOther: e.target.value }),
+
+      paceOpts: this.PACE.map((label, i) => ({
+        label,
+        optStyle: `background:${pace===i?'#eef6f7':'#fff'};border:2px solid ${pace===i?'#5DA4CD':'#ece7dd'};border-radius:16px;padding:16px 18px;font-size:14.5px;color:#1e2124;cursor:pointer`,
+        pick: set({ pace:i }),
+      })),
+
+      expChips: this.EXPS.concat(['+ other','none of these']).map(v => ({
+        label:v,
+        chipStyle: this.chip(v, v === '+ other' ? this.state.expOtherOpen : (v === 'none of these' ? this.state.expNone : exp.indexOf(v)>=0)),
+        toggle: v === '+ other' ? set({ expOtherOpen: !this.state.expOtherOpen })
+              : v === 'none of these' ? set({ expNone: !this.state.expNone, exp: [] })
+              : this.toggleIn('exp', v),
+      })),
+      expOtherOpen: this.state.expOtherOpen,
+      expOther: this.state.expOther,
+      onExpOther: (e) => this.setState({ expOther: e.target.value }),
+
+      bio,
+      onBio: (e) => this.setState({ bio: e.target.value }),
+      bioPreview: bio.trim() ? bio : "Your bio will show up right here — this is exactly how she'll read it.",
+      bioPreviewColor: bio.trim() ? '#2c2f33' : '#b0a898',
+      helpChips: this.HELP.map(v => ({ label:v, chipStyle:this.chip(v, help.indexOf(v)>=0), toggle:this.toggleIn('help', v) })),
+      helpSelected: help,
+      hasHelp: help.length > 0,
+
+      notifRows: this.NOTIFS.map((n, i) => ({
+        label:n.label, sub:n.sub, cap:n.cap,
+        rowStyle: `display:flex;gap:12px;align-items:center;background:#fff;border:1.5px solid ${notifs[i]?'#cfe0ea':'#ece7dd'};border-radius:14px;padding:13px 15px;cursor:pointer`,
+        track: `width:42px;height:25px;border-radius:99px;background:${notifs[i]?'#5DA4CD':'#ded8cb'};flex:none;display:flex;align-items:center;padding:3px;box-sizing:border-box;transition:background .2s`,
+        knob: `width:19px;height:19px;border-radius:50%;background:#fff;margin-left:${notifs[i]?'17px':'0'};transition:margin-left .2s`,
+        toggle: () => this.setState(s => { const c = s.notifs.slice(); c[i] = !c[i]; return { notifs:c }; }),
+      })),
+
+      cards,
+      waitingLabel: '3 need you',
+      moment: this.MOMENTS[momentIdx].t,
+      momentLabel: this.MOMENTS[momentIdx].k,
+      swapMoment: () => this.setState(s => ({ momentIdx: (s.momentIdx + 1) % this.MOMENTS.length })),
+
+      gearOpen,
+      gearMenu: this.state.gearView !== 'users',
+      gearUsersView: this.state.gearView === 'users',
+      openGear: set({ gearOpen:true, gearView:'menu' }), closeGear: set({ gearOpen:false, gearView:'menu' }),
+      openGearUsers: set({ gearView:'users' }), backToGearMenu: set({ gearView:'menu' }),
+      profileOpen: this.state.profileOpen,
+      openProfile: set({ profileOpen:true }), closeProfile: set({ profileOpen:false }),
+      logOut: set({ profileOpen:false }),
+      gearUsers: [
+        { name:'Maya R.', sub:'maya.r@example.com', role:'Teen', color:'#a9d6dc' },
+        { name:'Zoe T.', sub:'zoe.t@example.com', role:'Teen', color:'#FEC2B9' },
+        { name:mentorName, sub:firstName.toLowerCase()+'.brooks@uga.edu', role:'Mentor', color:'#5da4cd' },
+        { name:'Priya S.', sub:'priya.s@example.com', role:'Mentor', color:'#e0a458' },
+        { name:'Jordan B.', sub:'jordan.b@example.com', role:'Moderator', color:'#9cc5a1' },
+        { name:'Olivia Reyes', sub:'olivia@vescent.co', role:'Super-admin', color:'#6b5b95' },
+      ].map(u=>{
+        const tone = { 'Teen':['#e8f4f7','#3a8fb0','#a9d6dc'], 'Mentor':['#e2eef7','#2f6f96','#5da4cd'], 'Moderator':['#f8efdb','#a9741f','#e0a458'], 'Super-admin':['#efeaf6','#5b4b86','#6b5b95'] }[u.role];
+        return { ...u, initial:u.name[0], badgeStyle:`flex:none;font-size:10.5px;font-weight:600;background:${tone[0]};color:${tone[1]};border:1px solid ${tone[2]};border-radius:999px;padding:3px 9px` };
+      }),
+      profileRows: [
+        { label:'First Name', val:firstName },
+        { label:'Last Name', val:'Brooks' },
+        { label:'Nickname', val:firstName.toLowerCase()+'.v' },
+        { label:'Birth Date', val:'March 3, 2004' },
+        { label:'Phone Number', val:'(706) 555-0184' },
+        { label:'State', val:'Georgia' },
+      ],
+
+      diffGroups: this.DIFFS.map(g => ({
+        title: g.title,
+        rows: g.rows.map(r => ({ tag:r.tag, tagStyle:this.tag(r.tag), what:r.what, detail:r.detail, hasAsk: !!r.ask, ask: r.ask || '' })),
+      })),
+      today: 'JULY 2026',
+
+      showFlag: !!(this.props.showFlags ?? true) && !!flag[0],
+      flagLabel: flag[0] + ' · ' + flag[1],
+      flagStyle: `font:600 10px 'Space Mono',monospace;letter-spacing:.05em;padding:4px 10px;border-radius:6px;background:${flagTone[0]};color:${flagTone[1]}`,
+      caption: this.captionOf(screen),
+    };
+  }
+
+  advanceQ() { this.setState(s => s.qi >= 19 ? { screen:'lightning', qi:0 } : { qi: s.qi + 1 }); }
+  advanceL() { this.setState(s => s.li >= 7 ? { screen:'interests', li:0 } : { li: s.li + 1 }); }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=GFS+Didot&amp;family=Mulish:ital,wght@0,300..800;1,300..800&amp;family=Space+Mono&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e7e2d8;font-family:'Mulish',Tahoma,system-ui,sans-serif}
+a{color:#2f6f96;text-decoration:none}a:hover{color:#1e5678}
+*{box-sizing:border-box}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#d8d0c1;border-radius:6px}
+</style>
+</helmet>
+
+<div style="display:flex;width:1280px;min-height:860px;margin:0 auto;background:#faf7f1;color:#1e2124;border:1px solid #ded6c7">
+
+  <aside style="width:236px;flex-shrink:0;background:#1e2124;color:#e9e4da;display:flex;flex-direction:column;padding:22px 0">
+    <div style="padding:0 20px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #34383c">
+      <img src="assets/brand/vescent-star-blue.svg" alt="" style="width:20px;height:20px">
+      <div>
+        <div style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:17px;font-weight:700;color:#fff;line-height:1">Vescent</div>
+        <div style="font-size:10.5px;letter-spacing:.14em;color:#8b9094;text-transform:uppercase;margin-top:2px">Admin Portal</div>
+      </div>
+    </div>
+    <nav style="display:flex;flex-direction:column;gap:2px;padding:14px 12px;flex:1">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+        <div onClick="{{ n.go }}" style="{{ n.style }}">
+          <span style="opacity:.85">{{ n.dot }}</span>
+          <span style="flex:1">{{ n.label }}</span>
+          <sc-if value="{{ n.count }}" hint-placeholder-val="{{ false }}"><span style="{{ n.badgeStyle }}">{{ n.count }}</span></sc-if>
+        </div>
+      </sc-for>
+      <div style="margin:16px 12px 6px;padding-top:14px;border-top:1px solid #34383c;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b7076;font-weight:700">Spec reference · not features</div>
+      <sc-for list="{{ specNav }}" as="n" hint-placeholder-count="2">
+        <div onClick="{{ n.go }}" style="{{ n.style }}">
+          <span style="opacity:.6">{{ n.dot }}</span>
+          <span style="flex:1;font-style:italic">{{ n.label }}</span>
+          <span style="font-size:9px;letter-spacing:.08em;color:#6b7076;border:1px solid #3a4046;border-radius:4px;padding:1px 5px">DOC</span>
+        </div>
+      </sc-for>
+    </nav>
+    <div style="padding:14px 20px 0;border-top:1px solid #34383c;display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:34px;border-radius:999px;background:#6b5b95;color:#fff;display:flex;align-items:center;justify-content:center;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:16px;flex-shrink:0">O</div>
+      <div style="min-width:0">
+        <div style="font-size:13px;color:#fff;font-weight:600">Olivia Reyes</div>
+        <div style="margin-top:3px"><dc-import name="components/RoleBadge" role="Super-admin" hint-size="110px,22px"></dc-import></div>
+      </div>
+    </div>
+  </aside>
+
+  <main style="flex:1;min-width:0;display:flex;flex-direction:column">
+
+    <!-- ============ MATCH QUEUE ============ -->
+    <sc-if value="{{ isMatch }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:26px 30px 40px">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px">
+        <div>
+          <h1 style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:27px;font-weight:700;margin:0">Match queue</h1>
+          <p style="margin:6px 0 0;color:#6b7076;font-size:13.5px;max-width:560px">Suggestions are computed in the <strong style="color:#1e2124">matching tool outside the app</strong> (Phase 1) and imported here. <strong style="color:#1e2124">Olivia approves every match</strong> — nothing is auto-assigned. Tier 1 teens match to a <strong style="color:#1e2124">circle</strong>; Tier 2 teens get two independent matches: a 1:1 mentor and a circle.</p>
+        </div>
+        <div style="background:#eef4f7;border:1px solid #cfe3ea;border-radius:10px;padding:9px 13px;font-size:11px;color:#2f6f96;font-family:'Space Mono',monospace;line-height:1.5;white-space:nowrap">
+          <div style="font-weight:700;letter-spacing:.05em">WEIGHT MODEL · v1</div>
+          <div style="color:#5a7f92;margin-top:2px">Resp gate +25 · 4H 25 · Exp 20 · Pers 15 · Int 15</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:22px;margin-top:24px;align-items:flex-start">
+        <!-- teen queue -->
+        <div style="width:262px;flex-shrink:0">
+          <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8b9094;font-weight:600;margin-bottom:10px">Teens awaiting match</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ teens }}" as="t" hint-placeholder-count="3">
+              <div onClick="{{ t.select }}" style="{{ t.cardStyle }}">
+                <div style="{{ t.avStyle }}">{{ t.initial }}</div>
+                <div style="flex:1;min-width:0">
+                  <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600;color:#1e2124">{{ t.name }}</span><span style="{{ t.tierChipStyle }}">{{ t.tierChip }}</span></div>
+                  <div style="font-size:11.5px;color:#8b9094;margin-top:1px">{{ t.sub }}</div>
+                </div>
+                <sc-if value="{{ t.matched }}" hint-placeholder-val="{{ false }}"><span style="font-size:10.5px;font-weight:700;color:#2f8f5b;background:#e5f4ec;border-radius:999px;padding:3px 8px">✓ matched</span></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- proposals -->
+        <div style="flex:1;min-width:0">
+          <div style="background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:18px 20px;display:flex;gap:18px;align-items:center">
+            <div style="{{ sel.avStyle }}">{{ sel.initial }}</div>
+            <div style="flex:1">
+              <div style="display:flex;align-items:center;gap:9px"><span style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:20px;font-weight:700">{{ sel.name }}</span><dc-import name="components/RoleBadge" role="Teen" hint-size="70px,22px"></dc-import></div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:9px">
+                <sc-for list="{{ sel.chips }}" as="c" hint-placeholder-count="5"><span style="font-size:11.5px;color:#4a5056;background:#f4f0e8;border:1px solid #ece7dd;border-radius:6px;padding:3px 8px">{{ c }}</span></sc-for>
+              </div>
+            </div>
+          </div>
+
+          <sc-if value="{{ selIs1 }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8b9094;font-weight:600;margin:22px 2px 12px">Suggested circles — mentors who run group circles, with open seats</div>
+          </sc-if>
+          <sc-if value="{{ selIs2 }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8b9094;font-weight:600;margin:22px 2px 12px">Match 1 of 2 · Group circle — from the group-running pool</div>
+          </sc-if>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ circleSugs }}" as="cs" hint-placeholder-count="2">
+              <div style="{{ cs.cardStyle }}">
+                <div style="display:flex;align-items:center;gap:14px">
+                  <div style="{{ cs.avStyle }}">{{ cs.initial }}</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px;font-weight:700">{{ cs.name }}</span><sc-if value="{{ cs.isTop }}" hint-placeholder-val="{{ false }}"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#2f6f96;background:#e2eef7;border:1px solid #bcdaeb;border-radius:999px;padding:2px 8px">TOP PICK</span></sc-if></div>
+                    <div style="font-size:11.5px;color:#8b9094;margin-top:2px">{{ cs.mentors }} · {{ cs.seats }}</div>
+                    <div style="font-size:12px;color:#4a5056;margin-top:6px;line-height:1.45">{{ cs.why }}</div>
+                  </div>
+                  <div style="text-align:right;flex-shrink:0">
+                    <div style="font-family:'Space Mono',monospace;font-size:19px;font-weight:700;color:#1e2124">{{ cs.fit }}</div>
+                    <div style="font-size:10px;letter-spacing:.1em;color:#a3a8ac;text-transform:uppercase">fit</div>
+                  </div>
+                </div>
+                <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+                  <sc-if value="{{ cs.approved }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:600;color:#2f8f5b">✓ Approved — she joins this circle</div><button onClick="{{ cs.undoFn }}" style="border:1px solid #ded6c7;background:#fff;color:#6b7076;border-radius:8px;padding:6px 13px;font-size:12px;cursor:pointer;font-family:inherit">Undo</button></sc-if>
+                  <sc-if value="{{ cs.showActions }}" hint-placeholder-val="{{ true }}"><button onClick="{{ cs.approve }}" style="margin-left:auto;border:none;background:#1e2124;color:#fff;border-radius:8px;padding:8px 17px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit">Approve circle</button></sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ selIs2 }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8b9094;font-weight:600;margin:24px 2px 12px">Match 2 of 2 · 1:1 mentor — from the 1:1-available pool (may not run a group circle)</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ proposals }}" as="p" hint-placeholder-count="4">
+              <div style="{{ p.cardStyle }}">
+                <div style="display:flex;align-items:center;gap:14px">
+                  <div style="{{ p.rankStyle }}">{{ p.rankLabel }}</div>
+                  <div style="{{ p.avStyle }}">{{ p.initial }}</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px;font-weight:700">{{ p.name }}</span><dc-import name="components/RoleBadge" role="Mentor" hint-size="82px,22px"></dc-import><sc-if value="{{ p.isTop }}" hint-placeholder-val="{{ false }}"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#2f6f96;background:#e2eef7;border:1px solid #bcdaeb;border-radius:999px;padding:2px 8px">TOP PICK</span></sc-if></div>
+                    <div style="font-size:11.5px;color:#8b9094;margin-top:2px">{{ p.type }} · replies {{ p.pace }}</div>
+                  </div>
+                  <div style="text-align:right">
+                    <div style="{{ p.scoreStyle }}">{{ p.total }}</div>
+                    <div style="font-size:10px;letter-spacing:.1em;color:#a3a8ac;text-transform:uppercase">compat.</div>
+                  </div>
+                </div>
+
+                <sc-if value="{{ p.gated }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:12px;background:#fbecea;border:1px solid #f3c9c2;border-radius:8px;padding:8px 12px;font-size:12px;color:#b0453a"><strong>Responsiveness gate: FAILED</strong> — pace mismatch too wide. Not recommended.</div>
+                </sc-if>
+
+                <div style="margin-top:14px;display:flex;flex-direction:column;gap:7px">
+                  <sc-for list="{{ p.signals }}" as="s" hint-placeholder-count="5">
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <div style="width:104px;font-size:11.5px;color:#6b7076;flex-shrink:0">{{ s.label }}</div>
+                      <div style="flex:1;height:8px;background:#f0ebe2;border-radius:99px;overflow:hidden"><div style="{{ s.fillStyle }}"></div></div>
+                      <div style="width:56px;text-align:right;font-family:'Space Mono',monospace;font-size:11px;color:#4a5056;flex-shrink:0">{{ s.ptsLabel }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+
+                <div style="margin-top:13px;background:#f4f0e8;border-radius:9px;padding:10px 13px;display:flex;gap:9px;align-items:flex-start">
+                  <img src="assets/brand/vescent-spark-blue.svg" alt="" style="width:15px;height:15px;margin-top:1px;flex-shrink:0">
+                  <div style="font-size:12.5px;color:#4a5056;line-height:1.45"><strong style="color:#1e2124">How to connect ({{ p.type }}):</strong> {{ p.connect }}</div>
+                </div>
+
+                <div style="margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+                  <sc-if value="{{ p.approved }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;font-weight:600;color:#2f8f5b;display:flex;align-items:center;gap:6px">✓ Approved by Olivia — circle will be created</div></sc-if>
+                  <sc-if value="{{ p.showActions }}" hint-placeholder-val="{{ true }}"><div style="display:flex;gap:9px;margin-left:auto"><button onClick="{{ p.approve }}" style="border:none;background:#1e2124;color:#fff;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">Approve match</button></div></sc-if>
+                  <sc-if value="{{ p.undo }}" hint-placeholder-val="{{ false }}"><button onClick="{{ p.undoFn }}" style="margin-left:auto;border:1px solid #ded6c7;background:#fff;color:#6b7076;border-radius:8px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:inherit">Undo</button></sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ ONBOARDING DATA ============ -->
+    <sc-if value="{{ isOnboarding }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:26px 30px 40px">
+      <h1 style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:27px;font-weight:700;margin:0">Onboarding responses</h1>
+      <p style="margin:6px 0 0;color:#6b7076;font-size:13.5px;max-width:600px">The raw assessment signals collected in-app. In Phase 1 this is <strong style="color:#1e2124">exported for Olivia's matching tool</strong>; the scoring lives there, not in the app.</p>
+
+      <div style="display:flex;gap:22px;margin-top:22px;align-items:flex-start">
+        <div style="width:262px;flex-shrink:0">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <span style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8b9094;font-weight:600">Respondents</span>
+            <button onClick="{{ exportAll }}" style="border:1px solid #bcdaeb;background:#e2eef7;color:#2f6f96;border-radius:7px;padding:5px 10px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">Export all ⤓</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ obList }}" as="t" hint-placeholder-count="4">
+              <div onClick="{{ t.select }}" style="{{ t.cardStyle }}">
+                <div style="{{ t.avStyle }}">{{ t.initial }}</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:600">{{ t.name }}</div>
+                  <div style="font-size:11px;color:#8b9094;margin-top:1px">{{ t.created }}</div>
+                </div>
+                <dc-import name="components/RoleBadge" role="{{ t.role }}" hint-size="70px,22px"></dc-import>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="flex:1;min-width:0;background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:22px 24px">
+          <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0ebe2;padding-bottom:16px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="{{ obSel.avStyle }}">{{ obSel.initial }}</div>
+              <div>
+                <div style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:19px;font-weight:700">{{ obSel.name }}</div>
+                <div style="font-size:12px;color:#8b9094;margin-top:2px">Submitted {{ obSel.created }} · type <strong style="color:#2f6f96;font-family:'Space Mono',monospace">{{ obSel.type }}</strong></div>
+              </div>
+            </div>
+            <button onClick="{{ exportOne }}" style="border:none;background:#1e2124;color:#fff;border-radius:8px;padding:9px 16px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit">Export for matching tool ⤓</button>
+          </div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:18px">
+            <sc-for list="{{ obSel.sections }}" as="sec" hint-placeholder-count="5">
+              <div>
+                <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px"><span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8b9094;font-weight:700">{{ sec.title }}</span><span style="{{ sec.wStyle }}">{{ sec.weight }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <sc-for list="{{ sec.rows }}" as="r" hint-placeholder-count="2">
+                    <div style="display:flex;gap:12px;font-size:13.5px;line-height:1.4"><span style="flex:1;color:#4a5056">{{ r.q }}</span><span style="width:210px;flex-shrink:0;color:#1e2124;font-weight:500;text-align:right">{{ r.a }}</span></div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ USERS ============ -->
+    <sc-if value="{{ isUsers }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:26px 30px 40px">
+      <h1 style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:27px;font-weight:700;margin:0">User management</h1>
+      <p style="margin:6px 0 0;color:#6b7076;font-size:13.5px">Assign roles and run account actions. Each user carries exactly one active role badge across the whole app.</p>
+      <sc-if value="{{ maskName }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:14px;background:#e2eef7;border:1px solid #cfe3ea;border-radius:11px;padding:11px 16px">
+          <div style="font-size:13px;color:#2f6f96"><span style="font-weight:700">Masked as {{ maskName }}</span> — you are seeing the app exactly as this user does. Actions are read-only while masked.</div>
+          <div onClick="{{ exitMask }}" style="border:1px solid #9dc3d8;background:#fff;color:#2f6f96;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">Exit mask</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:16px;background:#f7f3ec;border:1px solid #ece7dd;border-left:3px solid #9cc5a1;border-radius:0 10px 10px 0;padding:10px 16px;font-size:12.5px;color:#4a5056">{{ toast }}</div>
+      </sc-if>
+      <div style="margin-top:22px;background:#fff;border:1px solid #ece7dd;border-radius:14px;overflow:hidden">
+        <div style="display:flex;padding:12px 20px;background:#f7f3ec;border-bottom:1px solid #ece7dd;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8b9094;font-weight:700">
+          <div style="flex:1">Member</div><div style="width:130px">Role</div><div style="width:86px">Status</div><div style="width:120px">Last login</div><div style="width:420px;text-align:right">Actions</div>
+        </div>
+        <sc-for list="{{ users }}" as="u" hint-placeholder-count="6">
+          <div style="{{ u.rowStyle }}">
+            <div style="flex:1;display:flex;align-items:center;gap:12px;min-width:0">
+              <div style="{{ u.avStyle }}">{{ u.initial }}</div>
+              <div style="min-width:0"><div style="font-size:14px;font-weight:600">{{ u.name }}</div><div style="font-size:11.5px;color:#8b9094">{{ u.email }}</div></div>
+            </div>
+            <div style="width:130px"><dc-import name="components/RoleBadge" role="{{ u.role }}" hint-size="100px,24px"></dc-import></div>
+            <div style="width:86px"><span style="{{ u.statusStyle }}">{{ u.statusLabel }}</span></div>
+            <div style="width:120px"><div style="font-size:12px;color:#4a5056;font-weight:500">{{ u.lastLogin }}</div><div style="font-size:10.5px;color:#a3a8ac">{{ u.lastLoginDate }}</div></div>
+            <div style="width:420px;display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;align-items:center">
+              <select onChange="{{ u.changeRole }}" style="border:1px solid #ded6c7;border-radius:7px;padding:6px 8px;font-size:12px;font-family:inherit;color:#4a5056;background:#fff;cursor:pointer">
+                <sc-for list="{{ u.roleOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.value }}" selected="{{ o.sel }}">{{ o.label }}</option></sc-for>
+              </select>
+              <button onClick="{{ u.toggleActive }}" title="Applies to the account, not their posts" style="{{ u.activeStyle }}">{{ u.activeLabel }}</button>
+              <button onClick="{{ u.editProfile }}" style="border:1px solid #ded6c7;background:#fff;color:#4a5056;border-radius:7px;padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap">Edit profile</button>
+              <button onClick="{{ u.resetPassword }}" style="border:1px solid #ded6c7;background:#fff;color:#4a5056;border-radius:7px;padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap">Reset password</button>
+              <button onClick="{{ u.mask }}" style="border:1px solid #cfe3ea;background:#e2eef7;color:#2f6f96;border-radius:7px;padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap">Mask</button>
+              <button onClick="{{ u.remove }}" style="border:1px solid #f3c9c2;background:#fff;color:#b0453a;border-radius:7px;padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap">Delete</button>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ confirmOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:fixed;inset:0;background:rgba(30,33,36,.45);display:flex;align-items:center;justify-content:center;z-index:60">
+          <div style="background:#fffdf9;border-radius:16px;padding:26px 28px;width:400px;box-shadow:0 18px 50px rgba(30,33,36,.25)">
+            <div style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:19px;font-weight:600;color:#1e2124">{{ confirmTitle }}</div>
+            <div style="margin-top:10px;font-size:13.5px;color:#4a4d51;line-height:1.55">{{ confirmBody }}</div>
+            <sc-if value="{{ confirmNeedsType }}" hint-placeholder-val="{{ false }}">
+            <input value="{{ confirmTyped }}" onChange="{{ onConfirmType }}" placeholder="Type DELETE to confirm" style="margin-top:14px;width:100%;box-sizing:border-box;border:1px solid #ded6c7;border-radius:8px;padding:10px 12px;font-size:13px;font-family:inherit;background:#fff">
+            </sc-if>
+            <div style="margin-top:18px;display:flex;gap:10px;justify-content:flex-end">
+              <button onClick="{{ confirmCancel }}" style="border:1px solid #ded6c7;background:#fff;color:#4a5056;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">Cancel</button>
+              <button onClick="{{ confirmGo }}" style="border:none;background:{{ confirmGoBg }};color:#fff;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:{{ confirmGoCursor }};font-family:inherit">{{ confirmAction }}</button>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ FLAGGED ============ -->
+    <sc-if value="{{ isFlagged }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:26px 30px 40px">
+      <h1 style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:27px;font-weight:700;margin:0">Flagged content</h1>
+      <p style="margin:6px 0 0;color:#6b7076;font-size:13.5px">Reported posts and comments awaiting a moderator decision.</p>
+      <div style="margin-top:22px;display:flex;flex-direction:column;gap:14px">
+        <sc-for list="{{ flags }}" as="f" hint-placeholder-count="3">
+          <div style="{{ f.cardStyle }}">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <div style="display:flex;align-items:center;gap:9px"><span style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#b0453a;background:#fbecea;border:1px solid #f3c9c2;border-radius:999px;padding:3px 10px">{{ f.flagType }}</span><span style="font-size:11.5px;color:#8b9094">{{ f.created }} · {{ f.createdDate }}</span></div>
+              <sc-if value="{{ f.resolved }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:600;color:#2f8f5b">✓ {{ f.resolvedLabel }}</span></sc-if>
+            </div>
+            <div style="margin-top:12px;background:#f7f3ec;border-left:3px solid #d8d0c1;border-radius:0 8px 8px 0;padding:11px 14px;font-size:13.5px;color:#3a4046;line-height:1.5;font-style:italic">"{{ f.content }}"</div>
+            <div style="margin-top:12px;display:flex;align-items:center;gap:22px;font-size:12.5px">
+              <div style="display:flex;align-items:center;gap:7px"><span style="color:#8b9094">Author:</span><span style="font-weight:600">{{ f.author }}</span><dc-import name="components/RoleBadge" role="{{ f.authorRole }}" hint-size="70px,22px"></dc-import></div>
+              <div style="display:flex;align-items:center;gap:7px"><span style="color:#8b9094">Reported by:</span><span style="font-weight:600">{{ f.reporter }}</span></div>
+            </div>
+            <sc-if value="{{ f.note }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px;font-size:12.5px;color:#6b7076"><span style="color:#8b9094">Reporter note:</span> {{ f.note }}</div></sc-if>
+            <sc-if value="{{ f.showActions }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:14px;display:flex;gap:9px;justify-content:flex-end">
+              <button onClick="{{ f.deactivate }}" style="border:1px solid #b0453a;background:#fff;color:#b0453a;border-radius:8px;padding:8px 15px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit">Deactivate</button>
+              <button onClick="{{ f.remove }}" style="border:none;background:#b0453a;color:#fff;border-radius:8px;padding:8px 15px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit">Delete</button>
+              <button onClick="{{ f.dismiss }}" style="border:1px solid #ded6c7;background:#fff;color:#6b7076;border-radius:8px;padding:8px 15px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit">Dismiss</button>
+            </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ CIRCLES ============ -->
+    <sc-if value="{{ isCircles }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:26px 30px 40px">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px">
+        <div>
+          <h1 style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:27px;font-weight:700;margin:0">Circle management</h1>
+          <p style="margin:6px 0 0;color:#6b7076;font-size:13.5px;max-width:600px">Create circles and assign mentors and teens. A 1:1 is a <strong style="color:#1e2124">circle of two</strong> — same surface, membership of two.</p>
+        </div>
+        <button onClick="{{ createCircle }}" style="border:none;background:#1e2124;color:#fff;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap">+ Create circle</button>
+      </div>
+      <sc-if value="{{ circleToast }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:16px;background:#f7f3ec;border:1px solid #ece7dd;border-left:3px solid #9cc5a1;border-radius:0 10px 10px 0;padding:10px 16px;font-size:12.5px;color:#4a5056">{{ circleToast }}</div>
+      </sc-if>
+      <div style="margin-top:22px;display:flex;flex-direction:column;gap:14px">
+        <sc-for list="{{ circles }}" as="c" hint-placeholder-count="3">
+          <div style="background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:18px 20px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="{{ c.avStyle }}">{{ c.initial }}</div>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:9px"><span style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:18px;font-weight:700">{{ c.name }}</span><span style="{{ c.typeStyle }}">{{ c.typeLabel }}</span></div>
+                <div style="font-size:12px;color:#8b9094;margin-top:2px">{{ c.sub }}</div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button onClick="{{ c.assign }}" style="border:1px solid #cfe3ea;background:#e2eef7;color:#2f6f96;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">Assign members</button>
+                <button onClick="{{ c.edit }}" style="border:1px solid #ded6c7;background:#fff;color:#4a5056;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">Edit</button>
+                <sc-if value="{{ c.notClosed }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.close }}" style="border:1px solid #e8cdb9;background:#fff;color:#a9741f;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap">Close circle</button></sc-if>
+                <sc-if value="{{ c.isClosed }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.reopen }}" style="border:1px solid #ded6c7;background:#f4f0e8;color:#6b7076;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap">Reopen</button></sc-if>
+              </div>
+            </div>
+            <sc-if value="{{ c.isClosed }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:12px;background:#f8efdb;border:1px solid #eadfc2;border-radius:9px;padding:9px 13px;font-size:12px;color:#8a5f18">Closed — unlisted from teens and mentors. Content retained for audit &amp; safety; nothing is deleted.</div>
+            </sc-if>
+            <div style="margin-top:14px;display:flex;gap:26px;align-items:flex-start">
+              <div style="flex:1">
+                <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8b9094;font-weight:700;margin-bottom:7px">Mentors</div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ c.mentors }}" as="m" hint-placeholder-count="2"><span style="font-size:12px;color:#2f6f96;background:#e2eef7;border:1px solid #cfe3ea;border-radius:999px;padding:4px 11px;font-weight:600">{{ m }}</span></sc-for></div>
+              </div>
+              <div style="flex:1.4">
+                <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8b9094;font-weight:700;margin-bottom:7px">Teens</div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ c.teensIn }}" as="t" hint-placeholder-count="3"><span style="font-size:12px;color:#4a5056;background:#f4f0e8;border:1px solid #ece7dd;border-radius:999px;padding:4px 11px">{{ t }}</span></sc-for></div>
+              </div>
+              <div style="width:230px;flex-shrink:0;background:linear-gradient(155deg,#eef6f7,#f6ede2);border:1px solid #dfe8ea;border-radius:10px;padding:11px 14px" data-comment-anchor="d7fd4823-thisweek">
+                <div style="font-size:10px;letter-spacing:.11em;color:#4a90b8;font-weight:700">THIS WEEK</div>
+                <sc-if value="{{ c.hasWeek }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top:4px;font-size:12.5px;font-weight:700;color:#1e2124">{{ c.weekTitle }}</div>
+                <div style="margin-top:3px;font-size:11px;color:#4a4d51;line-height:1.45">{{ c.weekText }}</div>
+                <div style="margin-top:5px;font-size:10.5px;color:#8b9094">{{ c.weekBy }} · read-only — mentors write it in the app</div>
+                </sc-if>
+                <sc-if value="{{ c.noWeek }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:4px;font-size:11.5px;color:#8b9094;line-height:1.45;font-style:italic">Not written yet — teens don't see the box.</div>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ ROLES & BADGES ============ -->
+    <sc-if value="{{ isRoles }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:26px 30px 40px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:#f4f0e8;border:1px solid #e6e0d4;border-radius:999px;padding:4px 13px;font-size:11px;font-weight:700;letter-spacing:.06em;color:#8b9094;margin-bottom:12px">SPEC REFERENCE — documentation for Eric, not a portal feature</div>
+      <h1 style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:27px;font-weight:700;margin:0">Roles &amp; badges</h1>
+      <p style="margin:6px 0 0;color:#6b7076;font-size:13.5px;max-width:640px">Four roles, four badges. A user shows <strong style="color:#1e2124">exactly one</strong> active badge — a moderator who graduates to mentor shows only the mentor badge. Badges render everywhere identity appears and can't be hidden by the user.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px">
+        <sc-for list="{{ roleCards }}" as="r" hint-placeholder-count="4">
+          <div style="{{ r.cardStyle }}">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <dc-import name="components/RoleBadge" role="{{ r.role }}" hint-size="120px,26px"></dc-import>
+              <span style="font-family:'Space Mono',monospace;font-size:11px;color:#a3a8ac">{{ r.enum }}</span>
+            </div>
+            <div style="margin-top:13px;font-size:13.5px;color:#4a5056;line-height:1.5">{{ r.desc }}</div>
+            <div style="margin-top:14px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8b9094;font-weight:700">Can</div>
+            <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ r.can }}" as="c" hint-placeholder-count="3"><span style="font-size:11.5px;color:#2f6f96;background:#e2eef7;border:1px solid #cfe3ea;border-radius:6px;padding:3px 9px">{{ c }}</span></sc-for></div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:22px;background:#fff;border:1px solid #ece7dd;border-radius:14px;overflow:hidden">
+        <div style="display:flex;align-items:center;padding:13px 16px;background:#1e2124;color:#e9e4da">
+          <div style="flex:1;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700">Permissions</div>
+          <sc-for list="{{ matrixCols }}" as="c" hint-placeholder-count="4"><div style="width:118px;text-align:center;flex-shrink:0"><dc-import name="components/RoleBadge" role="{{ c }}" hint-size="110px,24px"></dc-import></div></sc-for>
+        </div>
+        <sc-for list="{{ permMatrix }}" as="m" hint-placeholder-count="12">
+          <div style="{{ m.rowStyle }}">
+            <div style="flex:1;font-size:13px;color:#3a4046">{{ m.cap }}</div>
+            <sc-for list="{{ m.cells }}" as="cell" hint-placeholder-count="4"><div style="{{ cell.cellStyle }}">{{ cell.mark }}</div></sc-for>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:22px;background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:20px 24px">
+        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8b9094;font-weight:700;margin-bottom:14px">Where the badge renders</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+          <sc-for list="{{ renderSpots }}" as="s" hint-placeholder-count="3">
+            <div style="background:#f7f3ec;border:1px solid #ece7dd;border-radius:10px;padding:14px 16px">
+              <div style="font-size:13.5px;font-weight:700;color:#1e2124">{{ s.where }}</div>
+              <div style="font-size:12px;color:#6b7076;margin-top:4px;line-height:1.4">{{ s.detail }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ ACCESS / SECRET WORD ============ -->
+    <sc-if value="{{ isAccess }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:26px 30px 40px;max-width:760px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:#f4f0e8;border:1px solid #e6e0d4;border-radius:999px;padding:4px 13px;font-size:11px;font-weight:700;letter-spacing:.06em;color:#8b9094;margin-bottom:12px">SPEC REFERENCE — documentation for Eric, not a portal feature</div>
+      <h1 style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:27px;font-weight:700;margin:0">Access &amp; login</h1>
+      <p style="margin:6px 0 0;color:#6b7076;font-size:13.5px">Controls how members get into the community.</p>
+
+      <div style="margin-top:22px;background:#fff8ec;border:1px solid #f0d9a8;border-radius:14px;padding:20px 22px">
+        <div style="display:flex;align-items:center;gap:9px"><span style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#a9741f;background:#f8efdb;border:1px solid #e6cf9a;border-radius:999px;padding:3px 11px">⚑ DISCUSSION ITEM</span></div>
+        <div style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:18px;font-weight:700;margin-top:12px">Retire the secret word?</div>
+        <div style="font-size:13.5px;color:#4a5056;line-height:1.55;margin-top:8px">The secret word was a gatekeeper + scarcity precaution when we had little bad-actor security. With the <strong>pay model</strong>, delivering a secret word to parents after purchase is impractical. Open question for Eric: does <strong>single sign-on / magic-link login</strong> give us enough security on its own, or do we still issue parents a <strong>code</strong> after payment?</div>
+        <div style="margin-top:14px;display:flex;gap:10px">
+          <div style="flex:1;background:#fff;border:1px solid #ece7dd;border-radius:10px;padding:12px 14px"><div style="font-size:12.5px;font-weight:700;color:#2f8f5b">Option A · SSO / magic link</div><div style="font-size:12px;color:#6b7076;margin-top:4px;line-height:1.4">Parent pays → email magic link or 6-digit code → teen logs in. Less friction; security from the login itself.</div></div>
+          <div style="flex:1;background:#fff;border:1px solid #ece7dd;border-radius:10px;padding:12px 14px"><div style="font-size:12.5px;font-weight:700;color:#a9741f">Option B · Issued code</div><div style="font-size:12px;color:#6b7076;margin-top:4px;line-height:1.4">Keep an entry code, delivered post-payment. Extra gate, but a delivery + support burden.</div></div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:20px 22px;opacity:.92">
+        <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:15px;font-weight:700">Secret word</div><span style="font-size:11px;font-weight:700;color:#a9741f;background:#f8efdb;border:1px solid #e6cf9a;border-radius:999px;padding:3px 10px">LEGACY</span></div>
+        <div style="font-size:12.5px;color:#8b9094;margin-top:6px">Current gate. Kept until the decision above is made.</div>
+        <div style="margin-top:14px;display:flex;gap:10px;align-items:center">
+          <input value="sunrise-2026" style="flex:1;border:1px solid #ded6c7;border-radius:8px;padding:10px 13px;font-size:13.5px;font-family:'Space Mono',monospace;color:#4a5056;background:#faf7f1" readonly="readonly">
+          <button style="border:1px solid #ded6c7;background:#fff;color:#6b7076;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">Reset word</button>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:880}}">
+class Component extends DCLogic {
+  state = { view:'match', selTeen:0, obSel:0, decisions:{}, blocked:{}, roles:{}, resolved:{} };
+
+  PACE = ['Within an hour','A few times a day','Same day','Once a day'];
+
+  TEENS = [
+    { id:'maya', name:'Maya R.', initial:'M', color:'#a9d6dc', type:'INFP', paceIx:2, tier:2,
+      fourh:['Healthy Living','Civic Engagement'], exp:['Anxiety','New school'],
+      interests:['Drawing + art','Music','Reading + writing'] },
+    { id:'zoe', name:'Zoe T.', initial:'Z', color:'#FEC2B9', type:'ESFJ', paceIx:1, tier:1,
+      fourh:['Community','Leadership'], exp:['Family change'],
+      interests:['Sports + moving','Being outside','Music'] },
+    { id:'aaliyah', name:'Aaliyah K.', initial:'A', color:'#c9b7e0', type:'INTJ', paceIx:1, tier:1,
+      fourh:['STEM','Leadership'], exp:['Perfectionism'],
+      interests:['Gaming','Reading + writing','Music'] },
+  ];
+
+  MENTORS = [
+    { name:'Kelsey M.', initial:'K', color:'#5da4cd', type:'ENFJ', paceIx:2,
+      fourh:['Healthy Living','Community'], exp:['Anxiety','First-gen college'],
+      interests:['Drawing + art','Music','Being outside'],
+      connect:'Leads with warmth and vision — open with encouragement and paint the big picture before getting practical.' },
+    { name:'Priya S.', initial:'P', color:'#e0a458', type:'INFJ', paceIx:1,
+      fourh:['Civic Engagement','Leadership'], exp:['New school','Anxiety'],
+      interests:['Reading + writing','Music','Baking + cooking'],
+      connect:'Deeply attuned and private — give her space to reflect, and honor one-on-one depth over rapid back-and-forth.' },
+    { name:'Dana W.', initial:'D', color:'#9cc5a1', type:'ISFP', paceIx:3,
+      fourh:['STEM','Healthy Living'], exp:['Perfectionism'],
+      interests:['Drawing + art','Gaming'],
+      connect:'Gentle and hands-on — bonds through shared making, not talking. Expect a slower, steady rhythm.' },
+    { name:'Bri L.', initial:'B', color:'#FEC2B9', type:'ESFJ', paceIx:1,
+      fourh:['Community','Leadership'], exp:['Family change'],
+      interests:['Sports + moving','Being outside','Music'],
+      connect:'Organized and quick to respond — thrives on regular check-ins and concrete plans.' },
+  ];
+
+  GATE = [25,18,10,0];
+
+  overlap(a,b){ return a.filter(x=>b.includes(x)).length; }
+  sharedLetters(a,b){ let n=0; for(let i=0;i<4;i++) if(a[i]===b[i]) n++; return n; }
+
+  score(teen, m){
+    const diff = Math.abs(teen.paceIx - m.paceIx);
+    const gated = diff >= 3;
+    const resp = this.GATE[Math.min(diff,3)];
+    const fourh = Math.round(this.overlap(teen.fourh,m.fourh)/Math.max(1,teen.fourh.length)*25);
+    const exp = Math.round(this.overlap(teen.exp,m.exp)/Math.max(1,teen.exp.length)*20);
+    const pers = Math.round(this.sharedLetters(teen.type,m.type)/4*15);
+    const ints = Math.round(this.overlap(teen.interests,m.interests)/Math.max(1,teen.interests.length)*15);
+    const total = resp+fourh+exp+pers+ints;
+    const sig = (label,pts,max)=>({ label, pts, max, ptsLabel:`${pts}/${max}`,
+      fillStyle:`width:${Math.round(pts/max*100)}%;height:100%;border-radius:99px;background:${pts/max>=.66?'#5da4cd':pts/max>=.34?'#a9d6dc':'#d8d0c1'}` });
+    return { name:m.name, initial:m.initial, color:m.color, type:m.type, pace:this.PACE[m.paceIx].toLowerCase(),
+      connect:m.connect, total, gated,
+      signals:[ sig('Responsiveness',resp,25), sig('4H journey',fourh,25), sig('Experiences',exp,20), sig('Personality',pers,15), sig('Interests',ints,15) ] };
+  }
+
+  avatar(color, size=44, fs=18){
+    return `width:${size}px;height:${size}px;border-radius:999px;background:${color};color:#1e2124;display:flex;align-items:center;justify-content:center;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:${fs}px;font-weight:600;flex-shrink:0`;
+  }
+
+  go(v){ return ()=>this.setState({view:v}); }
+
+  renderVals(){
+    const S=this.state;
+    const decisionCount = Object.keys(S.decisions).length;
+    const flagOpen = this.FLAGS ? 0 : 0;
+    const navStyle = (id,muted)=>`display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;font-size:13.5px;cursor:pointer;transition:background .12s;${S.view===id?'background:#2f353a;color:#fff;font-weight:600':muted?'color:#8b9094':'color:#b7bcc0'}`;
+    const nav = [
+      {id:'match',label:'Match queue',dot:'◆',count:this.TEENS.length-decisionCount},
+      {id:'onboarding',label:'Onboarding data',dot:'▤'},
+      {id:'users',label:'Users',dot:'◉'},
+      {id:'circles',label:'Circles',dot:'○'},
+      {id:'flagged',label:'Flagged content',dot:'⚑',count:this.flagCount()},
+    ].map(n=>({ ...n,
+      go:this.go(n.id),
+      style:navStyle(n.id),
+      badgeStyle:`font-size:10.5px;font-weight:700;background:${S.view===n.id?'#5da4cd':'#3a4046'};color:${S.view===n.id?'#08222e':'#cfd4d8'};border-radius:999px;padding:1px 7px;min-width:18px;text-align:center` }));
+    const specNav = [
+      {id:'roles',label:'Roles & badges',dot:'✦'},
+      {id:'access',label:'Access & login',dot:'⚿'},
+    ].map(n=>({ ...n, go:this.go(n.id), style:navStyle(n.id,true) }));
+
+    // MATCH
+    const teens = this.TEENS.map((t,i)=>({ ...t, sub:`${t.type} · replies ${this.PACE[t.paceIx].toLowerCase()}`,
+      tierChip:t.tier===2?'Circle + 1:1':'Circle',
+      tierChipStyle:`font-size:9.5px;font-weight:700;letter-spacing:.03em;border-radius:999px;padding:2px 8px;white-space:nowrap;${t.tier===2?'color:#6b5b95;background:#efe9f7;border:1px solid #d9cdea':'color:#2f6f96;background:#e2eef7;border:1px solid #cfe3ea'}`,
+      matched:!!S.decisions[t.id]||!!(S.circleDecisions||{})[t.id], select:()=>this.setState({selTeen:i}),
+      avStyle:this.avatar(t.color,40,16),
+      cardStyle:`display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:11px;cursor:pointer;border:1px solid ${i===S.selTeen?'#5da4cd':'#ece7dd'};background:${i===S.selTeen?'#eef4f7':'#fff'}` }));
+    const teen = this.TEENS[S.selTeen];
+    const sel = { name:teen.name, initial:teen.initial, avStyle:this.avatar(teen.color,54,22),
+      chips:[`${teen.tier===2?'Circle + 1:1 · $39':'Circle · $10'}`, `${teen.type}`, `Replies ${this.PACE[teen.paceIx].toLowerCase()}`, ...teen.fourh, ...teen.interests.slice(0,2)] };
+    const selIs2 = teen.tier===2, selIs1 = teen.tier===1;
+    const circleDecided = (S.circleDecisions||{})[teen.id];
+    const circleSugs = [
+      {id:'c1',name:'Your Nova Circle',initial:'N',color:'#a9d6dc',mentors:'Kelsey M. & Priya S.',seats:'3 open seats of 9',fit:87,why:'Kelsey scores highest among group-running mentors for this teen; circle skews Healthy Living.'},
+      {id:'c2',name:'Creative Minds',initial:'C',color:'#FEC2B9',mentors:'Bri L. & Dana W.',seats:'1 open seat of 8',fit:74,why:'Strong interests overlap (art, writing); pace fit is looser.'},
+    ].map((cs,i)=>({ ...cs, rankLabel:i===0?'1st':'2nd', avStyle:this.avatar(cs.color,40,16),
+      isTop:i===0, approved:circleDecided===cs.name, showActions:!circleDecided,
+      cardStyle:`background:#fff;border:1px solid ${circleDecided===cs.name?'#9cc5a1':'#ece7dd'};border-radius:14px;padding:16px 18px;${circleDecided&&circleDecided!==cs.name?'opacity:.55':''}`,
+      approve:()=>this.setState(s=>({circleDecisions:{...(s.circleDecisions||{}),[teen.id]:cs.name}})),
+      undoFn:()=>this.setState(s=>{const d={...(s.circleDecisions||{})};delete d[teen.id];return{circleDecisions:d};}) }));
+    const circleSugVals = { circleSugs, selIs2, selIs1, circleUndo:!!circleDecided };
+    const decided = S.decisions[teen.id];
+    const proposals = this.MENTORS.map(m=>this.score(teen,m)).sort((a,b)=>b.total-a.total).map((p,i)=>{
+      const approved = decided===p.name;
+      const rankColors=['#1e2124','#5da4cd','#a9d6dc','#d8d0c1'];
+      return { ...p, rank:i+1, isTop:i===0, rankLabel:`#${i+1}`,
+        rankStyle:`width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;flex-shrink:0;background:${i===0?'#1e2124':'#f4f0e8'};color:${i===0?'#fff':'#8b9094'}`,
+        avStyle:this.avatar(p.color,44,18),
+        scoreStyle:`font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:30px;font-weight:700;line-height:1;color:${p.gated?'#b0453a':i===0?'#2f6f96':'#1e2124'}`,
+        cardStyle:`background:#fff;border:1px solid ${approved?'#8fce9f':i===0&&!decided?'#bcdaeb':'#ece7dd'};border-radius:14px;padding:18px 20px;${p.gated?'opacity:.7':''}`,
+        approved, showActions:!decided, undo:approved, decline:this.go('match'),
+        approve:()=>this.setState(s=>({decisions:{...s.decisions,[teen.id]:p.name}})),
+        undoFn:()=>this.setState(s=>{const d={...s.decisions};delete d[teen.id];return{decisions:d};}) };
+    });
+
+    // ONBOARDING
+    const obDataFor = (t)=>([
+      {title:'Personality (20 Jungian Qs)', weight:'15%', rows:[
+        {q:'Computed 4-letter type', a:t.type},
+        {q:'Energy source', a:t.type[0]==='E'?'Extraverted':'Introverted'},
+        {q:'Decision style', a:t.type[2]==='F'?'Values / feeling':'Logic / thinking'} ]},
+      {title:'Responsiveness (gate + 25%)', weight:'gate', rows:[
+        {q:'How often she checks in', a:this.PACE[t.paceIx]},
+        {q:'Reply-time expectation', a:this.PACE[t.paceIx]} ]},
+      {title:'4H journey', weight:'25%', rows:t.fourh.map(f=>({q:'Focus area',a:f}))},
+      {title:'Experiences (optional)', weight:'20%', rows:t.exp.map(e=>({q:'Shared experience',a:e}))},
+      {title:'Interests', weight:'15%', rows:t.interests.map(x=>({q:'Interest area',a:x}))},
+    ]);
+    const obList = this.TEENS.map((t,i)=>({ ...t, role:'Teen', created:'Jul 21, 2026',
+      select:()=>this.setState({obSel:i}), avStyle:this.avatar(t.color,40,16),
+      cardStyle:`display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:11px;cursor:pointer;border:1px solid ${i===S.obSel?'#5da4cd':'#ece7dd'};background:${i===S.obSel?'#eef4f7':'#fff'}` }));
+    const obT = this.TEENS[S.obSel];
+    const obSel = { name:obT.name, initial:obT.initial, type:obT.type, created:'Jul 21, 2026',
+      avStyle:this.avatar(obT.color,48,20),
+      sections:obDataFor(obT).map(sec=>({ ...sec,
+        wStyle:`font-family:'Space Mono',monospace;font-size:10.5px;color:#2f6f96;background:#e2eef7;border:1px solid #cfe3ea;border-radius:5px;padding:1px 7px` })) };
+
+    // USERS
+    const ROLE_OPTS = ['Teen','Mentor','Moderator','Super-admin'];
+    const baseUsers = [
+      {id:'u1',name:'Maya R.',email:'maya.r@example.com',color:'#a9d6dc',role:'Teen',lastLogin:'2h ago',lastLoginDate:'Jul 31, 2026 · 7:41 AM'},
+      {id:'u2',name:'Zoe T.',email:'zoe.t@example.com',color:'#FEC2B9',role:'Teen',lastLogin:'Yesterday',lastLoginDate:'Jul 30, 2026 · 4:12 PM'},
+      {id:'u3',name:'Kelsey M.',email:'kelsey.m@example.com',color:'#5da4cd',role:'Mentor',lastLogin:'3h ago',lastLoginDate:'Jul 31, 2026 · 6:58 AM'},
+      {id:'u4',name:'Priya S.',email:'priya.s@example.com',color:'#e0a458',role:'Mentor',lastLogin:'4d ago',lastLoginDate:'Jul 27, 2026 · 9:03 PM'},
+      {id:'u5',name:'Jordan B.',email:'jordan.b@example.com',color:'#9cc5a1',role:'Moderator',lastLogin:'1h ago',lastLoginDate:'Jul 31, 2026 · 8:47 AM'},
+      {id:'u6',name:'Olivia Reyes',email:'olivia@vescent.co',color:'#6b5b95',role:'Super-admin',lastLogin:'Now',lastLoginDate:'Jul 31, 2026 · 9:40 AM'},
+    ];
+    const say = (t)=>this.setState({toast:t});
+    const users = baseUsers.filter(u=>!(S.deleted||{})[u.id]).map(u=>{
+      const role = S.roles[u.id]||u.role;
+      const blocked = !!S.blocked[u.id];
+      return { ...u, role, initial:u.name[0],
+        toggleActive:()=>{ if(!blocked){ this.setState({confirm:{kind:'deactivate',id:u.id,name:u.name}}); return; } this.setState(s=>({blocked:{...s.blocked,[u.id]:!s.blocked[u.id]}})); say(blocked?`${u.name} reactivated — account access restored.`:`${u.name} deactivated — sign-in blocked, content hidden from circles.`);},
+        activeLabel:blocked?'Activate':'Deactivate',
+        activeStyle:`border:1px solid ${blocked?'#8fce9f':'#ded6c7'};background:${blocked?'#e5f4ec':'#fff'};color:${blocked?'#2f8f5b':'#4a5056'};border-radius:7px;padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap`,
+        editProfile:()=>say(`Editing ${u.name}'s profile — name, email, pronouns, birthday, and photo are editable.`),
+        resetPassword:()=>say(`Password reset link sent to ${u.email}. Expires in 24 hours.`),
+        mask:()=>this.setState({mask:u.id,toast:''}),
+        remove:()=>this.setState({confirm:{kind:'delete',id:u.id,name:u.name},confirmTyped:''}),
+        lastLogin:u.lastLogin, lastLoginDate:u.lastLoginDate,
+        avStyle:this.avatar(u.color,38,15),
+        rowStyle:`display:flex;align-items:center;padding:13px 20px;border-bottom:1px solid #f0ebe2;${blocked?'opacity:.55':''}`,
+        statusLabel:blocked?'Blocked':'Active', statusStyle:`font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;${blocked?'color:#b0453a;background:#fbecea':'color:#2f8f5b;background:#e5f4ec'}`,
+        roleOpts:ROLE_OPTS.map(o=>({value:o,label:o,sel:o===role})),
+        changeRole:(e)=>{const v=e.target.value;this.setState(s=>({roles:{...s.roles,[u.id]:v}}));},
+        toggleBlock:()=>this.setState(s=>({blocked:{...s.blocked,[u.id]:!s.blocked[u.id]}})),
+        blockLabel:blocked?'Unblock':'Block',
+        blockStyle:`border:1px solid ${blocked?'#8fce9f':'#f3c9c2'};background:${blocked?'#e5f4ec':'#fff'};color:${blocked?'#2f8f5b':'#b0453a'};border-radius:7px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit` };
+    });
+
+    // CIRCLES
+    const circleSay = (t)=>this.setState({circleToast:t});
+    const circlesBase = [
+      {id:'c1',name:'Your Nova Circle',initial:'N',color:'#a9d6dc',type:'group',mentors:['Kelsey M.','Priya S.'],teensIn:['Maya R.','Zoe T.','Aaliyah K.','Imani D.','Sofia G.','Harper W.'],weekTitle:'Coping skills',weekText:'"The little things that steady you when stress hits. Jordan kicked it off — jump in whenever."',weekBy:'Priya S. · Mon'},
+      {id:'c2',name:'Creative Minds',initial:'C',color:'#FEC2B9',type:'group',mentors:['Bri L.','Dana W.'],teensIn:['Ruby C.','Nia P.','Lena F.','June A.','Talia M.','Wren S.','Amara J.'],weekTitle:null,weekText:null,weekBy:null},
+      {id:'c3',name:'Steady & Bright',initial:'S',color:'#c9b7e0',type:'oneone',mentors:['Kelsey M.'],teensIn:['Maya R.'],weekTitle:'Coping skills',weekText:'"Something you and I can talk through together whenever you\'re ready."',weekBy:'Kelsey M. · Mon'},
+    ];
+    const circles = circlesBase.map(c=>{
+      const is11 = c.type==='oneone';
+      const hasWeek = !!c.weekTitle;
+      return { ...c,
+        avStyle:this.avatar(c.color,44,18),
+        typeLabel:is11?'1:1 · circle of two':'Group circle',
+        typeStyle:`font-size:10.5px;font-weight:700;letter-spacing:.04em;border-radius:999px;padding:3px 10px;${is11?'color:#6b5b95;background:#efe9f7;border:1px solid #d9cdea':'color:#2f6f96;background:#e2eef7;border:1px solid #cfe3ea'}`,
+        sub:`${c.teensIn.length} ${c.teensIn.length===1?'teen':'teens'} · ${c.mentors.length} ${c.mentors.length===1?'mentor':'mentors'} · last activity 2h ago`,
+        hasWeek, noWeek:!hasWeek,
+        isClosed:!!(S.closedCircles||{})[c.id], notClosed:!(S.closedCircles||{})[c.id],
+        close:()=>{ if(window.confirm(`Close ${c.name}? It unlists from teens and mentors. All content is retained — nothing is deleted. You can reopen it later.`)) this.setState(s=>({closedCircles:{...(s.closedCircles||{}),[c.id]:true},circleToast:`${c.name} closed — unlisted for members, content retained.`})); },
+        reopen:()=>this.setState(s=>({closedCircles:{...(s.closedCircles||{}),[c.id]:false},circleToast:`${c.name} reopened.`})),
+        assign:()=>circleSay(`Assign members to ${c.name} — pick mentors and teens from the user list. Unmatched teens surface first.`),
+        edit:()=>circleSay(`Editing ${c.name} — name, photo, and description. Circle names are chosen with the girls, not auto-named.`) };
+    });
+
+    // FLAGGED
+    const flagsBase = [
+      {id:'f1',flagType:'Bullying',created:'2h ago',createdDate:'Jul 31, 2026 · 7:38 AM',content:'nobody in this circle even likes you, just leave',author:'anon (teen)',authorRole:'Teen',reporter:'Maya R.',note:'This felt targeted at me.'},
+      {id:'f2',flagType:'Self-harm concern',created:'5h ago',createdDate:'Jul 31, 2026 · 4:51 AM',content:"i don't think i can keep doing this anymore",author:'Zoe T.',authorRole:'Teen',reporter:'Kelsey M.',note:'Escalating per safety protocol — mentor flagged.'},
+      {id:'f3',flagType:'Spam',created:'1d ago',createdDate:'Jul 30, 2026 · 8:14 AM',content:'check out my link!! free stuff >>> bit.ly/...',author:'unknown',authorRole:'Teen',reporter:'Jordan B.',note:''},
+    ];
+    const flags = flagsBase.map(f=>{
+      const r = S.resolved[f.id];
+      return { ...f, resolved:!!r, resolvedLabel:r||'', showActions:!r,
+        cardStyle:`background:#fff;border:1px solid ${r?'#e6e0d4':'#ece7dd'};border-radius:14px;padding:18px 20px;${r?'opacity:.7':''}`,
+        dismiss:()=>this.setState(s=>({resolved:{...s.resolved,[f.id]:'Dismissed'}})),
+        deactivate:()=>this.setState(s=>({resolved:{...s.resolved,[f.id]:'User deactivated'}})),
+        remove:()=>this.setState(s=>({resolved:{...s.resolved,[f.id]:'Content deleted'}})) };
+    });
+
+    // ROLES
+    const roleCards = [
+      {role:'Teen',enum:'Basic',desc:'The girls the program serves. Full access to their circles, chats, and assessment — no moderation powers.',can:['Join circles','Post & comment','Message peers']},
+      {role:'Mentor',enum:'(new)',desc:'Trained college student guides. Author circle content, run live sessions, and hold 1:1s with premium teens. Takes the assessment too.',can:['Author modules','Start live session','1:1 with teen']},
+      {role:'Moderator',enum:'Moderator',desc:'Safety layer. Reviews flagged content and upholds boundaries. Can see teens clearly to keep interactions appropriate.',can:['Review flags','Deactivate / delete / dismiss','See all posts']},
+      {role:'Super-admin',enum:'SuperAdmin',desc:'The highest-level role — full portal access: assigns roles, approves matches, manages access. Olivia holds it today; the role isn\u2019t tied to her.',can:['Assign roles','Approve matches','All portal areas']},
+    ].map(r=>({...r, cardStyle:'background:#fff;border:1px solid #ece7dd;border-radius:14px;padding:20px 22px'}));
+    const permMatrix = [
+      {cap:'Join circles, post & comment',            r:[true,true,true,true]},
+      {cap:'Message peers (1:1)',                      r:[true,true,true,true]},
+      {cap:'Take the assessment',                      r:[true,true,false,false]},
+      {cap:'Author circle content & modules',          r:[false,true,false,true]},
+      {cap:'Start a live session (within her circle)', r:[true,true,false,true]},
+      {cap:'1:1 with a teen (premium)',                r:[false,true,false,true]},
+      {cap:'Review & resolve flagged content',         r:[false,false,true,true]},
+      {cap:'Deactivate user / delete content',         r:[false,false,true,true]},
+      {cap:'See all posts (moderation view)',          r:[false,false,true,true]},
+      {cap:'View user list (via gear, read-only)',     r:[false,true,true,true]},
+      {cap:'Manage users & assign roles',              r:[false,false,false,true]},
+      {cap:'Approve matches',                          r:[false,false,false,true]},
+      {cap:'Access & login settings',                  r:[false,false,false,true]},
+    ].map((row,i)=>({ ...row, rowStyle:`display:flex;align-items:center;padding:10px 16px;${i%2?'background:#faf7f1':'background:#fff'}`,
+      cells:row.r.map(v=>({ ok:v, mark:v?'✓':'—',
+        cellStyle:`width:118px;text-align:center;flex-shrink:0;font-size:14px;font-weight:700;color:${v?'#2f8f5b':'#c9c2b4'}` })) }));
+    const matrixCols = ['Teen','Mentor','Moderator','Super-admin'];
+
+    const renderSpots = [
+      {where:'Profiles',detail:'Above the fold, mobile + desktop. Cannot be hidden or disabled by the user.'},
+      {where:'Posts & comments',detail:'Inline with the author name on every post, reply, and comment — feed and detail views.'},
+      {where:'Chat',detail:'Next to the participant name and in the inbox list. Updates in real time if a role changes.'},
+    ];
+
+    const cf = S.confirm;
+    const typedOk = (S.confirmTyped||'').trim().toUpperCase()==='DELETE';
+    const confirmVals = {
+      confirmOpen: !!cf,
+      confirmTitle: cf ? (cf.kind==='delete' ? `Delete ${cf.name}'s account?` : `Deactivate ${cf.name}?`) : '',
+      confirmBody: cf ? (cf.kind==='delete'
+        ? `This permanently deletes the account AND all their posts, comments, and messages. This can't be undone. An audit record is kept for 90 days.`
+        : `${cf.name} won't be able to sign in. Their posts and comments stay visible. You can reactivate anytime.`) : '',
+      confirmAction: cf && cf.kind==='delete' ? 'Delete forever' : 'Deactivate',
+      confirmNeedsType: !!cf && cf.kind==='delete',
+      confirmTyped: S.confirmTyped||'',
+      onConfirmType: (e)=>this.setState({confirmTyped:e.target.value}),
+      confirmGoBg: cf && cf.kind==='delete' && !typedOk ? '#dcb5af' : '#b0453a',
+      confirmGoCursor: cf && cf.kind==='delete' && !typedOk ? 'default' : 'pointer',
+      confirmCancel: ()=>this.setState({confirm:null,confirmTyped:''}),
+      confirmGo: ()=>{
+        if(!cf) return;
+        if(cf.kind==='delete'){ if(!typedOk) return;
+          this.setState(s=>({deleted:{...(s.deleted||{}),[cf.id]:true},confirm:null,confirmTyped:'',toast:`${cf.name} deleted. Account and content removed; audit record retained for 90 days.`}));
+        } else {
+          this.setState(s=>({blocked:{...s.blocked,[cf.id]:true},confirm:null,toast:`${cf.name} deactivated — sign-in blocked. Posts stay visible. Reactivate anytime.`}));
+        }
+      },
+    };
+    return {
+      ...confirmVals,
+      ...circleSugVals,
+      nav,
+      isMatch:S.view==='match', isOnboarding:S.view==='onboarding', isUsers:S.view==='users',
+      isCircles:S.view==='circles', isFlagged:S.view==='flagged', isRoles:S.view==='roles', isAccess:S.view==='access',
+      specNav, circles, createCircle:()=>circleSay('New circle — set a name, type (group or 1:1), then assign mentors and teens.'), circleToast:S.circleToast||'',
+      teens, sel, proposals,
+      obList, obSel, exportAll:()=>{}, exportOne:()=>{},
+      users, flags, roleCards, renderSpots, permMatrix, matrixCols,
+      toast:S.toast||'',
+      maskName:(baseUsers.find(u=>u.id===S.mask)||{}).name||'',
+      exitMask:()=>this.setState({mask:null}),
+    };
+  }
+
+  flagCount(){ const r=this.state.resolved; return 3 - Object.keys(r).length; }
+}
+</script>
+</body>
+</html>

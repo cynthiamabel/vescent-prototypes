@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=GFS+Didot&family=Mulish:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#faf7f1}a{color:#5da4cd}a:hover{color:#1e2124}</style>
+<script src="./doc-page.js"></script>
+</helmet>
+<doc-page>
+<div style="font-family:'Mulish',Tahoma,sans-serif;color:#1e2124;line-height:1.5;font-size:12pt">
+  <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:3px solid #1e2124;padding-bottom:10px;margin-bottom:6px">
+    <h1 style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:26pt;font-weight:700;margin:0">Questions for Eric</h1>
+    <div style="font-size:10pt;color:#8a8378">Vescent rebuild · Aug 4, 2026</div>
+  </div>
+  <p style="font-size:10.5pt;color:#6b6459;margin:0 0 20px">Design is locked in the prototypes (pages 01–04). Section A needs an answer from you; section B is decided — just build to it. <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span> Phase 1 · <span style="background:#fec2b955;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P2</span> Phase 2.</p>
+
+  <h2 style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:16pt;margin:22px 0 12px;border-bottom:1px solid #d9d2c4;padding-bottom:4px">A. Your calls</h2>
+  <div style="display:grid;gap:13px">
+    <div><strong>2. Pick the login method.</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>Email + secret word vs magic link / 6-digit code — simplest secure option wins. Can we retire the secret word? Hard rule: no account until screening passes (mentors) / purchase completes (teens).</div>
+    <div><strong>3. Can the app read tier live from the subscription record?</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>All purchases and tier changes happen on the website (Stripe); the app just reflects the current tier. Your call: on downgrade, does 1:1 message history stay read-only or hide? Cindy is pulling the current payment forms — tell us what else you need for the parent→teen invite handoff.</div>
+    <div><strong>4. Are we clear of Apple's rules with a web-only subscription?</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>Or do we need an in-app purchase fallback? Also confirm we build on the stores' minor-age signals (Apple Declared Age Range API, Google Play Age Signals) — new state laws require it. Cindy is confirming the rules on our side.</div>
+    <div><strong>6. What format do you want assessment data in?</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>Both roles take the assessment; both datasets stored in Phase 1. The portal makes them downloadable for Olivia's matching tool.</div>
+    <div><strong>9. What format do you want the content banks in?</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>One rotation system, three Phase 1 sets: teen quotes, mentor quotes/prompts, Quick Reads (1–3 min reads on Home). Polls + milestone cards are Phase 2. We deliver the content.</div>
+    <div><strong>12. How heavy is per-girl engagement tracking?</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>Preferred in Phase 1 so we can welcome quiet girls back. If it's heavy, circle-level counters ship first and per-girl waits — your call on cost. Also: is Pendo (or similar) in your build? That may cover it with no app code.</div>
+    <div><strong>13. Is the dashed-circle inactivity cue cheap?</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>Some visible cue that a circle has gone quiet (10+ days) is required in Phase 1. Dashed avatars are the design; a badge or banner is fine if that's costly.</div>
+    <div><strong>14. Is deep-linking from mentor Home to a circle hard?</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>If so, the missed-activity cue still ships (tap → Circles tab) and deep links move to Phase 2.</div>
+    <div><strong>15. Office hours: who edits the text field?</strong> <span style="background:#fec2b955;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P2</span><br>Scheduler is Phase 2. Phase 1 is one editable "office hours" text field on the mentor profile — mentor-editable, or admin-edited via the portal. Your pick.</div>
+    <div><strong>16. Confirm the messaging data model.</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>Teens message any teen (New Chat search). Mentors message their own girls + any mentor. If limiting mentors is hard, everyone-can-message-everyone is acceptable for Phase 1. Deletion: author + admins only.</div>
+    <div><strong>17. What would AI chat monitoring take?</strong> <span style="background:#fec2b955;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P2</span><br>Instead of admin read-access to 1:1 chats: AI flags alarming content to admins. Sizing only.</div>
+    <div><strong>18. Confirm store-compliance coverage.</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>Apple 1.2 + Google UGC require: report content and users, block users (incl. in DMs), act on reports within 24h. Our design covers report → Flagged Content queue + block. Confirm block exists in DMs and the 24h SLA is workable. Written safety spec coming from Cindy. Refs: <a href="https://developer.apple.com/app-store/review/guidelines/#user-generated-content">Apple §1.2</a> · <a href="https://support.google.com/googleplay/android-developer/answer/9876937">Play UGC</a>.</div>
+    <div><strong>19. Confirm the anonymous-posting identity model.</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>"Post anonymously" hides the name from teens; mentors/moderators still see identity. Tell Cindy what the privacy policy / T&amp;C need.</div>
+    <div><strong>22. Confirm one match_status drives Home.</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>No waiting screen. The teen always lands on Home; the same content slots render waiting or matched content by match status. Built in page 01.</div>
+    <div><strong>23. What font ships, and what does moving to brand fonts cost?</strong> <span style="background:#a9d6dc55;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P1</span><br>Brand is Didot (headlines) + Muli (body); the current app is neither. Lauren: get as close to brand as we can in Phase 1.</div>
+    <div><strong>1. How hard are per-person permission overrides?</strong> <span style="background:#fec2b955;padding:1px 7px;border-radius:3px;font-size:9.5pt;font-weight:600">P2</span><br>Granting one person extra scope beyond their role, without a new role.</div>
+  </div>
+
+  <h2 style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:16pt;margin:26px 0 12px;border-bottom:1px solid #d9d2c4;padding-bottom:4px">B. Decided — build to this</h2>
+  <div style="display:grid;gap:9px;font-size:11pt">
+    <div><strong>5. Matching pools.</strong> Tier 1: teen → circle directly, from mentors who run group circles (with capacity). Tier 2: two independent matches — 1:1 mentor from the 1:1 pool, circle from the group pool. Mentor record needs runs-group (+capacity) and takes-1:1s. Scoring runs in Olivia's tool; the portal exports assessments and records approvals.</div>
+    <div><strong>7. THIS WEEK box.</strong> Always available to mentors in every circle; renders to teens only once written. No per-circle config. Empty = feed starts at the live row (which always sits above the box).</div>
+    <div><strong>8. THIS WEEK is freeform text.</strong> No pre-fill. Sharpen content enters circles as post attachments via the API — mentor-only. Teens compose text + photo/video; the compose sheet differs by role.</div>
+    <div><strong>10. Retention.</strong> Circle feed is persistent (no 7-day archive). Home / "New for You" surface only the last 7 days.</div>
+    <div><strong>11. Timestamps.</strong> Relative time + exact date, like the current app.</div>
+    <div><strong>20. Notification preferences.</strong> One mechanism, both roles, different category sets (teen: circle activity, 1:1 mentor [Tier 2], weekly content; mentor: her four). Set in onboarding, editable in Settings. Lauren's trigger tables define the events; basic is fine.</div>
+    <div><strong>21. Circle Management + last login.</strong> Portal creates/edits circles, assigns members, shows last login. Circles close (unlist, content retained) — never hard-delete in Phase 1. Built in page 04.</div>
+    <div><strong>No Like feature.</strong> Posts get Comment only in Phase 1 (unused in the current app).</div>
+    <div><strong>Old spec is dead.</strong> July 8 three-tier spec retired — Spark = Tier 1, Anchor = Tier 2. Build only from pages 01–04.</div>
+  </div>
+</div>
+</doc-page>
+</x-dc>
+</body>
+</html>
