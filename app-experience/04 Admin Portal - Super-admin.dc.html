@@ -547,14 +547,14 @@ class Component extends DCLogic {
 
     // MATCH
     const teens = this.TEENS.map((t,i)=>({ ...t, sub:`${t.type} · replies ${this.PACE[t.paceIx].toLowerCase()}`,
-      tierChip:t.tier===2?'Circle + 1:1':'Circle',
+      tierChip:t.tier===2?'Anchor':'Spark',
       tierChipStyle:`font-size:9.5px;font-weight:700;letter-spacing:.03em;border-radius:999px;padding:2px 8px;white-space:nowrap;${t.tier===2?'color:#6b5b95;background:#efe9f7;border:1px solid #d9cdea':'color:#2f6f96;background:#e2eef7;border:1px solid #cfe3ea'}`,
       matched:!!S.decisions[t.id]||!!(S.circleDecisions||{})[t.id], select:()=>this.setState({selTeen:i}),
       avStyle:this.avatar(t.color,40,16),
       cardStyle:`display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:11px;cursor:pointer;border:1px solid ${i===S.selTeen?'#5da4cd':'#ece7dd'};background:${i===S.selTeen?'#eef4f7':'#fff'}` }));
     const teen = this.TEENS[S.selTeen];
     const sel = { name:teen.name, initial:teen.initial, avStyle:this.avatar(teen.color,54,22),
-      chips:[`${teen.tier===2?'Circle + 1:1 · $39':'Circle · $10'}`, `${teen.type}`, `Replies ${this.PACE[teen.paceIx].toLowerCase()}`, ...teen.fourh, ...teen.interests.slice(0,2)] };
+      chips:[`${teen.tier===2?'The Anchor · $200/mo':'The Spark · $75/mo'}`, `${teen.type}`, `Replies ${this.PACE[teen.paceIx].toLowerCase()}`, ...teen.fourh, ...teen.interests.slice(0,2)] };
     const selIs2 = teen.tier===2, selIs1 = teen.tier===1;
     const circleDecided = (S.circleDecisions||{})[teen.id];
     const circleSugs = [

@@ -50,11 +50,11 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
   <div style="font-size:13.5px;color:#6b7076;margin-top:8px;font-weight:300;line-height:1.5">In the real flow the parent pays on the web first; the teen logs in with a code from her email and lands in the purchased tier. Pick one to preview that whole journey.</div>
   <div style="margin-top:22px;display:flex;flex-direction:column;gap:12px">
     <div onClick="{{ pickT1 }}" style="background:#fff;border:1.5px solid #ece7dd;border-radius:18px;padding:18px;cursor:pointer" style-hover="border-color:#5DA4CD">
-      <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:19px;color:#1e2124">Circle</span><span style="font-size:14px;color:#6b7076">$10/mo</span></div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-family: Didot, &quot;GFS Didot&quot;, &quot;Times New Roman&quot;, serif; font-size: 19px; color: rgb(30, 33, 36);">The Spark</span><span style="font-size: 14px; color: rgb(107, 112, 118);">$75/mo</span></div>
       <div style="font-size:13px;color:#6b7076;margin-top:6px;line-height:1.5">Your circle · weekly sessions · the Sharpen journey</div>
     </div>
     <div onClick="{{ pickT2 }}" style="background:#1e2124;border-radius:18px;padding:18px;cursor:pointer;position:relative" style-hover="background:#2a2e33">
-      <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:19px;color:#fff">Circle + One-on-one</span><span style="font-size:14px;color:#a9d6dc">$39/mo</span></div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-family: Didot, &quot;GFS Didot&quot;, &quot;Times New Roman&quot;, serif; font-size: 19px; color: rgb(255, 255, 255);">The Anchor</span><span style="font-size: 14px; color: rgb(169, 214, 220);">$200/mo</span></div>
       <div style="font-size:13px;color:rgba(255,255,255,.72);margin-top:6px;line-height:1.5">Everything in Circle, plus your own circle of two — just you and a mentor.</div>
     </div>
   </div>
@@ -858,8 +858,8 @@ class Component extends DCLogic {
   componentWillUnmount() { clearInterval(this._qt); }
 
   PQ = [
-    { d:'ENERGY', q:"After a long day at school, what sounds better?", a:"Being around people", b:"Chilling alone" },
-    { d:'ENERGY', q:"When you're stressed, what helps more?", a:"Venting to a friend or being around people", b:"Taking space and processing it alone" },
+    { d:'ENERGY', q:"After a long day at school, what sounds better?", a:"Being around lots of people", b:"Chilling alone or with a few close friends" },
+    { d:'ENERGY', q:"When you're stressed, what helps more?", a:"Venting to a friend or being around people", b:"Taking space to process on your own" },
     { d:'ENERGY', q:"At a party or group hangout, you're more likely to…", a:"Talk to lots of different people", b:"Stick with one or two you know" },
     { d:'HOW YOU TAKE THINGS IN', q:"When someone gives you directions, what works better?", a:"Step-by-step details", b:"The general idea — I'll figure it out" },
     { d:'HOW YOU TAKE THINGS IN', q:"You're more drawn to…", a:"What's real and happening now", b:"Ideas and what could be" },
@@ -1059,8 +1059,8 @@ class Component extends DCLogic {
       isT1: tier===1, isT2: tier===2,
       isHome: tab==='home', isCircles: tab==='circles', isMessages: tab==='messages', isYou: tab==='you', isCircleFeed: tab==='circle',
 
-      tierLabel: tier===2 ? 'Previewing: Circle + 1:1 · $39' : 'Previewing: Circle · $10',
-      tierProfile: tier===2 ? 'Circle + 1:1 mentor' : 'Circle member',
+      tierLabel: tier===2 ? 'Previewing: The Anchor · $200/mo' : 'Previewing: The Spark · $75/mo',
+      tierProfile: tier===2 ? 'Anchor — circle + 1:1 mentor' : 'Spark — circle member',
       notifBody: tier===2 ? "Meet your circle — and your one-on-one mentor." : "Meet your mentors and your girls.",
       caption: this.captionOf(screen, tab),
 
