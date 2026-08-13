@@ -382,13 +382,14 @@
           </div>
           <div style="margin-top:12px;background:#fffdf9;border:1px solid #ece3d5;border-radius:15px;padding:13px;position:relative">
             <sc-if value="{{ showPins }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;left:-13px;top:34px;width:19px;height:19px;border-radius:50%;background:#a9741f;color:#fff;font:700 11px 'Space Mono',monospace;display:flex;align-items:center;justify-content:center;z-index:5">3</span></sc-if>
-            <div style="display:flex;align-items:center;gap:9px"><span style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5c9a0);flex:none"></span><div style="flex:1"><div style="font-size:12px;font-weight:600">Jordan · Teen</div><div style="font-size:9.5px;color:#6b7076">Today at 11:20 AM</div></div><span style="color:#c3bdb1;font-size:15px">⋮</span></div>
+            <div style="display:flex;align-items:center;gap:9px"><span style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5c9a0);flex:none"></span><div style="flex:1"><div style="font-size:12px;font-weight:600">Jordan · Teen</div><div style="font-size:9.5px;color:#6b7076">Today at 11:20 AM</div></div><span onClick="{{ pmFlag.toggle }}" style="color:#c3bdb1;font-size:15px;cursor:pointer;position:relative;padding:0 4px;user-select:none">⋮<span style="display:{{ pmFlag.disp }};position:absolute;top:18px;right:-2px;z-index:40;background:#fff;border:1px solid #ece3d5;border-radius:10px;box-shadow:0 10px 26px rgba(30,33,36,.14);padding:4px;flex-direction:column;min-width:112px"><span onClick="{{ pmFlag.report }}" style="padding:7px 9px;border-radius:7px;font-size:10.5px;font-weight:600;color:#b0453a;white-space:nowrap;cursor:pointer" style-hover="background:#fbf1ef">⚑ Report Post</span></span></span></div>
+            <sc-if value="{{ pmFlag.reported }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px;background:#fbe3de;border-radius:8px;padding:6px 9px;font-size:9.5px;font-weight:700;color:#8a3b2c">Reported — sent to the admin Flagged Content queue.</div></sc-if>
             <div style="margin-top:9px;font-size:12px;line-height:1.5">does anyone else get like really anxious before tests or is it just me</div>
             <div style="margin-top:9px;display:flex;align-items:center;gap:7px;background:#fbe3de;border-radius:9px;padding:7px 9px">
               <span style="font-size:9px;font-weight:700;color:#8a3b2c;font-family:'Space Mono',monospace">REPORTED BY A MEMBER</span>
               <span style="margin-left:auto;font-size:10px;font-weight:700;color:#8a3b2c">Review ›</span>
             </div>
-            <div style="margin-top:10px;display:flex;align-items:center;gap:9px;border-top:1px solid #ece3d5;padding-top:9px"><span style="font-size:10.5px;color:#4a90b8;font-weight:600">Comment</span><span style="font-size:10.5px;color:#4a90b8;font-weight:600">Report</span><span style="margin-left:auto;font-size:9px;color:#6b7076">not her post — no delete</span></div>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:9px;border-top:1px solid #ece3d5;padding-top:9px"><span style="font-size:10.5px;color:#4a90b8;font-weight:600">Comment</span><span style="margin-left:auto;font-size:9px;color:#6b7076">⋮ = Report only — not her post, no delete</span></div>
           </div>
         </div>
         <div style="position:absolute;bottom:0;left:0;right:0;height:52px;background:rgba(255,253,249,.96);border-top:1px solid #ece3d5;display:flex;align-items:center;justify-content:space-around;font-size:9px;font-weight:600;color:#9aa0a6">
@@ -568,7 +569,14 @@ const TAG = {
 };
 
 class Component extends DCLogic {
+  state = { pmOpen: false, pmReported: false };
+
   renderVals() {
+    const pmFlag = {
+      open: this.state.pmOpen, disp: this.state.pmOpen ? 'flex' : 'none', reported: this.state.pmReported,
+      toggle: (e)=>{ e.stopPropagation(); this.setState(s=>({ pmOpen: !s.pmOpen })); },
+      report: (e)=>{ e.stopPropagation(); this.setState({ pmOpen: false, pmReported: true }); }
+    };
     const t = new Date();
     const today = t.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase();
 
@@ -600,7 +608,7 @@ class Component extends DCLogic {
     const circleDeltas = [
       [1, 'She can edit the THIS WEEK box', 'Freeform text \u2014 a teaser in her own words (decided Aug 4; no prefill needed). The actual Sharpen module attaches to a post via the API. Teens see the box only once she\u2019s written one.'],
       [2, 'Her post button knows the next module', 'The 24 modules go in order, and only she can post the next one.'],
-      [3, 'Reporting works like the live app', 'Mentors report a post or comment like anyone else \u2014 only admins delete. Reports land in the admin panel\u2019s Flagged Content queue (deactivate / delete / dismiss). In-app reporting is an Apple / Google requirement \u2014 phase 1. Whether mentors can also DELETE a teen\u2019s post is an open question for Lauren.'],
+      [3, 'Reporting works like the live app', 'The \u22ee menu on every post matches the live app \u2014 built because the app stores require it: Report Post on anyone else\u2019s post, Delete Post on your own. Only admins delete others\u2019 content, via the Flagged Content queue (deactivate / delete / dismiss). Whether mentors can also DELETE a teen\u2019s post is an open question for Lauren.'],
       [4, 'Faces at the top show who\u2019s gone quiet', 'A dashed circle means no activity in 10+ days — no need to read the whole feed to spot it. (Per-girl tracking decided in — Lauren, Jul 31; dashed cue approved if not a big lift — Eric feasibility.)']
     ].map(d => ({ n: d[0], what: d[1], detail: d[2] }));
 
@@ -643,6 +651,7 @@ class Component extends DCLogic {
 
     const ericMode = this.props.ericMode ?? false;
     return {
+      pmFlag,
       today,
       showPins: this.props.showPins ?? true,
       showAsks: (this.props.showAsks ?? true) && !ericMode,

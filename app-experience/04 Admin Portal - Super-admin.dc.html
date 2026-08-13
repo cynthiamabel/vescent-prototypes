@@ -272,21 +272,22 @@ a{color:#2f6f96;text-decoration:none}a:hover{color:#1e5678}
             </div>
           </div>
         </sc-for>
-        <sc-if value="{{ confirmOpen }}" hint-placeholder-val="{{ false }}">
-        <div style="position:fixed;inset:0;background:rgba(30,33,36,.45);display:flex;align-items:center;justify-content:center;z-index:60">
-          <div style="background:#fffdf9;border-radius:16px;padding:26px 28px;width:400px;box-shadow:0 18px 50px rgba(30,33,36,.25)">
-            <div style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:19px;font-weight:600;color:#1e2124">{{ confirmTitle }}</div>
-            <div style="margin-top:10px;font-size:13.5px;color:#4a4d51;line-height:1.55">{{ confirmBody }}</div>
-            <sc-if value="{{ confirmNeedsType }}" hint-placeholder-val="{{ false }}">
-            <input value="{{ confirmTyped }}" onChange="{{ onConfirmType }}" placeholder="Type DELETE to confirm" style="margin-top:14px;width:100%;box-sizing:border-box;border:1px solid #ded6c7;border-radius:8px;padding:10px 12px;font-size:13px;font-family:inherit;background:#fff">
-            </sc-if>
-            <div style="margin-top:18px;display:flex;gap:10px;justify-content:flex-end">
-              <button onClick="{{ confirmCancel }}" style="border:1px solid #ded6c7;background:#fff;color:#4a5056;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">Cancel</button>
-              <button onClick="{{ confirmGo }}" style="border:none;background:{{ confirmGoBg }};color:#fff;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:{{ confirmGoCursor }};font-family:inherit">{{ confirmAction }}</button>
-            </div>
-          </div>
-        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ confirmOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:rgba(30,33,36,.45);display:flex;align-items:center;justify-content:center;z-index:60">
+      <div style="background:#fffdf9;border-radius:16px;padding:26px 28px;width:400px;box-shadow:0 18px 50px rgba(30,33,36,.25)">
+        <div style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:19px;font-weight:600;color:#1e2124">{{ confirmTitle }}</div>
+        <div style="margin-top:10px;font-size:13.5px;color:#4a4d51;line-height:1.55">{{ confirmBody }}</div>
+        <sc-if value="{{ confirmNeedsType }}" hint-placeholder-val="{{ false }}">
+        <input value="{{ confirmTyped }}" onChange="{{ onConfirmType }}" placeholder="Type DELETE to confirm" style="margin-top:14px;width:100%;box-sizing:border-box;border:1px solid #ded6c7;border-radius:8px;padding:10px 12px;font-size:13px;font-family:inherit;background:#fff">
         </sc-if>
+        <div style="margin-top:18px;display:flex;gap:10px;justify-content:flex-end">
+          <button onClick="{{ confirmCancel }}" style="border:1px solid #ded6c7;background:#fff;color:#4a5056;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">Cancel</button>
+          <button onClick="{{ confirmGo }}" style="border:none;background:{{ confirmGoBg }};color:#fff;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:{{ confirmGoCursor }};font-family:inherit">{{ confirmAction }}</button>
+        </div>
       </div>
     </div>
     </sc-if>
@@ -668,8 +669,8 @@ class Component extends DCLogic {
       return { ...f, resolved:!!r, resolvedLabel:r||'', showActions:!r,
         cardStyle:`background:#fff;border:1px solid ${r?'#e6e0d4':'#ece7dd'};border-radius:14px;padding:18px 20px;${r?'opacity:.7':''}`,
         dismiss:()=>this.setState(s=>({resolved:{...s.resolved,[f.id]:'Dismissed'}})),
-        deactivate:()=>this.setState(s=>({resolved:{...s.resolved,[f.id]:'User deactivated'}})),
-        remove:()=>this.setState(s=>({resolved:{...s.resolved,[f.id]:'Content deleted'}})) };
+        deactivate:()=>this.setState({confirm:{kind:'flagDeactivate',id:f.id,name:f.author}}),
+        remove:()=>this.setState({confirm:{kind:'flagDelete',id:f.id,name:f.author}}) };
     });
 
     // ROLES
@@ -708,11 +709,16 @@ class Component extends DCLogic {
     const typedOk = (S.confirmTyped||'').trim().toUpperCase()==='DELETE';
     const confirmVals = {
       confirmOpen: !!cf,
-      confirmTitle: cf ? (cf.kind==='delete' ? `Delete ${cf.name}'s account?` : `Deactivate ${cf.name}?`) : '',
-      confirmBody: cf ? (cf.kind==='delete'
-        ? `This permanently deletes the account AND all their posts, comments, and messages. This can't be undone. An audit record is kept for 90 days.`
-        : `${cf.name} won't be able to sign in. Their posts and comments stay visible. You can reactivate anytime.`) : '',
-      confirmAction: cf && cf.kind==='delete' ? 'Delete forever' : 'Deactivate',
+      confirmTitle: !cf ? '' :
+        cf.kind==='delete' ? `Delete ${cf.name}'s account?` :
+        cf.kind==='flagDelete' ? 'Delete this content?' :
+        `Deactivate ${cf.name}?`,
+      confirmBody: !cf ? '' :
+        cf.kind==='delete' ? `This permanently deletes the account AND all their posts, comments, and messages. This can't be undone. An audit record is kept for 90 days.` :
+        cf.kind==='flagDelete' ? `The post is removed for everyone in the circle and the flag is marked resolved. An audit record is kept for 90 days.` :
+        cf.kind==='flagDeactivate' ? `${cf.name} won't be able to sign in. Their posts and comments stay visible, and this flag is marked resolved. You can reactivate anytime from Users.` :
+        `${cf.name} won't be able to sign in. Their posts and comments stay visible. You can reactivate anytime.`,
+      confirmAction: !cf ? '' : cf.kind==='delete' ? 'Delete forever' : cf.kind==='flagDelete' ? 'Delete content' : 'Deactivate',
       confirmNeedsType: !!cf && cf.kind==='delete',
       confirmTyped: S.confirmTyped||'',
       onConfirmType: (e)=>this.setState({confirmTyped:e.target.value}),
@@ -723,6 +729,10 @@ class Component extends DCLogic {
         if(!cf) return;
         if(cf.kind==='delete'){ if(!typedOk) return;
           this.setState(s=>({deleted:{...(s.deleted||{}),[cf.id]:true},confirm:null,confirmTyped:'',toast:`${cf.name} deleted. Account and content removed; audit record retained for 90 days.`}));
+        } else if(cf.kind==='flagDeactivate'){
+          this.setState(s=>({resolved:{...s.resolved,[cf.id]:'User deactivated'},confirm:null}));
+        } else if(cf.kind==='flagDelete'){
+          this.setState(s=>({resolved:{...s.resolved,[cf.id]:'Content deleted'},confirm:null}));
         } else {
           this.setState(s=>({blocked:{...s.blocked,[cf.id]:true},confirm:null,toast:`${cf.name} deactivated — sign-in blocked. Posts stay visible. Reactivate anytime.`}));
         }
