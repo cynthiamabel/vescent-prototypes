@@ -354,17 +354,52 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
 </div>
 </sc-if>
 
+<sc-if value="{{ newMsgOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:18">
+  <div onClick="{{ closeNewMsg }}" style="position:absolute;inset:0;background:rgba(30,33,36,.5)"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;top:80px;background:#fff;border-radius:22px 22px 0 0;display:flex;flex-direction:column;overflow:hidden">
+    <div style="padding:12px 20px 0;display:flex;justify-content:center"><span style="width:44px;height:5px;border-radius:99px;background:#d8d2c6"></span></div>
+    <div style="padding:12px 20px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee7db">
+      <span style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:18px;font-weight:600;color:#1e2124">New message</span>
+      <span onClick="{{ closeNewMsg }}" style="color:#9aa0a6;font-size:17px;cursor:pointer">&#10005;</span>
+    </div>
+    <div style="padding:12px 20px 10px;background:#f7f2ea;border-bottom:1px solid #eee7db">
+      <div style="font-size:12.5px;color:#5f6b6d;line-height:1.5">You can message your mentors and the girls in your circle. Nobody else can message you, and you can't message anyone outside it.</div>
+    </div>
+    <div style="flex:1;min-height:0;overflow-y:auto;padding:6px 18px 24px">
+      <div style="margin-top:10px;font-size:11px;letter-spacing:.13em;color:#4a90b8;font-weight:600">YOUR MENTORS</div>
+      <sc-for list="{{ msgMentors }}" as="m" hint-placeholder-count="2">
+      <div onClick="{{ m.start }}" style="display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid #f2ede3;cursor:pointer">
+        <span style="width:42px;height:42px;border-radius:50%;flex:none;background:{{ m.grad }}"></span>
+        <div style="flex:1;min-width:0"><div style="font-size:14.5px;font-weight:600;color:#1e2124">{{ m.name }}</div><div style="font-size:11.5px;color:#6b7076">{{ m.sub }}</div></div>
+        <span style="color:#4a90b8;font-size:17px">&rsaquo;</span>
+      </div>
+      </sc-for>
+      <div style="margin-top:18px;font-size:11px;letter-spacing:.13em;color:#4a90b8;font-weight:600">YOUR CIRCLE</div>
+      <sc-for list="{{ msgGirls }}" as="g" hint-placeholder-count="8">
+      <div onClick="{{ g.start }}" style="display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid #f2ede3;cursor:pointer">
+        <span style="width:42px;height:42px;border-radius:50%;flex:none;background:{{ g.grad }}"></span>
+        <div style="flex:1;min-width:0"><div style="font-size:14.5px;font-weight:600;color:#1e2124">{{ g.name }}</div><div style="font-size:11.5px;color:#6b7076">{{ g.sub }}</div></div>
+        <span style="color:#4a90b8;font-size:17px">&rsaquo;</span>
+      </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</sc-if>
+
 <sc-if value="{{ isChat }}" hint-placeholder-val="{{ false }}">
 <div style="height:100%;background:#faf7f1;display:flex;flex-direction:column;font-family:'Mulish',Tahoma,sans-serif">
   <div style="padding:18px 18px 12px;border-bottom:1px solid #ece3d5;background:#fffdf9;display:flex;align-items:center;gap:11px">
     <span onClick="{{ closeChat }}" style="color:#9aa0a6;font-size:22px;cursor:pointer">&lsaquo;</span>
-    <span style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5c9a0);flex:none"></span>
+    <span style="width:36px;height:36px;border-radius:50%;background:{{ chatGrad }};flex:none"></span>
     <div style="flex:1;min-width:0">
-      <div style="font-size:15px;font-weight:600;color:#1e2124">Mia</div>
-      <div style="font-size:11.5px;color:#6b7076">Your Nova Circle</div>
+      <div style="font-size:15px;font-weight:600;color:#1e2124">{{ chatWith }}</div>
+      <div style="font-size:11.5px;color:#6b7076">{{ chatSub }}</div>
     </div>
   </div>
   <div style="flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:12px">
+    <sc-if value="{{ chatExisting }}" hint-placeholder-val="{{ true }}">
     <div style="text-align:center;font-size:11px;color:#9aa0a6">Yesterday</div>
     <div style="display:flex;gap:9px;align-items:flex-end">
       <span style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5c9a0);flex:none"></span>
@@ -378,6 +413,15 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
       <span style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#f5c9a0);flex:none"></span>
       <div style="background:#fff;border:1px solid #ece3d5;border-radius:4px 15px 15px 15px;padding:10px 13px;font-size:13.5px;color:#1e2124;line-height:1.45;max-width:78%">one small thing that went right this week. mine was that i actually asked a question in class</div>
     </div>
+    </sc-if>
+    <sc-if value="{{ chatNew }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px 24px">
+      <span style="width:64px;height:64px;border-radius:50%;background:{{ chatGrad }};flex:none"></span>
+      <div style="margin-top:14px;font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:20px;color:#1e2124;font-weight:600">{{ chatWith }}</div>
+      <div style="margin-top:4px;font-size:12.5px;color:#6b7076">{{ chatSub }}</div>
+      <div style="margin-top:14px;font-size:13px;color:#6b7076;line-height:1.5;max-width:250px">This is the start of your conversation. Say hi &#128153;</div>
+    </div>
+    </sc-if>
     <sc-if value="{{ chatDone }}" hint-placeholder-val="{{ false }}">
     <div style="display:flex;gap:9px;align-items:flex-end;flex-direction:row-reverse">
       <span style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#FEC2B9,#a9d6dc);flex:none"></span>
@@ -386,7 +430,7 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
     </sc-if>
   </div>
   <div style="padding:12px 14px 16px;border-top:1px solid #ece3d5;background:#fffdf9;display:flex;align-items:center;gap:9px">
-    <input value="{{ chatDraft }}" onInput="{{ onChatDraft }}" placeholder="Message Mia&hellip;" style="flex:1;border:1px solid #e3dccf;border-radius:999px;padding:11px 15px;font-size:13.5px;font-family:'Mulish',Tahoma,sans-serif;color:#1e2124;background:#fff;outline:none">
+    <input value="{{ chatDraft }}" onInput="{{ onChatDraft }}" placeholder="{{ chatPlaceholder }}" style="flex:1;border:1px solid #e3dccf;border-radius:999px;padding:11px 15px;font-size:13.5px;font-family:'Mulish',Tahoma,sans-serif;color:#1e2124;background:#fff;outline:none">
     <span onClick="{{ sendChat }}" style="background:{{ chatSendBg }};color:#fff;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;flex:none">&uarr;</span>
   </div>
 </div>
@@ -600,7 +644,6 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
 <div style="padding:30px 24px 96px;box-sizing:border-box">
   <div style="display:flex;align-items:center;justify-content:space-between">
     <span style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:26px;color:#1e2124;font-weight:600">Your circles</span>
-    <span style="width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid #ece3d5;display:flex;align-items:center;justify-content:center"><svg width="18" height="18"><circle cx="8" cy="8" r="6" fill="none" stroke="#6b7076" stroke-width="2"></circle><line x1="12.5" y1="12.5" x2="16" y2="16" stroke="#6b7076" stroke-width="2"></line></svg></span>
   </div>
   <div style="margin-top:6px;font-size:13px;color:#6b7076;font-weight:300">The ones with something new come first.</div>
 
@@ -661,7 +704,7 @@ a{color:#4a90b8;text-decoration:none}a:hover{color:#2f6f96}
     <span style="font-family:Didot,'GFS Didot','Times New Roman',serif;font-size:26px;color:#1e2124;font-weight:600">Messages</span>
     <span style="display:flex;gap:8px">
       <span style="width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid #ece3d5;display:flex;align-items:center;justify-content:center"><svg width="18" height="18"><circle cx="8" cy="8" r="6" fill="none" stroke="#6b7076" stroke-width="2"></circle><line x1="12.5" y1="12.5" x2="16" y2="16" stroke="#6b7076" stroke-width="2"></line></svg></span>
-      <span style="width:38px;height:38px;border-radius:50%;background:#1e2124;display:flex;align-items:center;justify-content:center"><svg width="18" height="18"><line x1="9" y1="3" x2="9" y2="15" stroke="#fff" stroke-width="2"></line><line x1="3" y1="9" x2="15" y2="9" stroke="#fff" stroke-width="2"></line></svg></span>
+      <span onClick="{{ openNewMsg }}" style="width:38px;height:38px;border-radius:50%;background:#1e2124;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="18" height="18"><line x1="9" y1="3" x2="9" y2="15" stroke="#fff" stroke-width="2"></line><line x1="3" y1="9" x2="15" y2="9" stroke="#fff" stroke-width="2"></line></svg></span>
     </span>
   </div>
 
@@ -1113,6 +1156,7 @@ class Component extends DCLogic {
     ];
     const openPerson = (pp) => () => this.setState({ person: pp, personOpen: true });
     const roster = this.GIRLS.map((g) => ({ ...g, open: openPerson(g) }));
+    const startChat = (p) => () => this.setState({ newMsgOpen:false, chatOpen:true, chatWith:p.name, chatSub:(p.role==='Mentor' ? 'Your mentor' : 'Your Nova Circle'), chatGrad:p.grad, chatNew:true, tab:'messages' });
     const per = this.state.person || {};
     // ⋮ post menus — app-store requirement: Report on others' posts, Delete on your own
     const pm = {};
@@ -1168,13 +1212,22 @@ class Component extends DCLogic {
         track:`width:38px;height:22px;border-radius:999px;flex-shrink:0;position:relative;transition:background .15s;background:${!(this.state.notifOff||{})[i]?'#5DA4CD':'#d8d0c1'}`,
         knob:`width:16px;height:16px;border-radius:999px;background:#fff;position:absolute;top:3px;transition:left .15s;left:${!(this.state.notifOff||{})[i]?'19px':'3px'}`,
       })),
-      isPrep: screen==='prep', isNotif: screen==='notif', isReveal: screen==='reveal', isApp: screen==='app',
+      isPrep: screen==='prep', isNotif: screen==='notif', isReveal: screen==='reveal', isApp: screen==='app' && !this.state.callOpen,
       callOpen: !!this.state.callOpen,
       composeTitle: this.state.composeMode === 'comment' ? 'Add a comment' : 'New post',
       isT1: tier===1, isT2: tier===2,
       isHome: tab==='home' && !this.state.callOpen, isCircles: tab==='circles' && !this.state.callOpen, isMessages: tab==='messages' && !this.state.chatOpen && !this.state.callOpen, isYou: tab==='you' && !this.state.callOpen, isCircleFeed: tab==='circle' && !this.state.callOpen,
       isChat: tab==='messages' && !!this.state.chatOpen && !this.state.callOpen,
       isCommunity: tab==='community' && !this.state.callOpen,
+      newMsgOpen: !!this.state.newMsgOpen,
+      chatWith: this.state.chatWith || 'Mia',
+      chatSub: this.state.chatSub || 'Your Nova Circle',
+      chatGrad: this.state.chatGrad || 'linear-gradient(135deg,#FEC2B9,#f5c9a0)',
+      chatNew: !!this.state.chatNew,
+      chatExisting: !this.state.chatNew,
+      chatPlaceholder: 'Message ' + (this.state.chatWith || 'Mia') + '\u2026',
+      msgMentors: this.MENTORS.map((m) => ({ ...m, start: startChat(m) })),
+      msgGirls: this.GIRLS.filter((g) => g.role !== 'You').map((g) => ({ ...g, start: startChat(g) })),
 
       tierLabel: tier===2 ? 'The Anchor' : 'The Spark',
       tierProfile: tier===2 ? 'Anchor — circle + 1:1 mentor' : 'Spark — circle member',
@@ -1210,7 +1263,7 @@ class Component extends DCLogic {
       goChCircle: () => this.setState({ screen:'app', tab:'circle', matched:true, moduleOpen:false, composeOpen:false }),
       goChMM: () => this.setState({ screen:'mmcircle', matched:true, moduleOpen:false, composeOpen:false }),
       goMM: () => this.setState({ screen:'mmcircle', moduleOpen:false }),
-      joinCall: () => this.setState({ callOpen:true }),
+      joinCall: () => this.setState({ callOpen:true, moduleOpen:false, mentorOpen:false, composeOpen:false }),
       leaveCall: () => this.setState({ callOpen:false }),
       mmHome: () => this.setState({ screen:'app', tab:'home', moduleOpen:false }),
       mmCircles: () => this.setState({ screen:'app', tab:'circles', moduleOpen:false }),
@@ -1237,7 +1290,9 @@ class Component extends DCLogic {
       goCircleFeed: () => this.setState({ tab:'circle' }),
       goCommunity: () => this.setState({ tab:'community' }),
       goMessages: () => this.setState({ tab:'messages', chatOpen:false }),
-      openChat: () => this.setState({ chatOpen:true }),
+      openChat: () => this.setState({ chatOpen:true, chatWith:'Mia', chatSub:'Your Nova Circle', chatGrad:'linear-gradient(135deg,#FEC2B9,#f5c9a0)', chatNew:false }),
+      openNewMsg: () => this.setState({ newMsgOpen:true }),
+      closeNewMsg: () => this.setState({ newMsgOpen:false }),
       closeChat: () => this.setState({ chatOpen:false }),
       goYou: () => this.setState({ tab:'you' }),
       cHome: tab==='home'?on:off, cCircles: (tab==='circles'||inCircle)?on:off, cMessages: tab==='messages'?on:off, cYou: tab==='you'?on:off,
@@ -1262,7 +1317,7 @@ class Component extends DCLogic {
         setTimeout(() => this.setState({ posted:false }), 2200);
       },
 
-      restart: () => this.setState({ screen:'tierpick', tier:2, matched:false, qi:0, li:0, tab:'home', moduleOpen:false, composeOpen:false, callOpen:false, chatOpen:false, draft:'', sharpen:null, anon:false, pollVote:null, reply:{}, sent:{} }),
+      restart: () => this.setState({ screen:'tierpick', tier:2, matched:false, qi:0, li:0, tab:'home', moduleOpen:false, composeOpen:false, callOpen:false, chatOpen:false, newMsgOpen:false, chatNew:false, chatWith:null, draft:'', sharpen:null, anon:false, pollVote:null, reply:{}, sent:{} }),
     };
   }
 }
