@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-21",
+  "browser": "Local Chrome, automated",
+  "checks": [
+    "Actual web sign-in and original auth layout render Teen/Mentor controls, register/reset links, heading and tagline; teen login is simulated",
+    "Profile validation, plan, simulated checkout, email confirmation, sign-in, complete 36-question survey and matching lead to Home",
+    "Premium sees General Circle in Circles; Home direct-message notification opens the fictional conversation",
+    "Actual Circle and meeting schedule screens; simulated message sends",
+    "Home quick read opens existing resource reader with fictional content and no reviewer prompts",
+    "Report, block, unblock and simulated safety notice remain available through app navigation",
+    "Proposed wellbeing popup supports rating and Done, stays dismissed on Home revisit, and can be skipped; rating is not saved",
+    "App navigation works at 390px with no page-level horizontal overflow",
+    "Start over returns to signup; there is no note-taking interface or notes storage",
+    "Free account skips paid checkout and survey, then opens Circles and its General Circle card after simulated account review; no separate General navigation item",
+    "No runtime errors or external requests; light appearance overrides the earlier dark preference"
+  ],
+  "errors": [],
+  "externalRequests": []
+}
