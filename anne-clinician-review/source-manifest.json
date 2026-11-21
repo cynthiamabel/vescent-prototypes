@@ -1,0 +1,327 @@
+{
+  "appCommit": "f5dcbee90d89d9d56a3186c606c8e4ea8c43c693",
+  "appBranch": "feature/issue-62-retire-former-mentor-circles",
+  "captured": "2026-11-21",
+  "files": [
+    {
+      "path": "apps/web/src/components/ui/participant-avatar-stack.tsx",
+      "sha256": "4ecaa5b48af181ca992e8eedeef769dbdd88c15785b6f087c20cf0d7a71b23c0"
+    },
+    {
+      "path": "apps/web/src/components/ui/card.tsx",
+      "sha256": "436fa655466c13840fd8230f738b2895801929da6bba666b2c9b3da1d4c04398"
+    },
+    {
+      "path": "apps/web/src/components/ui/fullscreen-image-viewer.tsx",
+      "sha256": "acd009d1fe85dc79ba7bf7ccc6f6b30652b8d59d917da3e5cd4e655854d9c171"
+    },
+    {
+      "path": "apps/web/src/components/ui/infinite-scroll-sentinel.tsx",
+      "sha256": "b6fe3f748c407df52df1fbf24866924c5946ca662fc657c635ff6b6e13591aaa"
+    },
+    {
+      "path": "apps/web/src/components/ui/avatar.tsx",
+      "sha256": "6eb3c7b7f761679bd8e8588e290d9e085f508f88e42f347d505755810929e78c"
+    },
+    {
+      "path": "apps/web/src/components/ui/badge.tsx",
+      "sha256": "9f7bf1e4349400ba73d63b4fa952e3c08f206f7c1d81d4b12e3fd7cfd27ca9e0"
+    },
+    {
+      "path": "apps/web/src/components/ui/button.tsx",
+      "sha256": "2fc3274a3c9a19601e90009e83020a054dd3f3bc75c029aeba52c85da7a6f95d"
+    },
+    {
+      "path": "apps/web/src/components/ui/input.tsx",
+      "sha256": "4c755ad8d1e15a5b064b23e9cdad157dd0dc4a289a474d80d21c552943c10920"
+    },
+    {
+      "path": "apps/web/src/components/ui/skeleton.tsx",
+      "sha256": "62588a68ff35565c9a414f45c0005209f47007a9d647da728d6a447644206c23"
+    },
+    {
+      "path": "apps/web/src/components/feed/sharpen-attachment.tsx",
+      "sha256": "03a06f5a77954d0b8abbc31109b8f34e00347c28611f0aa449966a949a4906d8"
+    },
+    {
+      "path": "apps/web/src/components/feed/create-post-form.tsx",
+      "sha256": "328df520cc5d00c97caecce9a67f6177bff465cdbff32434d2e1204d9cda991c"
+    },
+    {
+      "path": "apps/web/src/components/feed/sharpen-picker.tsx",
+      "sha256": "6f91be9949134d7b39267064efda8606033429788dff15d29d9460d0824ab6e4"
+    },
+    {
+      "path": "apps/web/src/components/feed/post-card.tsx",
+      "sha256": "bd534d1917f73a158e6e4804879a1faad45064e457076ccbb2f59bedfa70a2c5"
+    },
+    {
+      "path": "apps/web/src/components/safety/block-user-button.tsx",
+      "sha256": "c6d1bf45a011a053901f15b581a4b270000b7393383ab4200a61e7d605f31a9c"
+    },
+    {
+      "path": "apps/web/src/components/safety/report-button.tsx",
+      "sha256": "dc59ea13e8482d7f66cb915202ca09d074458efc22cbf27e0f899a95ba7e9994"
+    },
+    {
+      "path": "apps/web/src/components/safety/suspended-account.tsx",
+      "sha256": "9c4fdf6bd4a216b611ac3c67f14866c32399da969ffd14411b089a5f07e94d52"
+    },
+    {
+      "path": "apps/web/src/components/theme/theme-provider.tsx",
+      "sha256": "728404346c3e9b415a6cdbed91fb298da42ce03b6dd0051412aad0d1b397d3fb"
+    },
+    {
+      "path": "apps/web/src/components/theme/appearance-selector.tsx",
+      "sha256": "60884b1958cc52aa1cefa7f1b6c735c223da8a8d878eb055d345c70e5b7cd816"
+    },
+    {
+      "path": "apps/web/src/components/theme/design-variables.ts",
+      "sha256": "690ecb0755382195d2cfd91e17046f714cbdeeda83ab74e3b14af78da11923e5"
+    },
+    {
+      "path": "packages/shared/src/sharpen-format.ts",
+      "sha256": "719caed68cb80eb018c52423f7e54c3c50a94dc609e4aa2633346b3adcc4a389"
+    },
+    {
+      "path": "packages/shared/src/index.ts",
+      "sha256": "ebb18b7973c9aeb71d167a9aff536da67e2c445101480b5a55fb9d59fa68a3cf"
+    },
+    {
+      "path": "packages/shared/src/registration-options.ts",
+      "sha256": "6193344062802c381db5153283b58c0b89cd744b3d2a68e8ff80c2c607e045d7"
+    },
+    {
+      "path": "packages/shared/src/types/twilio.ts",
+      "sha256": "f5b92341b2e1db1dd490aaddf81a12ac6fde1e5558952ba021a78a6d8bd7f310"
+    },
+    {
+      "path": "packages/shared/src/types/usage.ts",
+      "sha256": "e1df2ca8f4320063872ceb4fb140a23c483f86266b242113a33f1a6ded0b89eb"
+    },
+    {
+      "path": "packages/shared/src/types/video.ts",
+      "sha256": "511c170e6ed8725016eff3d0d96849d583e89887f4be5fc66167caf47743f9fa"
+    },
+    {
+      "path": "packages/shared/src/types/safety.ts",
+      "sha256": "62dab5bd063319a38718cc04bbf1d09b73e6ec84dde0bbefde4dee91c128cba0"
+    },
+    {
+      "path": "packages/shared/src/types/group.ts",
+      "sha256": "6128e6db11a2f909fd4377473c67a7f910e0dffd6d9fdba3b7019c93e66b7958"
+    },
+    {
+      "path": "packages/shared/src/types/card.ts",
+      "sha256": "a0391bc7e6e4b1c87432455f74a792233e49a2cb148b3d90df8e59856369c345"
+    },
+    {
+      "path": "packages/shared/src/types/sharpen.ts",
+      "sha256": "a34aca9af537f68c0b5fe78d92e85e6b7e5304cf8c08d0ddcacadbb713534e3d"
+    },
+    {
+      "path": "packages/shared/src/types/notification.ts",
+      "sha256": "54992a2fc4a61ac8965b2b8c0ee07d6daaed6925826c0d7244cf4f4ae982afb7"
+    },
+    {
+      "path": "packages/shared/src/types/compliance.ts",
+      "sha256": "af14a819e3389aa00c34256cb12aa9128f0e186b83178dd01373fddb9132df99"
+    },
+    {
+      "path": "packages/shared/src/types/index.ts",
+      "sha256": "3aebcb5c1b0e50a51f7f8bdc851b1ae3a4d94e1c44c603460c8c50fc77a89104"
+    },
+    {
+      "path": "packages/shared/src/types/home.ts",
+      "sha256": "3781e5ce2f129aa201fdb5e2c13e9b1f5c6a63d33ab19309a9d98eed8314cdf1"
+    },
+    {
+      "path": "packages/shared/src/types/billing.ts",
+      "sha256": "a30fe1ee0a4a29ea2a321916af52f829fed943d4397ba3a466c5c8122aac3e8c"
+    },
+    {
+      "path": "packages/shared/src/types/enums.ts",
+      "sha256": "7569d83b78202f7f54da58ec3ab3f79c4bc88568b8fdb20501ac9d9148bf2a51"
+    },
+    {
+      "path": "packages/shared/src/types/user.ts",
+      "sha256": "b5de7eb93c2ffdf444c66d5497a0fbf49f24152a2cf8cf242410993832cd0684"
+    },
+    {
+      "path": "packages/shared/src/types/auth.ts",
+      "sha256": "ea52de999c5549de7dd4d38e08c14066fa970dc38d68560e08f6468103516a39"
+    },
+    {
+      "path": "packages/shared/src/types/post.ts",
+      "sha256": "1f331ae76e0296c35930b04b99f66703c946928446aca36c15d6f217b6b525db"
+    },
+    {
+      "path": "packages/shared/src/schemas/index.ts",
+      "sha256": "ae8c2d93e5e12efe2d28c89299795a85e8e24b9eaaf39197a3c94b92d2faadb1"
+    },
+    {
+      "path": "packages/shared/src/schemas/auth.ts",
+      "sha256": "b8b68e0161deabf0f29cf59cba60a23703b4081ceba19e924460c14640a9e1ed"
+    },
+    {
+      "path": "packages/shared/src/schemas/post.ts",
+      "sha256": "c75a2ec060484cf3454defa9301d007af2092ef97d7055dd0592ec1f5081b881"
+    },
+    {
+      "path": "packages/shared/src/api/user-settings.ts",
+      "sha256": "e3d11dc205a3504daffec4acfd4329ab7d21679aaffa1ead5d6ff206b96322a7"
+    },
+    {
+      "path": "packages/shared/src/api/twilio.ts",
+      "sha256": "8ad48fcb323e854b639ea4b4c4d788b5bebe753faeb73eee5e4b36179b877431"
+    },
+    {
+      "path": "packages/shared/src/api/usage.ts",
+      "sha256": "f3665fc763a85e0d5ce08846892904e5b97c84437b54ac4bda11d684a4bd32d2"
+    },
+    {
+      "path": "packages/shared/src/api/video.ts",
+      "sha256": "bffd8231189df8cd036334284612902b08282cf3c71cf61680946bc3690db666"
+    },
+    {
+      "path": "packages/shared/src/api/safety.ts",
+      "sha256": "a8475066085fff4250215b8efe33de0926bf650c1f5e5cf745693fbf89046079"
+    },
+    {
+      "path": "packages/shared/src/api/notifications.ts",
+      "sha256": "76a530a0c720c0a1510892a2eb4e40426f17dc96766bd8c52637a903a97bcc5f"
+    },
+    {
+      "path": "packages/shared/src/api/groups.ts",
+      "sha256": "b2ce6eeca4c9372aa640f3b6037e6c2e73af275bd63d69af27fa1a9ebdb6aefc"
+    },
+    {
+      "path": "packages/shared/src/api/sharpen.ts",
+      "sha256": "15fdb572af76ef5856ba04b859ccd61d1f3064e96527a7454d9d964aed038c53"
+    },
+    {
+      "path": "packages/shared/src/api/posts.ts",
+      "sha256": "be0db740f012c3a0ff92ccd1b99fe721496f88a58b8b151980ab2d32ab08d212"
+    },
+    {
+      "path": "packages/shared/src/api/cards.ts",
+      "sha256": "f0576d086c1a5b6994574de2c24b582c3a4c248e99ec2ad94ddf67ef93b23195"
+    },
+    {
+      "path": "packages/shared/src/api/client.ts",
+      "sha256": "d9a9ae05f9c5456a797d49483561d5ba8ef4e2f863da4231e5b4f8023980de20"
+    },
+    {
+      "path": "packages/shared/src/api/compliance.ts",
+      "sha256": "6b2f9ae1d4853c63d1ac87351f8279e1c5ebe2a7b0a8f6ba007dd17373157053"
+    },
+    {
+      "path": "packages/shared/src/api/users.ts",
+      "sha256": "1057e31aaa8a236b2b339afec4181ae29e2b4aea4f2cb47e58640a57d2546bcc"
+    },
+    {
+      "path": "packages/shared/src/api/index.ts",
+      "sha256": "4e562329ba1282b0999dc80628919d3f2a660433b70695b57724d99b0c6b48e3"
+    },
+    {
+      "path": "packages/shared/src/api/upload.ts",
+      "sha256": "c7114c458afc6a6eff24baf975dbd5906927a1e802f929784c3e57e727bed98a"
+    },
+    {
+      "path": "packages/shared/src/api/home.ts",
+      "sha256": "4d36b661ed346f4b7967a603f8e3f538c8e1c786bc1b2f94f248d5acd6b09cea"
+    },
+    {
+      "path": "packages/shared/src/api/billing.ts",
+      "sha256": "d45233a0b8afa68a7782456ca9d00ec186f9314b3316e7fbc8f239d675d0a0d0"
+    },
+    {
+      "path": "packages/shared/src/api/auth.ts",
+      "sha256": "886cb86c842d7fc604c62af201ecf544b5e9e8dac9081d05519f6cd4a77169ba"
+    },
+    {
+      "path": "packages/design/src/index.ts",
+      "sha256": "437953e15083520a9a9f45c9ed02a6c5287f0bfdccaa8b430c4b4f4a3d09627b"
+    },
+    {
+      "path": "apps/web/src/lib/utils.ts",
+      "sha256": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27"
+    },
+    {
+      "path": "apps/web/src/hooks/use-debounced-value.ts",
+      "sha256": "da9ae0dacc88d2745204754b30c54d0e7fab9098e4a3ba20d59e624b8d5cb041"
+    },
+    {
+      "path": "apps/web/src/components/groups/group-card.tsx",
+      "sha256": "c9ead1f5a5588584576c6f8a860e7484446bbf2b594870f9f3f6d7afb949284d"
+    },
+    {
+      "path": "apps/web/src/components/layout/matching-in-progress.tsx",
+      "sha256": "957c398a8edbf35aa8209f4ad692010d2f8bfc23a3b5c164cf5ccf2ca21254de"
+    },
+    {
+      "path": "apps/web/tailwind.config.ts",
+      "sha256": "8723b413cbe9b49abaa99c9af11f4b02aac52fd1b0087ae63a956c37cf150191"
+    },
+    {
+      "path": "apps/web/src/app/globals.css",
+      "sha256": "fd49a462388001eb29d3755d97ea8e8ada96ca033403daeddd91f84df1f56f28"
+    },
+    {
+      "path": "apps/api/app/core/onboarding_questions.json",
+      "sha256": "97db37ee58c1026dc024405c572e268187d8cb006aa90a6c74f2d7e80237c73c"
+    },
+    {
+      "path": "apps/mobile/app/(auth)/register.tsx",
+      "sha256": "65b87248ebb7ecbd61fecc8414c1a328db652307243087fe6e594b3de5f08d80"
+    },
+    {
+      "path": "apps/web/src/app/app/home/page.tsx",
+      "sha256": "8e962b99f9a1e045e3d251435578e39159b3cc220f0e9dff89db52aabcd986ef"
+    },
+    {
+      "path": "apps/web/src/app/app/onboarding-survey/page.tsx",
+      "sha256": "0311571f35710e7a51bb8e2a9ddd38c39a39fcbfee1eb7b6b4a1a3d99fb23359"
+    },
+    {
+      "path": "apps/web/src/app/app/groups/page.tsx",
+      "sha256": "07e69e5fdcf16983006a2bb8c05ffe3e7a7dbf83b6ff94f7741279a898e1dc6a"
+    },
+    {
+      "path": "apps/web/src/app/app/groups/[id]/page.tsx",
+      "sha256": "d25dfbfd756412a89a041bbad50a65848dfa82520dbced4266574c40c042fad9"
+    },
+    {
+      "path": "apps/web/src/app/app/groups/[id]/members/page.tsx",
+      "sha256": "f62d103a3c9407bedf3cf4f8bd396f94c93ecabda989b07fc3d9018bf8de978c"
+    },
+    {
+      "path": "apps/web/src/app/app/general/page.tsx",
+      "sha256": "6f2db0aaf27c220f422538309ed05782e76357fc0364f5f98ea5f7bd07afb63b"
+    },
+    {
+      "path": "apps/web/src/app/app/messages/page.tsx",
+      "sha256": "5864982cd2945f129b4b9d46b033c971df11d41f5bb6b54e68970fd32f7a18d8"
+    },
+    {
+      "path": "apps/web/src/app/app/posts/[id]/page.tsx",
+      "sha256": "9aa0517f12e1971e1afa3490755b4da5bbd8f682b26a83fdd7191b9b8c50df93"
+    },
+    {
+      "path": "apps/web/src/app/app/notifications/[id]/page.tsx",
+      "sha256": "017697c65ccdb2a253c11a32ebf8de393cbc50bc5879ede240a44ff1ee8b25a1"
+    },
+    {
+      "path": "apps/web/src/app/app/settings/page.tsx",
+      "sha256": "1db10953050eea7b9f6f545c90b283dbc9738a1e5fbd770f6933374e8b44e6ce"
+    },
+    {
+      "path": "apps/web/src/app/auth/login/page.tsx",
+      "sha256": "93fb264b3323a0e48d3680c4bdca4dd2ca0aaf0c020a33784d29c06fa68730c6"
+    },
+    {
+      "path": "apps/web/src/app/auth/layout.tsx",
+      "sha256": "7c24467f51b33fe7da35138025886b2efaf0445f008ffa1663d3e6fd689febdd"
+    }
+  ]
+}
