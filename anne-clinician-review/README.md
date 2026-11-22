@@ -1,33 +1,38 @@
-# Vescent app demo
+# Vescent team review
 
-A simple account-to-app journey using the current app’s screens, components, shared colors and local fonts. No reviewer dashboard, names, prompts or note-taking tools. A proposed wellbeing check-in appears once on first reaching Home; it is optional, simulated and does not save or send a rating.
+An updated version of the full signup-to-app prototype, with mentor resource sharing integrated through Circles. Yesterday’s published assets are preserved in `archive/2026-11-21/dist/`.
 
-The journey starts with a browser adaptation of the mobile registration form, then plan selection, simulated checkout for paid tiers, simulated email confirmation, the unchanged web sign-in screen and its original authentication layout, the complete current survey question set and the current matching screen. Continue into the app to explore Home, Circles, messages, resources, notifications and settings. Everyone sees General Circle in their Circles list. Free accounts see General Circle; paid accounts also see their mentor Circles. General Circle has no separate navigation tab. Home includes a fictional direct-message notification that opens the sample conversation. The demo opens in light mode, including when the earlier version was left in dark mode.
+## Review paths
 
-All identities and conversations are fictional. No accounts, purchases, emails, messages, reports or calls reach live services. Profile values and interactions live only in browser memory. Payment and verification steps are labeled simulations. The source app remains unchanged.
+- Established teen: the link opens Sign In. Choose Teen, enter `riley_demo` and `DemoOnly123!` to open Home without onboarding.
+- New teen: choose Register, create an account and complete the 36-question onboarding as before.
+- Mentor: open `#/auth/login`, choose Mentor, enter `jordan_mentor_demo` and `DemoOnly123!`, then select **Finding our footing** in Circles. Create a post and attach a resource from the combined list. Publishing switches to the teen view of that post.
+- Direct resource review: `#/demo/resources`.
 
-From this folder, start the local preview:
+All people, resources and interactions are fictional; no accounts, messages, approvals, sponsorships or partnerships are created. Resource review notes were intentionally removed from the screens at the user's request. The sponsor label demonstrates disclosure placement only. Provider links open local stand-ins in separate tabs; no live service is called. No admin portal is included.
 
-```sh
-python3 -m http.server 4317 --bind 127.0.0.1 --directory dist
-```
+## Local build and checks
 
-Open http://127.0.0.1:4317. This address works on this Mac only. Stop with Control-C.
-
-`source/` contains unchanged app source snapshots; `source-manifest.json` records their original commit and file fingerprints. The separate prototype adapters supply fictional data and browser navigation. To rebuild with the app checkout’s already-installed dependencies:
+Uses the app checkout's existing dependencies, with unchanged app-source snapshots recorded in `source-manifest.json`.
 
 ```sh
 VESCENT_APP_PATH=/Users/cynthiamabel/dev/vescent node scripts/build.mjs
+python3 -m http.server 4320 --bind 127.0.0.1 --directory dist
+PREVIEW_URL=http://127.0.0.1:4320 node scripts/check-preview.cjs
+PREVIEW_URL=http://127.0.0.1:4320 node scripts/check-resource-sharing.cjs
+PREVIEW_URL=http://127.0.0.1:4320 node scripts/check-mentor-entry.cjs
 ```
 
-The output in `dist/` is ready to view without installing dependencies. To check the running saved preview:
+Source inspection, assumptions and verification are in `docs/issues/`. The app repository is unchanged.
 
-```sh
-PREVIEW_URL=http://127.0.0.1:4317 node scripts/check-preview.cjs
-```
+## Sharing
 
-Checks use local Chrome and the app’s installed Playwright. Results are in `docs/issues/verification.json`.
+The existing team link is updated by this change:
 
-Saved separately from app code in `vescent-prototypes/anne-clinician-review`, on `feature/anne-clinician-review`. Changes are saved on the feature branch and submitted through a pull request for human review. A person must merge the reviewed change before the existing GitHub Pages site publishes it. The existing prototype library is preserved.
+https://cynthiamabel.github.io/vescent-prototypes/anne-clinician-review/dist/
 
-The sign-in page and authentication layout are preserved byte-for-byte from the app. Demo credentials appear in the separate simulation banner; fields, Teen/Mentor tabs, links, brand heading and tagline are rendered by the actual web screen. The demo supports teen sign-in only and does not enable live Apple authentication.
+Yesterday's experience is preserved at:
+
+https://cynthiamabel.github.io/vescent-prototypes/archive/2026-11-21/dist/
+
+The user approved committing, uploading and opening a review request on November 22. A human must review and merge; GitHub Pages serves main and publishes the reviewed changes after merge.

@@ -1,0 +1,3 @@
+# Built assets include third-party template strings; review their source files.
+dist/assets/review.js linguist-generated=true -whitespace
+dist/assets/review.css linguist-generated=true

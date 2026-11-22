@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// ../../../../private/tmp/anne-clinician-review/source/apps/web/tailwind.config.ts
+// ../../../../private/tmp/vescent-team-review/source/apps/web/tailwind.config.ts
 var tailwind_config_exports = {};
 __export(tailwind_config_exports, {
   default: () => tailwind_config_default

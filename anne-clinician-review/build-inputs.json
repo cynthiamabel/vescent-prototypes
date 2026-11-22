@@ -66,6 +66,9 @@
   "source/apps/web/src/app/app/groups/page.tsx",
   "src/image.ts",
   "source/apps/web/src/components/feed/sharpen-attachment.tsx",
+  "src/sample-resources.ts",
+  "src/resource-ui.tsx",
+  "src/resource-attachment.tsx",
   "source/apps/web/src/components/safety/report-button.tsx",
   "source/apps/web/src/components/safety/block-user-button.tsx",
   "source/apps/web/src/components/feed/post-card.tsx",
@@ -80,5 +83,6 @@
   "source/apps/web/src/app/app/notifications/[id]/page.tsx",
   "source/apps/web/src/components/theme/appearance-selector.tsx",
   "source/apps/web/src/app/app/settings/page.tsx",
+  "src/resource-sharing.tsx",
   "src/review.tsx"
 ]

@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-22",
+  "browser": "Local Chrome",
+  "checks": [
+    "One combined four-resource search identifies both providers and article/video formats; preview shows destination and sample sponsorship",
+    "Draft and search survive preview → search → New Post → preview → attach",
+    "Clean app screens contain no review notes; resource X removes attachment before selecting another",
+    "Edited mentor introduction publishes in the prototype and renders through the app PostCard as a teen",
+    "Teen opens a separate simulated provider tab with the same destination and sponsorship disclosure; original Circle remains open",
+    "Teen can reply using the existing post component with a browser-only simulated response",
+    "Teen can create a text Circle post with no Sharpen or resource attachment action",
+    "390px journey handles video preview, removing/replacing an attachment without losing text, and teen post without page overflow",
+    "Closing New Post cancels the draft; search and preview still retain it",
+    "Captured light and dark appearance using the app semantic theme colors",
+    "No uncaught browser errors or external requests; no provider content/service was called"
+  ],
+  "errors": [],
+  "externalRequests": []
+}
