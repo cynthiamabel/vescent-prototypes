@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-22",
+  "checks": [
+    "Default entry is sign-in; established teen account opens Home without onboarding",
+    "Mentor tab signs into fictional Jordan and opens the actual Circles screen",
+    "Finding our footing opens the integrated resource-sharing journey",
+    "Mentor New Post offers Add a resource",
+    "No browser errors or external service requests"
+  ],
+  "errors": [],
+  "externalRequests": []
+}

@@ -64,3 +64,6 @@ export const getUserSettings=async()=>settings;
 export const updateUserSettings=async(data:any)=>{settings={...settings,...data};simulated('settings updated');return settings;};
 export const apiRequest=async(path:string,options:any={})=>{if(path==='/api/v1/user-profiles/'&&options.method==='PUT'){simulated('fictional profile updated');return {...riley,...JSON.parse(options.body)};}throw new Error('This action is outside the review. No live service was contacted.');};
 export const changePassword=async()=>{throw new Error('There is no real account or password in this review.');};
+
+// Prototype-only insertion, for the resource-sharing journey.
+export function addDemoResourcePost(post:PostResponse){posts=[post,...posts];}
